@@ -1,6 +1,6 @@
-import Header from "../../components/Header";
-import NavBar from "../../components/Nav";
-import Footer from "../../components/Footer";
+import Header from "../../components/header";
+import NavBar from "../../components/nav";
+import Footer from "../../components/footer";
 import Content from "../../components/Content";
 
 const Main = () => (
