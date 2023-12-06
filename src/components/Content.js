@@ -1,3 +1,5 @@
+import { atom, useRecoilState } from "recoil";
+
 import star from "../assets/star.svg";
 import filledStar from "../assets/filled_star.svg";
 import marker from "../assets/marker.svg";
@@ -7,20 +9,29 @@ import sampleImage2 from "../assets/sampleImage2.png";
 import sampleImage3 from "../assets/sampleImage3.png";
 import sampleImage4 from "../assets/sampleImage4.png";
 
-function Content() {
+import { restaurantData } from "../recoil/atoms/restaurantData"
+
+function Content({ i }) {
+
+  const [data, setData] = useRecoilState(restaurantData);
+
   return (
     <div className="mt-5 flex h-auto w-1/2 flex-col bg-white p-3">
       <div className="flex w-full items-center justify-between">
         <div className="flex flex-col items-start">
           <div className="">
             <span className="mr-3 text-2xl text-[#325FFF] hover:cursor-pointer">
-              TeamB 홍대점
+              {/* 가게 이름 */}
+              {data[i].restaurantName}
             </span>
             <span className="text-[#5A5A5A]">일식</span>
           </div>
           <div className="mt-1 flex items-center">
             <div className="flex items-baseline">
-              <span className="text-[#444444]">서울 마포구 서교동</span>
+              <span className="text-[#444444]">
+                {/* 가게 위치 */}
+                {data[i].location}
+              </span>
               <img
                 src={arrowDown}
                 alt="arrow_down"
@@ -33,10 +44,12 @@ function Content() {
             </div>
             <div className="ml-3 flex">
               <div className="mx-2 h-6 w-24 rounded-2xl border-[1px] border-[#5A5A5A] bg-[#D9D9D9] text-sm text-[#5A5A5A]">
-                소주 3000원
+                {/* 소주 가격 */}
+                소주: {data[i].sojuPrice}
               </div>
               <div className="h-6 w-24 rounded-2xl border-[1px] border-[#5A5A5A] bg-[#D9D9D9] text-sm text-[#5A5A5A]">
-                맥주 4000원
+                {/* 맥주 가격 */}
+                맥주: {data[i].beerPrice}
               </div>
             </div>
           </div>

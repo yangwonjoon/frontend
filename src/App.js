@@ -2,13 +2,18 @@ import logo from "./logo.svg";
 import "./App.css";
 
 import { Routes, Route } from "react-router-dom";
+import { atom, useRecoilState } from "recoil";
 
 import Main from "./pages/main/main";
-import { Detail, Counter, Display, scount } from "./pages/detail/detail";
+import Detail from "./pages/detail/detail";
 import Login from "./pages/login/login";
 import SignUp from "./pages/signup/signup";
 
+
 function App() {
+
+
+
   return (
     <div className="App">
       <Routes>
