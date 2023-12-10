@@ -1,5 +1,6 @@
 [
     {
+        "id": 1,
         "restaurantName": "가게1",
         "sojuPrice": "4000",
         "beerPrice": "5000",
@@ -9,6 +10,7 @@
         "bookmartCount": 0
     },
     {
+        "id": 2,
         "restaurantName": "가게2",
         "sojuPrice": "5000",
         "sojuPrice": "6000",

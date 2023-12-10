@@ -1,4 +1,4 @@
-import { atom, useRecoilState } from "recoil";
+import { atom, useRecoilState, useRecoilValue } from "recoil";
 
 import star from "../assets/star.svg";
 import filledStar from "../assets/filled_star.svg";
@@ -9,14 +9,21 @@ import sampleImage2 from "../assets/sampleImage2.png";
 import sampleImage3 from "../assets/sampleImage3.png";
 import sampleImage4 from "../assets/sampleImage4.png";
 
-import { restaurantData } from "../recoil/atoms/restaurantData"
+import { restaurantData } from "../recoil/selectors/restaurantData"
+import { useNavigate } from "react-router-dom";
 
 function Content({ i }) {
 
-  const [data, setData] = useRecoilState(restaurantData);
+  const data = useRecoilValue(restaurantData);
+  { console.log(data) }
+  const navigate = useNavigate()
+
+
 
   return (
-    <div className="mt-5 flex h-auto w-1/2 flex-col bg-white p-3">
+    <div className="mt-5 flex h-auto w-1/2 flex-col bg-white p-3"
+      onClick={() => { navigate('/detail') }}
+    >
       <div className="flex w-full items-center justify-between">
         <div className="flex flex-col items-start">
           <div className="">
@@ -30,7 +37,7 @@ function Content({ i }) {
             <div className="flex items-baseline">
               <span className="text-[#444444]">
                 {/* 가게 위치 */}
-                {data[i].location}
+                {data[i].address}
               </span>
               <img
                 src={arrowDown}
