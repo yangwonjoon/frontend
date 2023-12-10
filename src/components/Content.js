@@ -9,16 +9,14 @@ import sampleImage2 from "../assets/sampleImage2.png";
 import sampleImage3 from "../assets/sampleImage3.png";
 import sampleImage4 from "../assets/sampleImage4.png";
 
-import { restaurantData } from "../recoil/selectors/restaurantData"
+import { restaurantSelector } from "../recoil/selectors/restaurantSeletor"
 import { useNavigate } from "react-router-dom";
 
 function Content({ i }) {
 
-  const data = useRecoilValue(restaurantData);
-  { console.log(data) }
-  const navigate = useNavigate()
-
-
+  //레스토랑 전체 데이터
+  const [data, setData] = useRecoilState(restaurantSelector);
+  const navigate = useNavigate();
 
   return (
     <div className="mt-5 flex h-auto w-1/2 flex-col bg-white p-3"
