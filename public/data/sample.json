@@ -1,0 +1,20 @@
+[
+    {
+        "restaurantName": "가게1",
+        "sojuPrice": "4000",
+        "beerPrice": "5000",
+        "address": "서울시 마포구 서교동 ~",
+        "category": "한식",
+        "imageURLs": "",
+        "bookmartCount": 0
+    },
+    {
+        "restaurantName": "가게2",
+        "sojuPrice": "5000",
+        "sojuPrice": "6000",
+        "address": "서울시 마포구 서교동 ~",
+        "category": "일식",
+        "imageURLs": "",
+        "bookmartCount": 0
+    }
+]
