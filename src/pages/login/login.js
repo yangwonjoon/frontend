@@ -17,6 +17,12 @@ function Login() {
         setUserPw(e.target.value)
     }
 
+    const [showPassword, setShowPassword] = useState(false);
+
+    const toggleShowPassword = () => {
+      setShowPassword(!showPassword);
+    };
+
         //Login 버튼 클릭 이벤트
         const onClickLogin = async () => {
             try {
@@ -28,7 +34,12 @@ function Login() {
                 const response = await axios.post('https://localhost:8080/api/login', {
                     userId: userId,
                     userPw: userPw,
-                });
+                }, {
+                    withCredentials:true,
+                    headers: {
+                        'Content-Type':'application/json',
+                    },
+                })
         
                 if (response.data === 'success') {
                     console.log('로그인 성공');
@@ -44,16 +55,16 @@ function Login() {
             }
         };
 
-        useEffect(() => {
-            axios.get('https://localhost:8080/api/login')
-                .then(res => {
-                    console.log(res);
-                    // 응답에 대한 처리 추가
-                })
-                .catch(err => console.error(err));
-        },
-        // 페이지 호출 후 처음 한 번만 호출될 수 있도록 [] 추가
-        []);
+        // useEffect(() => {
+        //     axios.get('https://localhost:8080/api/login')
+        //         .then(res => {
+        //             console.log(res);
+        //             // 응답에 대한 처리 추가
+        //         })
+        //         .catch(err => console.error(err));
+        // },
+        // // 페이지 호출 후 처음 한 번만 호출될 수 있도록 [] 추가
+        // []);
 
 
     return (
@@ -89,7 +100,8 @@ function Login() {
           </div>
           <div style={{ width: '280px', margin: 'auto',marginTop:'30px' }}>
             <label style={{ display: 'flex', justifyContent: 'center' }}>
-              <input type="password" placeholder="비밀번호" name='userPw' onChange={handleuserPw} value={userPw}
+              <input type={showPassword ? 'text' : 'password'}
+              placeholder="비밀번호" name='userPw' onChange={handleuserPw} value={userPw}
                 style={{
                   width: '280px',
                   border: 'none',
@@ -98,7 +110,8 @@ function Login() {
                   fontWeight: 'bold',
                 }}
               />
-              <div style={{
+              <div onClick={toggleShowPassword}
+              style={{
                 border: 'none',
                 borderBottom: 'solid 2px'
               }}>
