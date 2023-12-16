@@ -11,12 +11,14 @@ import SignUp from "./pages/signup/signup";
 function App() {
   return (
     <div className="App">
-      <Routes>
-        <Route path="/" element={<Main></Main>}></Route>
-        <Route path="/detail" element={<Detail></Detail>}></Route>
-        <Route path="/login" element={<Login></Login>}></Route>
-        <Route path="/signup" element={<SignUp></SignUp>}></Route>
-      </Routes>
+      <div className="mx-auto my-0 h-full min-w-[320px] max-w-[640px]">
+        <Routes>
+          <Route path="/" element={<Main></Main>}></Route>
+          <Route path="/detail" element={<Detail></Detail>}></Route>
+          <Route path="/login" element={<Login></Login>}></Route>
+          <Route path="/signup" element={<SignUp></SignUp>}></Route>
+        </Routes>
+      </div>
     </div>
   );
 }

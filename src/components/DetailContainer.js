@@ -22,27 +22,27 @@ function DetailContainer() {
   };
 
   return (
-    <div className="mt-5 flex w-1/2 flex-col items-center bg-[#F9F9F9] p-7">
+    <div className="mt-5 flex w-full flex-col items-center bg-[#F9F9F9] p-7">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center">
           <img
             src={starCliked ? filledStar : star}
             alt="star"
-            className="w-7 hover:cursor-pointer"
+            className="w-6 hover:cursor-pointer"
             onClick={saveClickHandler}
           />
           <div className="flex items-end">
-            <span className="ml-3 text-3xl text-[#325FFF] hover:cursor-pointer">
+            <span className="ml-3 text-2xl text-[#325FFF] hover:cursor-pointer">
               TeamB 홍대점
             </span>
-            <span className="ml-2 text-[#5A5A5A]">한식, 일식</span>
+            <span className="ml-2 text-sm text-[#5A5A5A]">한식, 일식</span>
             <div className="ml-2 flex items-center">
               <img src={filledStar} alt="star" className="w-3" />
               <span className="ml-1 text-sm">365</span>
             </div>
           </div>
         </div>
-        <img src={cancel} alt="cancel" className="w-6 hover:cursor-pointer" />
+        <img src={cancel} alt="cancel" className="w-5 hover:cursor-pointer" />
       </div>
       <div className="mt-3 grid w-full grid-cols-2 gap-4">
         <img
@@ -67,18 +67,18 @@ function DetailContainer() {
         />
       </div>
       <div className="mt-3 flex w-full items-center justify-start">
-        <div className="flex h-10 w-36 items-center justify-center rounded-xl border-[1px] border-[#5A5A5A] bg-[#CCE7D0]">
+        <div className="flex h-8 w-32 items-center justify-center rounded-xl border-[1px] bg-[#CCE7D0] text-sm">
           소주 3000원
         </div>
-        <div className="ml-2 flex h-10 w-36 items-center justify-center rounded-xl border-[1px] border-[#5A5A5A] bg-[#E8E6B1]">
+        <div className="ml-2 flex h-8 w-32 items-center justify-center rounded-xl border-[1px] bg-[#e8e6b1] text-sm">
           맥주 4000원
         </div>
       </div>
-      <div className="mt-3 flex w-full flex-col items-start">
-        <span className="text-xl font-medium text-[#444444]">
+      <div className="mt-4 flex w-full flex-col items-start">
+        <span className="text-lg font-medium text-[#444444]">
           영업시간 : 11:00 ~ 17:00
         </span>
-        <span className="mt-4 text-xl font-medium text-[#444444]">
+        <span className="mt-4 text-lg font-medium text-[#444444]">
           주소 : 서울특별시 마포구 양화로 122 LAB7빌딩 3층, 4층
         </span>
       </div>
@@ -86,15 +86,15 @@ function DetailContainer() {
       <div className="mt-4 w-full border-t-2">
         <div className="mt-5 flex items-center justify-between">
           <div className="flex items-center">
-            <span className="text-2xl font-medium">댓글</span>
+            <span className="text-xl font-medium">댓글</span>
             {arrowClicked ? (
-              <img src={downArrow} alt="down_arrow" className="ml-2 w-5" />
+              <img src={downArrow} alt="down_arrow" className="ml-2 w-4" />
             ) : (
-              <img src={upArrow} alt="up_arrow" className="ml-2 w-5" />
+              <img src={upArrow} alt="up_arrow" className="ml-2 w-4" />
             )}
           </div>
           <div
-            className="flex h-8 w-28 items-center justify-center rounded-lg border-[1px] border-[#5A5A5A] bg-[#D9D9D9] hover:cursor-pointer"
+            className="flex h-7 w-24 items-center justify-center rounded-lg border-[1px] border-[#5A5A5A] bg-[#D9D9D9] text-sm hover:cursor-pointer"
             onClick={() => {
               arrowClickedHandler();
             }}
@@ -110,14 +110,14 @@ function DetailContainer() {
               </span>
               <textarea
                 placeholder="300자 이내로 댓글을 작성하세요."
-                className="mx-3 h-full w-5/6 bg-[#EFEFEF] text-sm text-[#5A5A5A]"
+                className="mx-3 h-full w-5/6 bg-[#EFEFEF] text-sm font-medium text-[#5A5A5A] outline-none"
               ></textarea>
               <span className="absolute bottom-0 right-6 text-sm text-[#5A5A5A]">
                 0 / 300자
               </span>
             </div>
             <div className="flex basis-1/12">
-              <div className="flex h-8 w-12 items-center justify-center rounded-lg border-[1px] border-[#5A5A5A] bg-[#D9D9D9] text-sm hover:cursor-pointer">
+              <div className="flex h-6 w-11 items-center justify-center rounded-lg border-[1px] border-[#5A5A5A] bg-[#D9D9D9] text-xs hover:cursor-pointer">
                 등록
               </div>
             </div>
