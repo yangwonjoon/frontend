@@ -17,6 +17,12 @@ const Signup = () => {
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
   const [isUserIdAvailable, setIsUserIdAvailable] = useState(false);
 
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   const validateNickname = (value) => {
     // 닉네임은 8자 이하
     if (value.length > 8) {
@@ -45,6 +51,14 @@ const Signup = () => {
       // 중복 체크 버튼이 눌리지 않았을 때 초기화
       setIsNicknameCheck(false);
 
+      // 중복 체크 전에 유효성 검사 수행
+      validateNickname(nickname);
+
+      // 닉네임이 유효하지 않으면 중복 체크를 진행하지 않음
+      if (!isNicknameAvailable) {
+        return;
+    }
+
       const response = await fetch(`/api/checkNickname?nickname=${nickname}`);
 
       if (response.ok) {
@@ -65,6 +79,14 @@ const Signup = () => {
     try {
       // 중복 체크 버튼이 눌리지 않았을 때 초기화
       setIsUserIdCheck(false);
+
+      // 중복 체크 전에 유효성 검사 수행
+      validatePassword(password);
+        
+      // 비밀번호가 유효하지 않으면 중복 체크를 진행하지 않음
+      if (!isUserIdAvailable) {
+          return;
+      }
 
       const response = await fetch(`/api/checkUserId?userId=${userId}`);
 
@@ -115,16 +137,15 @@ const Signup = () => {
 
   const onClickSignup = async () => {
     try {
-      const response = await fetch('/api/signup', {
+      const response = await fetch('http://localhost:8080/api/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          nickname,
-          userId,
-          password,
-          repassword,
+            userID: userId,
+            userPW: password,
+            nickname: nickname,
         }),
       });
 
@@ -132,6 +153,9 @@ const Signup = () => {
         // 회원가입 성공
         const data = await response.json();
         console.log(data);
+
+    //     // 회원가입 성공 시 다음 페이지로 이동
+    //   history.push('/login');
       } else if (response.status === 400) {
         // 회원가입 실패
         const data = await response.json();
@@ -166,7 +190,7 @@ const Signup = () => {
                 }}
               />
               <button
-                type="button"
+                type="button" onClick={checkNicknameAvailability}
                 style={{
                   width: '80px',
                   height: '25px',
@@ -226,7 +250,7 @@ const Signup = () => {
                 }}
               />
               <button
-                type="button"
+                type="button" onClick={checkUserIdAvailability}
                 style={{
                   width: '80px',
                   height: '25px',
@@ -254,7 +278,7 @@ const Signup = () => {
           <div style={{ width: '340px', margin: 'auto' }}>
             <label style={{ display: 'flex', justifyContent: 'space-between' }}>
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 placeholder="비밀번호" name="password" value={password}
                 onChange={onChangePasswordHandler}
                 style={{
@@ -266,7 +290,8 @@ const Signup = () => {
                   fontWeight: 'bold',
                 }}
               />
-              <div style={{
+              <div onClick={toggleShowPassword}
+              style={{
                 border: 'none',
                 borderBottom: 'solid 2px'
               }}>
