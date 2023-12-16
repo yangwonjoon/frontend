@@ -4,7 +4,24 @@ import downArrow from "../assets/down_arrow.svg";
 import { useState } from "react";
 import AIModal from "./AIModal";
 
+import { sojuAtom } from "../recoil/atoms/sojuAtom";
+import { useRecoilState } from "recoil";
+
 function Nav() {
+
+  //소주가격 분류하는 soju atom
+  const [sojuAt, setSojuAt] = useRecoilState(sojuAtom)
+
+  //클릭한 nav 소주 가격 sojuatom에 저장
+  function sojuHandler(e) {
+    e.preventDefault();
+    const price = e.currentTarget.dataset.value;
+    setSojuAt(price)
+    setShowMenu2(!showMenu2);
+  }
+
+  console.log(sojuAt)
+
   const [showMenu1, setShowMenu1] = useState(false);
   const [showMenu2, setShowMenu2] = useState(false);
   const [showMenu3, setShowMenu3] = useState(false);
@@ -63,20 +80,20 @@ function Nav() {
         {showMenu2 && (
           <div className="absolute right-4 mt-1 w-32 origin-top-right rounded-md border-[1px] border-black bg-[#efefef] shadow-lg">
             <div className="py-1">
-              <a href="#" className="block px-4 py-2 text-sm">
-                4000 ↓
+              <a href="#" data-value="4000" className="block px-4 py-2 text-sm" onClick={sojuHandler}>
+                4000원
               </a>
-              <a href="#" className="block px-4 py-2 text-sm">
-                4000 ~ 5000원
+              <a href="#" data-value="5000" className="block px-4 py-2 text-sm" onClick={sojuHandler}>
+                5000원
               </a>
-              <a href="#" className="block px-4 py-2 text-sm">
-                5000 ~ 6000원
+              <a href="#" data-value="6000" className="block px-4 py-2 text-sm" onClick={sojuHandler}>
+                6000원
               </a>
-              <a href="#" className="block px-4 py-2 text-sm">
-                6000 ~ 7000원
+              <a href="#" data-value="7000" className="block px-4 py-2 text-sm" onClick={sojuHandler}>
+                7000원
               </a>
-              <a href="#" className="block px-4 py-2 text-sm">
-                7000 ↑
+              <a href="#" data-value="8000" className="block px-4 py-2 text-sm" onClick={sojuHandler}>
+                8000원
               </a>
             </div>
           </div>

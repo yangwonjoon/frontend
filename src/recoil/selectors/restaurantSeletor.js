@@ -6,15 +6,12 @@ export const restaurantSelector = selector({
     get: async ({ get }) => {
 
         try {
-            // 비동기 API 호출을 수행
-            const res = await axios.get('http://localhost:3000/data/sample.json');
-            // const data = await res.json();
+            //api호출
+            const res = await axios.get('http://localhost:8080/api/restaurant/all');
+
             return res.data;
         } catch (error) {
             throw error;
         }
     },
-    // set: ({ set }, newValue) => {
-    //     set(restaurantAtom, newValue)
-    // }
 });

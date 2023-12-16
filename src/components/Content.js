@@ -12,16 +12,13 @@ import sampleImage4 from "../assets/sampleImage4.png";
 import { restaurantSelector } from "../recoil/selectors/restaurantSeletor"
 import { useNavigate } from "react-router-dom";
 
-function Content({ i }) {
+function Content({ i, data }) {
 
-  //레스토랑 전체 데이터
-  const [data, setData] = useRecoilState(restaurantSelector);
   const navigate = useNavigate();
+  console.log(data[1].imageURLs)
 
   return (
-    <div className="mt-5 flex h-auto w-1/2 flex-col bg-white p-3"
-      onClick={() => { navigate('/detail') }}
-    >
+    <div className="mt-5 flex h-auto w-1/2 flex-col bg-white p-3">
       <div className="flex w-full items-center justify-between">
         <div className="flex flex-col items-start">
           <div className="">
@@ -61,6 +58,7 @@ function Content({ i }) {
         </div>
         <div className="flex justify-end">
           <img src={star} alt="star" className="mr-3 hover:cursor-pointer" />
+          {data[i].bookmartCount}
           <img src={marker} alt="marker" className="hover:cursor-pointer" />
         </div>
       </div>
@@ -89,4 +87,7 @@ function Content({ i }) {
     </div>
   );
 }
+
+
+
 export default Content;
