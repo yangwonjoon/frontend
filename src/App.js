@@ -11,13 +11,6 @@ import SignUp from "./pages/signup/signup";
 
 
 function App() {
-
-import Main from "./pages/main/main";
-import Detail from "./pages/detail/detail";
-import Login from "./pages/login/login";
-import SignUp from "./pages/signup/signup";
-
-function App() {
   return (
     <div className="App">
       <div className="mx-auto my-0 h-full min-w-[320px] max-w-[640px]">
