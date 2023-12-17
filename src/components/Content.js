@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom";
 function Content({ i, data }) {
 
   const navigate = useNavigate();
-  console.log(data[1].imageURLs)
 
   return (
     <div className="mt-5 flex h-auto w-1/2 flex-col bg-white p-3">

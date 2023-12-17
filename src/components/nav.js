@@ -1,13 +1,17 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import downArrow from "../assets/down_arrow.svg";
-import { useState } from "react";
+import { useState, startTransition } from "react";
 import AIModal from "./AIModal";
+import axios from "axios";
 
 import { sojuAtom } from "../recoil/atoms/sojuAtom";
 import { useRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
 
 function Nav() {
+
+  const navigate = useNavigate()
 
   //소주가격 분류하는 soju atom
   const [sojuAt, setSojuAt] = useRecoilState(sojuAtom)
@@ -16,11 +20,21 @@ function Nav() {
   function sojuHandler(e) {
     e.preventDefault();
     const price = e.currentTarget.dataset.value;
-    setSojuAt(price)
+
+    axios.get(`http://localhost:8080/api/restaurant/info?underSojuPrice=${price}`)
+      .then(response => {
+        // 필터링 된 데이터로 메인 페이지 업데이트
+        navigate('/', { state: { filteredData: response.data } });
+        console.log(response.data)
+      })
+      .catch(error => {
+        console.error("데이터 가져오기 오류:", error);
+      });
+
+    setSojuAt(price);
+
     setShowMenu2(!showMenu2);
   }
-
-  console.log(sojuAt)
 
   const [showMenu1, setShowMenu1] = useState(false);
   const [showMenu2, setShowMenu2] = useState(false);
@@ -105,7 +119,7 @@ function Nav() {
               <a href="#" data-value="4000" className="block px-4 py-2 text-sm" onClick={sojuHandler}>
                 4000원
               </a>
-              <a href="#" className="block px-4 py-2 text-sm">
+              <a href="#" data-value="5000" className="block px-4 py-2 text-sm" onClick={sojuHandler}>
                 4000~5000원
               </a>
               <a href="#" className="block px-4 py-2 text-sm">
