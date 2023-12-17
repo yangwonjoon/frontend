@@ -10,7 +10,8 @@ import sampleImage4 from "../assets/sampleImage4.png";
 function Content({ i, data }) {
 
   return (
-    <div className="mt-5 flex h-auto w-1/2 flex-col bg-white p-3">
+
+    <div className="mt-5 flex h-auto flex-col bg-white p-3">
       <div className="flex w-full items-center justify-between">
         <div className="flex flex-col items-start">
           <div className="">
