@@ -1,27 +1,22 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import downArrow from "../assets/down_arrow.svg";
-import { useState, startTransition } from "react";
+import { useState } from "react";
 import AIModal from "./AIModal";
 import axios from "axios";
 
-import { sojuAtom } from "../recoil/atoms/sojuAtom";
-import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 
 function Nav() {
 
   const navigate = useNavigate()
 
-  //소주가격 분류하는 soju atom
-  const [sojuAt, setSojuAt] = useRecoilState(sojuAtom)
-
   //클릭한 nav 소주 가격 sojuatom에 저장
-  function sojuHandler(e) {
+  async function sojuHandler(e) {
     e.preventDefault();
     const price = e.currentTarget.dataset.value;
 
-    axios.get(`http://localhost:8080/api/restaurant/info?underSojuPrice=${price}`)
+    await axios.get(`http://localhost:8080/api/restaurant/info?underSojuPrice=${price}`)
       .then(response => {
         // 필터링 된 데이터로 메인 페이지 업데이트
         navigate('/', { state: { filteredData: response.data } });
@@ -30,8 +25,6 @@ function Nav() {
       .catch(error => {
         console.error("데이터 가져오기 오류:", error);
       });
-
-    setSojuAt(price);
 
     setShowMenu2(!showMenu2);
   }
@@ -122,10 +115,10 @@ function Nav() {
               <a href="#" data-value="5000" className="block px-4 py-2 text-sm" onClick={sojuHandler}>
                 4000~5000원
               </a>
-              <a href="#" className="block px-4 py-2 text-sm">
+              <a href="#" data-value="6000" className="block px-4 py-2 text-sm" onClick={sojuHandler}>
                 5000~6000원
               </a>
-              <a href="#" className="block px-4 py-2 text-sm">
+              <a href="#" data-value="7000" className="block px-4 py-2 text-sm" onClick={sojuHandler}>
                 6000~7000원
               </a>
               <a href="#" data-value="8000" className="block px-4 py-2 text-sm" onClick={sojuHandler}>
@@ -201,14 +194,6 @@ function Nav() {
           </div>
         )}
       </div>
-      {/* <div className="mx-4 flex h-11 w-32 items-center justify-evenly rounded-3xl border-[1.5px] border-[#5a5a5a] text-base hover:cursor-pointer">
-        <span className="text-lg font-medium">소주</span>
-        <img src={downArrow} alt="down_arrow" />
-      </div>
-      <div className="mx-4 flex h-11 w-32 items-center justify-evenly rounded-3xl border-[1.5px] border-[#5a5a5a] text-base hover:cursor-pointer">
-        <span className="text-lg font-medium">맥주</span>
-        <img src={downArrow} alt="down_arrow" />
-      </div>*/}
       <button
         className="mx-4 flex h-11 w-32 items-center justify-evenly rounded-3xl border-[1.5px] border-[#5a5a5a] text-base"
         onClick={() => {

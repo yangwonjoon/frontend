@@ -2,21 +2,18 @@ import Header from "../../components/Header";
 import NavBar from "../../components/Nav";
 import Footer from "../../components/Footer";
 import Content from "../../components/Content";
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
+import { useRecoilValueLoadable } from "recoil";
 import { restaurantSelector } from "../../recoil/selectors/restaurantSeletor";
-import { sojuAtom } from "../../recoil/atoms/sojuAtom";
-import { restaurantInfoSelector } from "../../recoil/selectors/restaurantInfoSelector";
-import { useEffect, Suspense } from "react";
 import { useLocation } from "react-router-dom";
 
 
 const Main = () => {
 
   const location = useLocation();
-  const filteredData = location.state?.filteredData;
 
-  //레스토랑 전체 데이터
-  const dataLoadable = useRecoilValueLoadable(restaurantSelector);
+  //소주가격 클릭시 페이지 
+  const filteredData = location.state?.filteredData;
+  const dataLoadable = useRecoilValueLoadable(restaurantSelector)
 
   //dataLoadable -> loading, hasValue, hasError
   switch (dataLoadable.state) {
@@ -31,7 +28,7 @@ const Main = () => {
     //값이 들어온경우
     case 'hasValue':
 
-      // const data = dataLoadable.contents
+      // const data = dataLoadable.contents, filterData가 값 있으면 data
       const data = filteredData || dataLoadable.contents;
 
       return (
