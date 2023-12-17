@@ -4,20 +4,24 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
-import {
-  RecoilRoot,
-} from 'recoil';
+import { RecoilRoot } from 'recoil';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// if (process.env.NODE_ENV === "development") {
+//   const { worker } = require("./mocks/browser");
+//   worker.start();
+// }
+
 root.render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </RecoilRoot>
-  </React.StrictMode>
+
+  <RecoilRoot>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </RecoilRoot>
+
 );
 
 // If you want to start measuring performance in your app, pass a function
