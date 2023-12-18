@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Signup = () => {
   const [nickname, setNickname] = useState('');
@@ -17,107 +18,235 @@ const Signup = () => {
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
   const [isUserIdAvailable, setIsUserIdAvailable] = useState(false);
 
+  const [isPasswordMatch, setIsPasswordMatch] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+//사용되지않는 변수..?ㅠ
   const [showPassword, setShowPassword] = useState(false);
-
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const validateNickname = (value) => {
-    // 닉네임은 8자 이하
-    if (value.length > 8) {
-      setNicknameError('닉네임은 8자 이하로 입력해주세요.');
-      setIsNicknameAvailable(false);
-    } else {
-      setNicknameError('');
-      setIsNicknameAvailable(true);
-    }
-  };
-
-  const validatePassword = (value) => {
-    // 비밀번호는 대소문자와 숫자를 모두 포함하고 10글자 이상
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$/;
-    if (!passwordRegex.test(value)) {
-      setPasswordError('대소문자와 숫자를 모두 포함하고 10글자 이상으로 입력해주세요.');
-      setIsUserIdAvailable(false);
-    } else {
-      setPasswordError('');
-      setIsUserIdAvailable(true);
-    }
-  };
-
-  const checkNicknameAvailability = async () => {
-    try {
-      // 중복 체크 버튼이 눌리지 않았을 때 초기화
-      setIsNicknameCheck(false);
-
-      // 중복 체크 전에 유효성 검사 수행
-      validateNickname(nickname);
-
-      // 닉네임이 유효하지 않으면 중복 체크를 진행하지 않음
-      if (!isNicknameAvailable) {
-        return;
-    }
-
-      const response = await fetch(`/api/checkNickname?nickname=${nickname}`);
-
-      if (response.ok) {
-        const data = await response.json();
-        setIsNicknameCheck(true);
-        setIsNicknameAvailable(data.available);
-        setNicknameError(data.available ? '' : '이미 사용 중인 닉네임입니다.');
-      } else {
-        console.log('서버 오류');
-      }
-    } catch (error) {
-      console.error('Error during nickname check:', error);
-      console.log('네트워크 오류');
-    }
-  };
-
-  const checkUserIdAvailability = async () => {
-    try {
-      // 중복 체크 버튼이 눌리지 않았을 때 초기화
-      setIsUserIdCheck(false);
-
-      // 중복 체크 전에 유효성 검사 수행
-      validatePassword(password);
-        
-      // 비밀번호가 유효하지 않으면 중복 체크를 진행하지 않음
-      if (!isUserIdAvailable) {
-          return;
-      }
-
-      const response = await fetch(`/api/checkUserId?userId=${userId}`);
-
-      if (response.ok) {
-        const data = await response.json();
-        setIsUserIdCheck(true);
-        setIsUserIdAvailable(data.available);
-        setUserIdError(data.available ? '' : '이미 사용 중인 아이디입니다.');
-      } else {
-        console.log('서버 오류');
-      }
-    } catch (error) {
-      console.error('Error during user ID check:', error);
-      console.log('네트워크 오류');
-    }
-  };
 
   const onChangeNicknameHandler = (e) => {
     const value = e.target.value;
     setNickname(value);
-    setIsNicknameCheck(false);
     validateNickname(value);
-    // 닉네임 유효성검사 로직 추가
+    //닉네임 유효성 검사
   };
 
   const onChangeUserIdHandler = (e) => {
     const value = e.target.value;
     setUserId(value);
-    setIsUserIdCheck(false);
+    validateUserId(value);
     // 아이디 유효성검사 로직 추가
   };
+
+  // 닉네임 유효성 검사 함수
+  const validateNickname = async (value) => {
+    if (value.length > 8) {
+      setNicknameError('닉네임은 8자 이하로 입력해주세요.');
+      setIsNicknameAvailable(false);
+    } else {
+      try {
+        const response = await axios.post('http://localhost:8080/api/checkNickname', { nickname: value });
+        if (response.status === 200) {
+          const data = response.data;
+          setIsNicknameCheck(true);
+          setIsNicknameAvailable(data.duplication);
+          setNicknameError(data.duplication ? '이미 사용 중인 닉네임입니다.' : '사용 가능한 닉네임입니다.');
+          updateSignupButtonState();
+        } else {
+          console.log('서버 오류');
+        }
+      } catch (error) {
+        console.error('닉네임 중복 체크 오류:', error);
+        console.log('네트워크 오류');
+      }
+    }
+  };
+
+//   const validateNickname = (value) => {
+//     // 닉네임은 8자 이하
+//     if (value.length > 8) {
+//       setNicknameError('닉네임은 8자 이하로 입력해주세요.');
+//       setIsNicknameAvailable(false);
+//     } else {
+//       setNicknameError('');
+//       setIsNicknameAvailable(true);
+//     }
+//   };
+
+//   const checkNicknameAvailability = async () => {
+//     try {
+//       // 중복 체크 버튼이 눌리지 않았을 때 초기화
+//       setIsNicknameCheck(false);
+
+//       const response = await fetch(`/api/checkNickname?nickname=${nickname}`);
+
+//       if (response.ok) {
+//         const data = await response.json();
+//         setIsNicknameCheck(true);
+//         setIsNicknameAvailable(data.available);
+//         setNicknameError(data.available ? '' : '이미 사용 중인 닉네임입니다.');
+//       } else {
+//         console.log('서버 오류');
+//       }
+//     } catch (error) {
+//       console.error('Error during nickname check:', error);
+//       console.log('네트워크 오류');
+//     }
+//   };
+
+  // 아이디 유효성 검사 함수
+  const validateUserId = async (value) => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/checkUserId', { userID: value });
+      if (response.status === 200) {
+        const data = response.data;
+        setIsUserIdCheck(true);
+        setIsUserIdAvailable(data.duplication);
+        setUserIdError(data.duplication ? '이미 사용 중인 아이디입니다.' : '사용 가능한 아이디입니다.');
+        updateSignupButtonState();
+      } else {
+        console.log('서버 오류');
+      }
+    } catch (error) {
+      console.error('아이디 중복 체크 오류:', error);
+      console.log('네트워크 오류');
+    }
+  };
+
+//   const checkUserIdAvailability = async () => {
+  
+//     try {
+//       // 중복 체크 버튼이 눌리지 않았을 때 초기화
+//       setIsUserIdCheck(false);
+
+//       const response = await fetch(`/api/checkUserId?userId=${userId}`);
+
+//       if (response.ok) {
+//         const data = await response.json();
+//         setIsUserIdCheck(true);
+//         setIsUserIdAvailable(data.available);
+//         setUserIdError(data.available ? '' : '이미 사용 중인 아이디입니다.');
+//       } else {
+//         console.log('서버 오류');
+//       }
+//     } catch (error) {
+//       console.error('Error during user ID check:', error);
+//       console.log('네트워크 오류');
+//     }
+//   };
+
+ // 비밀번호 유효성 검사 함수
+
+
+  // // 비밀번호 일치 여부 확인 함수
+  // const validatePasswordMatch = (password, repassword) => {
+  //   if (password !== repassword) {
+  //     setRepasswordError('비밀번호가 일치하지 않습니다.');
+  //     setIsPasswordMatch(false);
+  //   } else {
+  //     setRepasswordError('');
+  //     setIsPasswordMatch(true);
+  //   }
+  // };
+
+  const validatePasswordMatch = (password, repassword) => {
+    const match = password === repassword;
+    setIsPasswordMatch(match);
+    setRepasswordError(match ? '' : '비밀번호가 일치하지 않습니다.');
+  };
+
+  const validatePassword = (value) => {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$/;
+    if (!passwordRegex.test(value)) {
+      setPasswordError('대소문자와 숫자를 모두 포함하고 10글자 이상으로 입력해주세요.');
+      setIsPasswordValid(false);
+    } else {
+      setPasswordError('');
+      setIsPasswordValid(true);
+    }
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const updateSignupButtonState = () => {
+    //닉네임과 아이디가 모두 사용 가능한 경우 버튼 활성화
+    const isButtonEnabled = isNicknameAvailable && isUserIdAvailable;
+    //버튼 상태 업데이트
+    const signupButton = document.getElementById('signupButton');
+    if (signupButton) {
+      signupButton.disabled = !isButtonEnabled;
+    }
+  };
+
+// const validatePassword = (value) => {
+//     // 비밀번호는 대소문자와 숫자를 모두 포함하고 10글자 이상
+//     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$/;
+//     if (!passwordRegex.test(value)) {
+//       setPasswordError('대소문자와 숫자를 모두 포함하고 10글자 이상으로 입력해주세요.');
+//       setIsUserIdAvailable(false);
+//     } else {
+//       setPasswordError('');
+//       setIsUserIdAvailable(true);
+//     }
+//   };
+
+  // 회원가입 버튼 클릭 시 수행 함수
+  const onClickSignup = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/signup', {
+        userID: userId,
+        userPW: password,
+        nickname: nickname,
+      });
+
+      if (response.status === 201) {
+        const data = response.data;
+        console.log(data);
+      } else if (response.status === 400) {
+        const data = response.data;
+        console.log(data);
+      } else {
+        console.log('서버 오류');
+      }
+    } catch (error) {
+      console.error('회원가입 오류:', error);
+      console.log('네트워크 오류');
+    }
+  };
+
+// const onClickSignup = async () => {
+//     try {
+//       const response = await fetch('/api/signup', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//           nickname,
+//           userId,
+//           password,
+//           repassword,
+//         }),
+//       });
+
+//       if (response.ok) {
+//         // 회원가입 성공
+//         const data = await response.json();
+//         console.log(data);
+//       } else if (response.status === 400) {
+//         // 회원가입 실패
+//         const data = await response.json();
+//         console.log(data);
+//       } else {
+//         // 다른 오류
+//         console.log('서버 오류');
+//       }
+//     } catch (error) {
+//       console.error('Error during signup:', error);
+//       console.log('네트워크 오류');
+//     }
+//   };
 
   const onChangePasswordHandler = (e) => {
     const { name, value } = e.target;
@@ -126,49 +255,31 @@ const Signup = () => {
       validatePassword(value);
     } else {
       setRepassword(value);
-      // 비밀번호 확인 로직 추가
-      if (password !== value) {
-        setRepasswordError('비밀번호가 일치하지 않습니다.');
-      } else {
-        setRepasswordError('');
-      }
+      validatePasswordMatch(password, value);
     }
-  };
+  }
+  //     // 비밀번호 확인 로직 추가
+  // //     if (password !== value) {
+  // //       setRepasswordError('비밀번호가 일치하지 않습니다.');
+  // //     } else {
+  // //       setRepasswordError('');
+  // //     }
+  // //   }
+  // // };
 
-  const onClickSignup = async () => {
-    try {
-      const response = await fetch('http://localhost:8080/api/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            userID: userId,
-            userPW: password,
-            nickname: nickname,
-        }),
-      });
-
-      if (response.ok) {
-        // 회원가입 성공
-        const data = await response.json();
-        console.log(data);
-
-    //     // 회원가입 성공 시 다음 페이지로 이동
-    //   history.push('/login');
-      } else if (response.status === 400) {
-        // 회원가입 실패
-        const data = await response.json();
-        console.log(data);
-      } else {
-        // 다른 오류
-        console.log('서버 오류');
-      }
-    } catch (error) {
-      console.error('Error during signup:', error);
-      console.log('네트워크 오류');
-    }
-  };
+  //   // 중복 체크 함수
+  //   const checkNicknameAvailability = async () => {
+  //       await validateNickname(nickname);
+  //       setIsNicknameCheck(true);
+  //       updateSignupButtonState();
+  //     };
+    
+  //     // 중복 체크 함수
+  //     const checkUserIdAvailability = async () => {
+  //       await validateUserId(userId);
+  //       setIsUserIdCheck(true);
+  //       updateSignupButtonState();
+  //     };
 
   return (
     <div style={{ backgroundColor: '#f5f5f5', width: '100%', height: '800px' }}>
@@ -190,7 +301,8 @@ const Signup = () => {
                 }}
               />
               <button
-                type="button" onClick={checkNicknameAvailability}
+                type="button"
+                onClick={validateNickname}
                 style={{
                   width: '80px',
                   height: '25px',
@@ -250,7 +362,8 @@ const Signup = () => {
                 }}
               />
               <button
-                type="button" onClick={checkUserIdAvailability}
+                type="button"
+                onClick={validateUserId}
                 style={{
                   width: '80px',
                   height: '25px',
@@ -291,7 +404,7 @@ const Signup = () => {
                 }}
               />
               <div onClick={toggleShowPassword}
-              style={{
+                style={{ 
                 border: 'none',
                 borderBottom: 'solid 2px'
               }}>
@@ -331,6 +444,7 @@ const Signup = () => {
           backgroundColor: 'white', width: '60%', margin: 'auto'
         }}>
           <button
+          id="signupButton"
             type="button"
             onClick={onClickSignup}
             disabled={!isNicknameAvailable || !isUserIdAvailable}
