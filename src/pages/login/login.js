@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 function Login() {
     const [userId, setUserid] = useState('')
     const [userPw, setUserPw] = useState('')
+    const [showPassword, setShowPassword] = useState(false);
     // const history = useHistory();
 
         // input data 의 변화가 있을 때마다 value 값을 변경해서 useState 해준다
@@ -17,11 +18,9 @@ function Login() {
         setUserPw(e.target.value)
     }
 
-    const [showPassword, setShowPassword] = useState(false);
-
-    const toggleShowPassword = () => {
-      setShowPassword(!showPassword);
-    };
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
         //Login 버튼 클릭 이벤트
         const onClickLogin = async () => {
@@ -31,10 +30,12 @@ function Login() {
                     return;
                 }
         
-                const response = await axios.post('https://localhost:8080/api/login', {
+                const response = await axios.post(
+                    'https://localhost:8080/api/login', {
                     userId: userId,
                     userPw: userPw,
-                }, {
+                },
+                {
                     withCredentials:true,
                     headers: {
                         'Content-Type':'application/json',
@@ -45,6 +46,9 @@ function Login() {
                     console.log('로그인 성공');
                     // 로그인 성공 시 다음 페이지로 이동하도록 설정
                     // history.push('/main');
+                    sessionStorage.setItem('userId', userId);
+                    sessionStorage.setItem('isLoggedIn', 'true');
+
                 } else {
                     console.log('로그인 실패');
                     // 로그인 실패 시 사용자에게 알림 설정
@@ -54,6 +58,14 @@ function Login() {
                 // 에러 발생 시 사용자에게 알림 설정
             }
         };
+  // 페이지 로딩 시 세션 스토리지에서 로그인 상태 확인
+  useEffect(() => {
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    if (isLoggedIn === 'true') {
+      console.log('이미 로그인되어 있습니다.');
+      // 로그인 상태에 따른 처리 추가
+    }
+  }, []);
 
         // useEffect(() => {
         //     axios.get('https://localhost:8080/api/login')
@@ -65,7 +77,6 @@ function Login() {
         // },
         // // 페이지 호출 후 처음 한 번만 호출될 수 있도록 [] 추가
         // []);
-
 
     return (
         // <Router>
