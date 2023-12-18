@@ -4,18 +4,19 @@ import magnify from "../assets/magnify.svg";
 import person from "../assets/person.svg";
 
 function Header() {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
-    <div className="mt-1 flex h-24 w-1/2 items-start border-b-[1.5px] border-black">
+    <div className="mt-1 flex h-24 w-full items-start border-b-[1.5px] border-black">
       <div className="flex basis-1/3"></div>
       <div className="flex basis-1/3 items-center justify-center">
         <img
           src={logo}
           alt="logo"
           className="w-[200px] hover:cursor-pointer"
-          onClick={() => { navigate('/') }}
+          onClick={() => {
+            navigate("/");
+          }}
         ></img>
       </div>
       <div className="flex basis-1/3 justify-end">
