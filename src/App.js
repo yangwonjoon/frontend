@@ -9,6 +9,7 @@ import Detail from "./pages/detail/detail";
 import Login from "./pages/login/login";
 import SignUp from "./pages/signup/signup";
 
+
 function App() {
   return (
     <div className="App">

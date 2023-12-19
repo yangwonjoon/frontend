@@ -15,6 +15,7 @@ function Content({ i, data }) {
   const navigate = useNavigate()
 
   return (
+
     <div className="mt-5 flex h-auto flex-col bg-white p-3">
       <div className="flex w-full items-center justify-between">
         <div className="flex flex-col items-start" onClick={() => (navigate(`detail/${data[i].restaurantName}`))} >
