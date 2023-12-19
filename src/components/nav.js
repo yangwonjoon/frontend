@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Box from "@mui/material/Box";
@@ -22,7 +22,7 @@ function Nav() {
 
     const handleChange1 = (event, newValue, activeThumb) => {
 
-        console.log(newValue);
+        //console.log(newValue);
         if (!Array.isArray(newValue)) {
             return;
         }
@@ -34,13 +34,34 @@ function Nav() {
         }
     };
 
+    useEffect(() => {
+        // value1이 변경될 때 axios 요청 트리거
+        const filter = async () => {
+            try {
+                const moreSojuPrice = value1[0];
+                const underSojuPrice = value1[1];
+
+                const response = await axios.get(
+                    `http://localhost:8080/api/restaurant/info?moreSojuPrice=${moreSojuPrice}&underSojuPrice=${underSojuPrice}`
+                );
+
+                navigate("/", { state: { filteredData: response.data } });
+                // console.log(response.data);
+            } catch (error) {
+                console.error("데이터 가져오기 오류:", error);
+            }
+        };
+
+        filter();
+    }, [value1]);
 
     // //클릭한 nav 소주 가격 sojuatom에 저장
     // async function sojuHandler(e) {
     //     e.preventDefault();
-    //     const price = e.currentTarget.dataset.value;
+    //     const moreSojuPrice = value1[0];
+    //     const underSojuPrice = value1[1];
 
-    //     await axios.get(`http://localhost:8080/api/restaurant/info?underSojuPrice=${price}`)
+    //     await axios.get(`http://localhost:8080/api/restaurant/info?moreSojuPrice=${moreSojuPrice}&underSojuPrice=${underSojuPrice}`)
     //         .then(response => {
     //             // 필터링 된 데이터로 메인 페이지 업데이트
     //             navigate('/', { state: { filteredData: response.data } });
@@ -118,7 +139,7 @@ function Nav() {
                         <span className="text-xs text-[#080707]">{value1[0]}원</span>
                         <span className="text-xs text-[#080707]">{value1[1]}원</span>
 
-                        <div className="flex items-center space-x-2">
+                        {/* <div className="flex items-center space-x-2">
                             <div className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#5a5a5a] hover:cursor-pointer">
                                 <span className="font-semibold text-[#5a5a5a]">AI</span>
                             </div>
@@ -127,7 +148,7 @@ function Nav() {
                                 alt="category"
                                 className="w-11 hover:cursor-pointer"
                             />
-                        </div>
+                        </div> */}
 
                     </div>
                 </div>
