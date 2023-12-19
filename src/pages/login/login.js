@@ -1,7 +1,16 @@
-const Login = () => (
-    <>
-        로그인 페이지
-    </>
-)
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import LoginContainer from "../../components/LoginContainer"
 
-export default Login;
+function login(){
+    return(
+        <div className="flex flex-col items-center justify-center">
+            <Header />
+            <LoginContainer />
+            <Footer />
+        </div>
+    )
+
+}
+
+export default login;
