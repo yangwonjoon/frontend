@@ -2,17 +2,20 @@ import Header from "../../components/Header";
 import NavBar from "../../components/Nav";
 import Footer from "../../components/Footer";
 import Content from "../../components/Content";
-import { useRecoilValueLoadable } from "recoil";
+import { useRecoilState, useRecoilValueLoadable } from "recoil";
 import { restaurantSelector } from "../../recoil/selectors/restaurantSeletor";
 import { useLocation } from "react-router-dom";
+import { restaurantAtom } from "../../recoil/atoms/restaurantAtom";
+import { useEffect } from "react";
 
 
 const Main = () => {
 
   const location = useLocation();
 
-  //소주가격 클릭시 페이지 
+  //소주가격 클릭시 데이터
   const filteredData = location.state?.filteredData;
+  //소주 전체 데이터
   const dataLoadable = useRecoilValueLoadable(restaurantSelector)
 
   //dataLoadable -> loading, hasValue, hasError
