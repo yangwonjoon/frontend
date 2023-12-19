@@ -1,3 +1,4 @@
+
 import { useParams } from "react-router-dom";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -64,6 +65,7 @@ function Detail() {
   //   };
   // }, [id, restaurantSel, setDetailAt]);
 
+
   return (
     <div className="flex flex-col items-center justify-center">
       <Header />
@@ -72,6 +74,8 @@ function Detail() {
     </div>
   );
 }
+
+
 
 export default Detail;
 

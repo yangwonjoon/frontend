@@ -1,7 +1,7 @@
 function Footer() {
   return (
 
-    <div className="bottom-0 mt-5 flex h-32 w-1/2 items-center border-t-[1.5px] border-black">
+    <div className="bottom-0 mt-5 flex h-32 w-full items-center border-t-[1.5px] border-black">
 
       <div className="flex w-full flex-col items-start">
         <span className="text-base text-[#5F5F5F]">

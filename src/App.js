@@ -8,6 +8,7 @@ import Main from "./pages/main/main";
 import Detail from "./pages/detail/detail";
 import Login from "./pages/login/login";
 import SignUp from "./pages/signup/signup";
+import Mypage from "./pages/mypage/mypage";
 
 
 function App() {
@@ -16,9 +17,12 @@ function App() {
       <div className="mx-auto my-0 h-full min-w-[320px] max-w-[640px]">
         <Routes>
           <Route path="/" element={<Main></Main>}></Route>
+    
+    
           <Route path="/detail/:id" element={<Detail></Detail>}></Route>
           <Route path="/login" element={<Login></Login>}></Route>
           <Route path="/signup" element={<SignUp></SignUp>}></Route>
+          <Route path="/mypage" element={<Mypage></Mypage>}></Route>
         </Routes>
       </div>
 

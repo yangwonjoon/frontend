@@ -1,5 +1,7 @@
 import { useState } from "react";
+
 import { useNavigate, useParams } from "react-router-dom";
+
 import star from "../assets/star.svg";
 import filledStar from "../assets/filled_star.svg";
 import cancel from "../assets/cancel.svg";
@@ -9,6 +11,7 @@ import sampleImage7 from "../assets/sampleImage7.png";
 import mapSample from "../assets/mapSample.png";
 import upArrow from "../assets/up_arrow.svg";
 import downArrow from "../assets/down_arrow.svg";
+
 import { useRecoilValue } from "recoil";
 import { detailAtom } from "../recoil/atoms/detailAtom";
 
@@ -17,6 +20,7 @@ function DetailContainer() {
   const navigate = useNavigate();
   const detailAt = useRecoilValue(detailAtom);
   console.log(detailAt);
+
 
   const [arrowClicked, setArrowClicked] = useState(false);
   const [starCliked, setStartClicked] = useState(false);
@@ -41,20 +45,18 @@ function DetailContainer() {
           />
           <div className="flex items-end">
             <span className="ml-3 text-2xl text-[#325FFF] hover:cursor-pointer">
+
               {detailAt.restaurantName}
             </span>
-            <span className="ml-2 text-sm text-[#5A5A5A]">
-              {detailAt.category}
-            </span>
+            <span className="ml-2 text-sm text-[#5A5A5A]">{detailAt.category}</span>
             <div className="ml-2 flex items-center">
               <img src={filledStar} alt="star" className="w-3" />
-              <span className="ml-1 text-sm">
-                0
-              </span>
+              <span className="ml-1 text-sm">365</span>
             </div>
           </div>
         </div>
-        <img src={cancel} alt="cancel" className="w-5 hover:cursor-pointer" onClick={() => { navigate('/') }} />
+        <img src={cancel} alt="cancel" className="w-5 hover:cursor-pointer" onClick={() => { navigate('/') }}/>
+
       </div>
       <div className="mt-3 grid w-full grid-cols-2 gap-4">
         <img
