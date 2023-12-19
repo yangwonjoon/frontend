@@ -2,25 +2,21 @@ import Header from "../../components/Header";
 import NavBar from "../../components/Nav";
 import Footer from "../../components/Footer";
 import Content from "../../components/Content";
-
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
+import { useRecoilState, useRecoilValueLoadable } from "recoil";
 import { restaurantSelector } from "../../recoil/selectors/restaurantSeletor";
+import { useLocation } from "react-router-dom";
 import { restaurantAtom } from "../../recoil/atoms/restaurantAtom";
 import { useEffect } from "react";
-import { sojuAtom } from "../../recoil/atoms/sojuAtom";
+
 
 const Main = () => {
 
-  //레스토랑 전체 데이터
-  const dataLoadable = useRecoilValueLoadable(restaurantSelector);
+  const location = useLocation();
 
-  //레스토랑 전체 데이터 restaurantAtom에 저장
-  // const [restaurantAt, setRestaurantAt] = useRecoilState(restaurantAtom)
-  // useEffect(() => {
-  //   setRestaurantAt(dataLoadable.contents)
-  // }, [dataLoadable.contents])
-  // const sojAt = useRecoilValue(sojuAtom)
-
+  //소주가격 클릭시 데이터
+  const filteredData = location.state?.filteredData;
+  //소주 전체 데이터
+  const dataLoadable = useRecoilValueLoadable(restaurantSelector)
 
   //dataLoadable -> loading, hasValue, hasError
   switch (dataLoadable.state) {
@@ -34,8 +30,9 @@ const Main = () => {
 
     //값이 들어온경우
     case 'hasValue':
-      const data = dataLoadable.contents;
-      console.log(data)
+
+      // const data = dataLoadable.contents, filterData가 값 있으면 data
+      const data = filteredData || dataLoadable.contents;
 
       return (
 
@@ -45,7 +42,9 @@ const Main = () => {
             <NavBar />
             {
               data.map(function (a, i) {
-                return <Content key={i} i={i} data={data}></Content>
+                return (
+                  <Content key={i} i={i} data={data}></Content>
+                )
               })
             }
             <Footer />

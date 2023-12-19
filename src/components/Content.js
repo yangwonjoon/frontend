@@ -1,5 +1,3 @@
-import { atom, useRecoilState, useRecoilValue } from "recoil";
-
 import star from "../assets/star.svg";
 import filledStar from "../assets/filled_star.svg";
 import marker from "../assets/marker.svg";
@@ -8,19 +6,20 @@ import sampleImage1 from "../assets/sampleImage1.png";
 import sampleImage2 from "../assets/sampleImage2.png";
 import sampleImage3 from "../assets/sampleImage3.png";
 import sampleImage4 from "../assets/sampleImage4.png";
-
-import { restaurantSelector } from "../recoil/selectors/restaurantSeletor"
 import { useNavigate } from "react-router-dom";
+import { RecoilState, useRecoilState } from "recoil";
+
 
 function Content({ i, data }) {
 
-  const navigate = useNavigate();
-  console.log(data[1].imageURLs)
+  const navigate = useNavigate()
 
   return (
+
     <div className="mt-5 flex h-auto w-full flex-col bg-white p-3">
+
       <div className="flex w-full items-center justify-between">
-        <div className="flex flex-col items-start">
+        <div className="flex flex-col items-start" onClick={() => (navigate(`detail/${data[i].restaurantName}`))} >
           <div className="">
             <span className="mr-3 text-xl text-[#325FFF] hover:cursor-pointer">
               {/* 가게 이름 */}
@@ -41,8 +40,10 @@ function Content({ i, data }) {
               />
             </div>
             <div className="ml-4 flex items-center">
+
               <img src={filledStar} alt="star" className="w-3" />
               <span className="ml-1 text-xs">365</span>
+
             </div>
             <div className="ml-2 flex">
               <div className="mx-1 h-5 w-20 justify-center items-center rounded-2xl border-[1px] border-[#5A5A5A] bg-[#D9D9D9] text-xs text-[#5A5A5A]">
