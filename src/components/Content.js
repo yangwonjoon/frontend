@@ -2,10 +2,6 @@ import star from "../assets/star.svg";
 import filledStar from "../assets/filled_star.svg";
 import marker from "../assets/marker.svg";
 import arrowDown from "../assets/down_arrow.svg";
-import sampleImage1 from "../assets/sampleImage1.png";
-import sampleImage2 from "../assets/sampleImage2.png";
-import sampleImage3 from "../assets/sampleImage3.png";
-import sampleImage4 from "../assets/sampleImage4.png";
 import { useNavigate } from "react-router-dom";
 import { RecoilState, useRecoilState } from "recoil";
 
@@ -13,6 +9,7 @@ import { RecoilState, useRecoilState } from "recoil";
 function Content({ i, data }) {
 
   const navigate = useNavigate()
+
 
   return (
 
@@ -65,22 +62,22 @@ function Content({ i, data }) {
       </div>
       <div className="mt-2 grid w-full grid-cols-4 justify-between gap-2">
         <img
-          src={sampleImage1}
+          src={data[i].imageURLs[0]}
           alt="sampleImage1"
           className="rounded-lg"
         />
         <img
-          src={sampleImage2}
+          src={data[i].imageURLs[1]}
           alt="sampleImage2"
           className="rounded-lg"
         />
         <img
-          src={sampleImage3}
+          src={data[i].imageURLs[2]}
           alt="sampleImage3"
           className="rounded-lg"
         />
         <img
-          src={sampleImage4}
+          src={data[i].imageURLs[3]}
           alt="sampleImage4"
           className="rounded-lg"
         />

@@ -17,9 +17,11 @@ const minDistance = 1000;
 function Nav() {
 
     const navigate = useNavigate()
-    const [value1, setValue1] = useState([4000, 8000]);
+    //초기값
+    const [value1, setValue1] = useState([3000, 8000]);
 
     const handleChange1 = (event, newValue, activeThumb) => {
+
         console.log(newValue);
         if (!Array.isArray(newValue)) {
             return;
@@ -33,22 +35,22 @@ function Nav() {
     };
 
 
-    //클릭한 nav 소주 가격 sojuatom에 저장
-    async function sojuHandler(e) {
-        e.preventDefault();
-        const price = e.currentTarget.dataset.value;
+    // //클릭한 nav 소주 가격 sojuatom에 저장
+    // async function sojuHandler(e) {
+    //     e.preventDefault();
+    //     const price = e.currentTarget.dataset.value;
 
-        await axios.get(`http://localhost:8080/api/restaurant/info?underSojuPrice=${price}`)
-            .then(response => {
-                // 필터링 된 데이터로 메인 페이지 업데이트
-                navigate('/', { state: { filteredData: response.data } });
-                console.log(response.data)
-            })
-            .catch(error => {
-                console.error("데이터 가져오기 오류:", error);
-            });
+    //     await axios.get(`http://localhost:8080/api/restaurant/info?underSojuPrice=${price}`)
+    //         .then(response => {
+    //             // 필터링 된 데이터로 메인 페이지 업데이트
+    //             navigate('/', { state: { filteredData: response.data } });
+    //             console.log(response.data)
+    //         })
+    //         .catch(error => {
+    //             console.error("데이터 가져오기 오류:", error);
+    //         });
 
-    }
+    // }
 
     return (
 
@@ -100,13 +102,14 @@ function Nav() {
                                     },
                                 },
                             }}
-                            aria-label="pretto slider"
+                            //aria-label="pretto slider"
+
                             getAriaLabel={() => "Minimum distance"}
                             value={value1}
                             onChange={handleChange1}
                             getAriaValueText={valuetext}
                             disableSwap
-                            min={4000}
+                            min={3000}
                             max={8000}
                             step={1000}
                         />
