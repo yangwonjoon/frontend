@@ -7,6 +7,8 @@ import sampleImage2 from "../assets/sampleImage2.png";
 import sampleImage3 from "../assets/sampleImage3.png";
 import sampleImage4 from "../assets/sampleImage4.png";
 import { useNavigate } from "react-router-dom";
+import { RecoilState, useRecoilState } from "recoil";
+
 
 function Content({ i, data }) {
 
@@ -15,7 +17,7 @@ function Content({ i, data }) {
   return (
     <div className="mt-5 flex h-auto flex-col bg-white p-3">
       <div className="flex w-full items-center justify-between">
-        <div className="flex flex-col items-start" onClick={() => navigate('/detail')}>
+        <div className="flex flex-col items-start" onClick={() => (navigate(`detail/${data[i].restaurantName}`))} >
           <div className="">
             <span className="mr-3 text-2xl text-[#325FFF] hover:cursor-pointer">
               {/* 가게 이름 */}
