@@ -171,7 +171,7 @@ const Signup = () => {
 
   const updateSignupButtonState = () => {
     //닉네임과 아이디가 모두 사용 가능한 경우 버튼 활성화
-    const isButtonEnabled = isNicknameAvailable && isUserIdAvailable;
+    const isButtonEnabled = isNicknameAvailable && isUserIdAvailable && isPasswordMatch && isPasswordValid;
     //버튼 상태 업데이트
     const signupButton = document.getElementById('signupButton');
     if (signupButton) {
@@ -193,6 +193,9 @@ const Signup = () => {
 
   // 회원가입 버튼 클릭 시 수행 함수
   const onClickSignup = async () => {
+    setIsNicknameCheck(false);
+    setIsUserIdCheck(false);
+
     try {
       const response = await axios.post('http://localhost:8080/api/signup', {
         userID: userId,
