@@ -16,9 +16,9 @@ function Content({ i, data }) {
     <div className="mt-5 flex h-auto w-full flex-col bg-white p-3">
 
       <div className="flex w-full items-center justify-between">
-        <div className="flex flex-col items-start" onClick={() => (navigate(`detail/${data[i].restaurant_seq}`))} >
+        <div className="flex flex-col items-start">
           <div className="">
-            <span className="mr-3 text-xl text-[#325FFF] hover:cursor-pointer">
+            <span className="mr-3 text-xl text-[#325FFF] hover:cursor-pointer" onClick={() => (navigate(`detail/${data[i].restaurant_seq}`))}>
               {/* 가게 이름 */}
               {data[i].restaurantName}
             </span>
@@ -73,6 +73,7 @@ function Content({ i, data }) {
                 src={url}
                 alt={`img${i}`}
                 className="rounded-lg"
+                onClick={() => (navigate(`detail/${data[i].restaurant_seq}`))}
               />
             )
           })
