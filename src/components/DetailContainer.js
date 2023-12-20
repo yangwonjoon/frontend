@@ -80,7 +80,7 @@ function DetailContainer() {
       </div>
       <div className="mt-4 flex w-full flex-col items-start">
         <span className="text-lg font-medium text-[#444444]">
-          영업시간 : 11:00 ~ 17:00
+          영업시간 :{detailAt.businessHours}
         </span>
         <span className="mt-4 text-lg font-medium text-[#444444]">
           주소: {detailAt.address}
@@ -88,10 +88,7 @@ function DetailContainer() {
       </div>
 
 
-
-      {/* <img src={mapSample} alt="mapSample" className="mt-5" /> */}
       <KakaoMap></KakaoMap>
-
 
 
       <div className="mt-4 w-full border-t-2">

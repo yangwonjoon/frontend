@@ -1,5 +1,5 @@
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+import Header from "../../components/common/Header";
+import Footer from "../../components/common/Footer";
 import MyPageContainer from "../../components/MyPageContainer"
 
 const Mypage = () => (

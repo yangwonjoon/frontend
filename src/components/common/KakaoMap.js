@@ -39,9 +39,6 @@ function KakaoMap() {
         marker.setMap(map);
 
         var iwContent = `<div style="padding:5px;">${detailAt.restaurantName}</div>`
-        // `< a href = "https://map.kakao.com/link/map/${detailAt.restaurantName},${detailAt.lat},${detailAt.lon}" style = "color:blue" target = "_blank>큰지도보기</a> 
-        //     < a href = "https://map.kakao.com/link/to/${detailAt.restaurantName},${detailAt.lat},${detailAt.lon}" style = "color:blue" target = "_blank" > 길찾기</a></div>` 
-
 
         // 인포윈도우를 생성
         var infowindow = new kakao.maps.InfoWindow({

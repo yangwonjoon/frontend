@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
-import category from "../assets/category.svg";
+import category from "../../assets/category.svg";
 import axios from "axios";
 
 function valuetext(value) {

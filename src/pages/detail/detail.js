@@ -1,7 +1,7 @@
 
 import { useParams } from "react-router-dom";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+import Header from "../../components/common/Header";
+import Footer from "../../components/common/Footer";
 import DetailContainer from "../../components/DetailContainer";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { detailAtom } from "../../recoil/atoms/detailAtom"
