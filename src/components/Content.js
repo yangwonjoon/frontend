@@ -16,7 +16,7 @@ function Content({ i, data }) {
     <div className="mt-5 flex h-auto w-full flex-col bg-white p-3">
 
       <div className="flex w-full items-center justify-between">
-        <div className="flex flex-col items-start" onClick={() => (navigate(`detail/${data[i].restaurantName}`))} >
+        <div className="flex flex-col items-start" onClick={() => (navigate(`detail/${data[i].restaurant_seq}`))} >
           <div className="">
             <span className="mr-3 text-xl text-[#325FFF] hover:cursor-pointer">
               {/* 가게 이름 */}
@@ -39,7 +39,10 @@ function Content({ i, data }) {
             <div className="ml-4 flex items-center">
 
               <img src={filledStar} alt="star" className="w-3" />
-              <span className="ml-1 text-xs">365</span>
+              <span className="ml-1 text-xs">
+                {/* 찜하기 */}
+                {data[i].bookmarkCount}
+              </span>
 
             </div>
             <div className="ml-2 flex">
@@ -56,31 +59,21 @@ function Content({ i, data }) {
         </div>
         <div className="flex justify-end">
           <img src={star} alt="star" className="mr-3 w-6 hover:cursor-pointer" />
-          {data[i].bookmartCount}
           <img src={marker} alt="marker" className="w-8 hover:cursor-pointer" />
         </div>
       </div>
       <div className="mt-2 grid w-full grid-cols-4 justify-between gap-2">
-        <img
-          src={data[i].imageURLs[0]}
-          alt="sampleImage1"
-          className="rounded-lg"
-        />
-        <img
-          src={data[i].imageURLs[1]}
-          alt="sampleImage2"
-          className="rounded-lg"
-        />
-        <img
-          src={data[i].imageURLs[2]}
-          alt="sampleImage3"
-          className="rounded-lg"
-        />
-        <img
-          src={data[i].imageURLs[3]}
-          alt="sampleImage4"
-          className="rounded-lg"
-        />
+        {
+          data[i].imageURLs.map(function (url, i) {
+            return (
+              <img
+                src={url}
+                alt={`img${i}`}
+                className="rounded-lg"
+              />
+            )
+          })
+        }
       </div>
     </div>
   );
