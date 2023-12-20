@@ -59,7 +59,9 @@ function Content({ i, data }) {
         </div>
         <div className="flex justify-end">
           <img src={star} alt="star" className="mr-3 w-6 hover:cursor-pointer" />
-          <img src={marker} alt="marker" className="w-8 hover:cursor-pointer" />
+          <img src={marker} alt="marker" className="w-8 hover:cursor-pointer"
+            onClick={() => { window.open(`https://map.kakao.com/link/to/${data[i].restaurantName},${data[i].lat},${data[i].lon}`) }}
+          />
         </div>
       </div>
       <div className="mt-2 grid w-full grid-cols-4 justify-between gap-2">
@@ -67,6 +69,7 @@ function Content({ i, data }) {
           data[i].imageURLs.map(function (url, i) {
             return (
               <img
+                key={i}
                 src={url}
                 alt={`img${i}`}
                 className="rounded-lg"

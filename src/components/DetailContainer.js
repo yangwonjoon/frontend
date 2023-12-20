@@ -8,6 +8,7 @@ import cancel from "../assets/cancel.svg";
 import mapSample from "../assets/mapSample.png";
 import upArrow from "../assets/up_arrow.svg";
 import downArrow from "../assets/down_arrow.svg";
+import KakaoMap from "./common/KakaoMap";
 
 import { useRecoilValue } from "recoil";
 import { detailAtom } from "../recoil/atoms/detailAtom";
@@ -71,10 +72,10 @@ function DetailContainer() {
       </div>
       <div className="mt-3 flex w-full items-center justify-start">
         <div className="flex h-8 w-32 items-center justify-center rounded-xl border-[1px] bg-[#CCE7D0] text-sm">
-          소주 3000원
+          소주가격: {detailAt.sojuPrice}
         </div>
         <div className="ml-2 flex h-8 w-32 items-center justify-center rounded-xl border-[1px] bg-[#e8e6b1] text-sm">
-          맥주 4000원
+          맥주가격: {detailAt.beerPrice}
         </div>
       </div>
       <div className="mt-4 flex w-full flex-col items-start">
@@ -82,10 +83,17 @@ function DetailContainer() {
           영업시간 : 11:00 ~ 17:00
         </span>
         <span className="mt-4 text-lg font-medium text-[#444444]">
-          주소 : 서울특별시 마포구 양화로 122 LAB7빌딩 3층, 4층
+          주소: {detailAt.address}
         </span>
       </div>
-      <img src={mapSample} alt="mapSample" className="mt-5" />
+
+
+
+      {/* <img src={mapSample} alt="mapSample" className="mt-5" /> */}
+      <KakaoMap></KakaoMap>
+
+
+
       <div className="mt-4 w-full border-t-2">
         <div className="mt-5 flex items-center justify-between">
           <div className="flex items-center">

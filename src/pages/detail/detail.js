@@ -34,8 +34,6 @@ function Detail() {
 
   }, [res, setDetailAt])
 
-  console.log(detailAt)
-
   return (
     <div className="flex flex-col items-center justify-center">
       <Header />
