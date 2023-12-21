@@ -1,202 +1,66 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import eye from "../../assets/eye.svg";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 const Signup = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const [nickname, setNickname] = useState('');
+  const [isNicknameAvailable, setIsNicknameAvailable] = useState(null);
   const [userId, setUserId] = useState('');
+  const [isUserIdAvailable, setIsUserIdAvailable] = useState(null);
   const [password, setPassword] = useState('');
   const [repassword, setRepassword] = useState('');
+  const navigate = useNavigate();
+  const [passwordMatch, setPasswordMatch] = useState(true);
 
-  const [nicknameError, setNicknameError] = useState('');
-  const [userIdError, setUserIdError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [repasswordError, setRepasswordError] = useState('');
-
-  const [isNicknameCheck, setIsNicknameCheck] = useState(false);
-  const [isUserIdCheck, setIsUserIdCheck] = useState(false);
-  const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
-  const [isUserIdAvailable, setIsUserIdAvailable] = useState(false);
-
-  const [isPasswordMatch, setIsPasswordMatch] = useState(false);
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
-//사용되지않는 변수..?ㅠ
-  const [showPassword, setShowPassword] = useState(false);
-
-  const onChangeNicknameHandler = (e) => {
-    const value = e.target.value;
-    setNickname(value);
-    validateNickname(value);
-    //닉네임 유효성 검사
-  };
-
-  const onChangeUserIdHandler = (e) => {
-    const value = e.target.value;
-    setUserId(value);
-    validateUserId(value);
-    // 아이디 유효성검사 로직 추가
-  };
-
-  // 닉네임 유효성 검사 함수
-  const validateNickname = async (value) => {
-    if (value.length > 8) {
-      setNicknameError('닉네임은 8자 이하로 입력해주세요.');
-      setIsNicknameAvailable(false);
-    } else {
-      try {
-        const response = await axios.post('http://localhost:8080/api/checkNickname', { nickname: value });
-        if (response.status === 200) {
-          const data = response.data;
-          setIsNicknameCheck(true);
-          setIsNicknameAvailable(data.duplication);
-          setNicknameError(data.duplication ? '이미 사용 중인 닉네임입니다.' : '사용 가능한 닉네임입니다.');
-          updateSignupButtonState();
-        } else {
-          console.log('서버 오류');
-        }
-      } catch (error) {
-        console.error('닉네임 중복 체크 오류:', error);
-        console.log('네트워크 오류');
-      }
-    }
-  };
-
-//   const validateNickname = (value) => {
-//     // 닉네임은 8자 이하
-//     if (value.length > 8) {
-//       setNicknameError('닉네임은 8자 이하로 입력해주세요.');
-//       setIsNicknameAvailable(false);
-//     } else {
-//       setNicknameError('');
-//       setIsNicknameAvailable(true);
-//     }
-//   };
-
-//   const checkNicknameAvailability = async () => {
-//     try {
-//       // 중복 체크 버튼이 눌리지 않았을 때 초기화
-//       setIsNicknameCheck(false);
-
-//       const response = await fetch(`/api/checkNickname?nickname=${nickname}`);
-
-//       if (response.ok) {
-//         const data = await response.json();
-//         setIsNicknameCheck(true);
-//         setIsNicknameAvailable(data.available);
-//         setNicknameError(data.available ? '' : '이미 사용 중인 닉네임입니다.');
-//       } else {
-//         console.log('서버 오류');
-//       }
-//     } catch (error) {
-//       console.error('Error during nickname check:', error);
-//       console.log('네트워크 오류');
-//     }
-//   };
-
-  // 아이디 유효성 검사 함수
-  const validateUserId = async (value) => {
+  const checkNicknameAvailability = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/api/checkUserId', { userID: value });
-      if (response.status === 200) {
-        const data = response.data;
-        setIsUserIdCheck(true);
-        setIsUserIdAvailable(data.duplication);
-        setUserIdError(data.duplication ? '이미 사용 중인 아이디입니다.' : '사용 가능한 아이디입니다.');
-        updateSignupButtonState();
-      } else {
-        console.log('서버 오류');
-      }
+      const response = await axios.post('http://localhost:8080/api/checkNickname', { nickname });
+
+      setIsNicknameAvailable(!response.data.duplication);
     } catch (error) {
-      console.error('아이디 중복 체크 오류:', error);
-      console.log('네트워크 오류');
+      console.error('Error checking nickname availability:', error);
     }
   };
 
-//   const checkUserIdAvailability = async () => {
-  
-//     try {
-//       // 중복 체크 버튼이 눌리지 않았을 때 초기화
-//       setIsUserIdCheck(false);
-
-//       const response = await fetch(`/api/checkUserId?userId=${userId}`);
-
-//       if (response.ok) {
-//         const data = await response.json();
-//         setIsUserIdCheck(true);
-//         setIsUserIdAvailable(data.available);
-//         setUserIdError(data.available ? '' : '이미 사용 중인 아이디입니다.');
-//       } else {
-//         console.log('서버 오류');
-//       }
-//     } catch (error) {
-//       console.error('Error during user ID check:', error);
-//       console.log('네트워크 오류');
-//     }
-//   };
-
- // 비밀번호 유효성 검사 함수
-
-
-  // // 비밀번호 일치 여부 확인 함수
-  // const validatePasswordMatch = (password, repassword) => {
-  //   if (password !== repassword) {
-  //     setRepasswordError('비밀번호가 일치하지 않습니다.');
-  //     setIsPasswordMatch(false);
-  //   } else {
-  //     setRepasswordError('');
-  //     setIsPasswordMatch(true);
-  //   }
-  // };
-
-  const validatePasswordMatch = (password, repassword) => {
-    const match = password === repassword;
-    setIsPasswordMatch(match);
-    setRepasswordError(match ? '' : '비밀번호가 일치하지 않습니다.');
-  };
-
-  const validatePassword = (value) => {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$/;
-    if (!passwordRegex.test(value)) {
-      setPasswordError('대소문자와 숫자를 모두 포함하고 10글자 이상으로 입력해주세요.');
-      setIsPasswordValid(false);
-    } else {
-      setPasswordError('');
-      setIsPasswordValid(true);
-    }
-  };
-
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const updateSignupButtonState = () => {
-    //닉네임과 아이디가 모두 사용 가능한 경우 버튼 활성화
-    const isButtonEnabled = isNicknameAvailable && isUserIdAvailable && isPasswordMatch && isPasswordValid;
-    //버튼 상태 업데이트
-    const signupButton = document.getElementById('signupButton');
-    if (signupButton) {
-      signupButton.disabled = !isButtonEnabled;
-    }
-  };
-
-// const validatePassword = (value) => {
-//     // 비밀번호는 대소문자와 숫자를 모두 포함하고 10글자 이상
-//     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$/;
-//     if (!passwordRegex.test(value)) {
-//       setPasswordError('대소문자와 숫자를 모두 포함하고 10글자 이상으로 입력해주세요.');
-//       setIsUserIdAvailable(false);
-//     } else {
-//       setPasswordError('');
-//       setIsUserIdAvailable(true);
-//     }
-//   };
-
-  // 회원가입 버튼 클릭 시 수행 함수
-  const onClickSignup = async () => {
-    setIsNicknameCheck(false);
-    setIsUserIdCheck(false);
-
+  const checkUserIdAvailability = async () => {
     try {
+      const response = await axios.post('http://localhost:8080/api/checkUserId', { userID: userId });
+
+      setIsUserIdAvailable(!response.data.duplication);
+    } catch (error) {
+      console.error('Error checking user ID availability:', error);
+    }
+  };
+
+  const checkPasswordMatch = () => {
+    setPasswordMatch(password === repassword);
+  };
+
+  const handleSignup = async () => {
+    try {
+      await checkNicknameAvailability();
+
+      if (isNicknameAvailable === false) {
+        console.log('닉네임 중복으로 회원가입 불가');
+        return;
+      }
+
+      await checkUserIdAvailability();
+
+      if (isUserIdAvailable === false) {
+        console.log('아이디 중복으로 회원가입 불가');
+        return;
+      }
+
+      checkPasswordMatch();
+
+      if (!passwordMatch) {
+        console.log('비밀번호 확인 불일치');
+        return;
+      }
+
       const response = await axios.post('http://localhost:8080/api/signup', {
         userID: userId,
         userPW: password,
@@ -204,281 +68,122 @@ const Signup = () => {
       });
 
       if (response.status === 201) {
-        const data = response.data;
-        console.log(data);
-      } else if (response.status === 400) {
-        const data = response.data;
-        console.log(data);
+        console.log('회원가입 성공:', response.data);
       } else {
-        console.log('서버 오류');
+        console.log('회원가입 실패:', response.data);
       }
     } catch (error) {
-      console.error('회원가입 오류:', error);
-      console.log('네트워크 오류');
+      console.error('Error during signup:', error);
     }
   };
 
-// const onClickSignup = async () => {
-//     try {
-//       const response = await fetch('/api/signup', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//           nickname,
-//           userId,
-//           password,
-//           repassword,
-//         }),
-//       });
-
-//       if (response.ok) {
-//         // 회원가입 성공
-//         const data = await response.json();
-//         console.log(data);
-//       } else if (response.status === 400) {
-//         // 회원가입 실패
-//         const data = await response.json();
-//         console.log(data);
-//       } else {
-//         // 다른 오류
-//         console.log('서버 오류');
-//       }
-//     } catch (error) {
-//       console.error('Error during signup:', error);
-//       console.log('네트워크 오류');
-//     }
-//   };
-
-  const onChangePasswordHandler = (e) => {
-    const { name, value } = e.target;
-    if (name === 'password') {
-      setPassword(value);
-      validatePassword(value);
-    } else {
-      setRepassword(value);
-      validatePasswordMatch(password, value);
-    }
-  }
-  //     // 비밀번호 확인 로직 추가
-  // //     if (password !== value) {
-  // //       setRepasswordError('비밀번호가 일치하지 않습니다.');
-  // //     } else {
-  // //       setRepasswordError('');
-  // //     }
-  // //   }
-  // // };
-
-  //   // 중복 체크 함수
-  //   const checkNicknameAvailability = async () => {
-  //       await validateNickname(nickname);
-  //       setIsNicknameCheck(true);
-  //       updateSignupButtonState();
-  //     };
-    
-  //     // 중복 체크 함수
-  //     const checkUserIdAvailability = async () => {
-  //       await validateUserId(userId);
-  //       setIsUserIdCheck(true);
-  //       updateSignupButtonState();
-  //     };
-
   return (
-    <div style={{ backgroundColor: '#f5f5f5', width: '100%', height: '800px' }}>
-      <form>
-        <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: 'white', width: '60%', margin: 'auto' }}>
-          <h1>회원가입</h1>
-          <div style={{ width: '340px', margin: 'auto', marginTop: '40px', borderBottom: '2px solid' }}>
-            <label style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <input
-                type="text"
-                placeholder="닉네임" name="nickname" value={nickname}
-                onChange={onChangeNicknameHandler}
-                style={{
-                  border: 'none',
-                  width: '310px',
-                  height: '30px',
-                  fontSize: '20px',
-                  fontWeight: 'bold',
-                }}
-              />
-              <button
-                type="button"
-                onClick={validateNickname}
-                style={{
-                  width: '80px',
-                  height: '25px',
-                  border: 'none',
-                  borderRadius: '20px',
-                  fontSize: '13px',
-                  fontWeight: 'bold',
-                  backgroundColor: 'darkgray',
-                }}
-              >
-                중복 체크
-              </button>
-            </label>
-            {nicknameError && (
-              <div style={{ fontSize: '10px', color: 'red', textAlign: 'left', marginTop: '-5px', fontWeight: 'bold' }}>
-                <p>{nicknameError}</p>
-              </div>
-            )}
-            {isNicknameCheck && (
-              <div style={{ fontSize: '10px', color: 'blue', textAlign: 'left', marginTop: '-5px', fontWeight: 'bold' }}>
-                <p>중복 체크 완료</p>
-              </div>
-            )}
-          </div>
-          <div
-            style={{
-              width: '340px',
-              fontSize: '10px',
-              color: 'gray',
-              marginTop: '-8px',
-              fontWeight: 'bold',
-              margin: 'auto',
-              textAlign: 'left'
-            }}
-          >
-            <p>*8자 이하</p>
-          </div>
-          <div
-            style={{
-              width: '340px',
-              margin: 'auto',
-              borderBottom: '2px solid',
-              marginTop: '30px',
-              marginBottom: '50px'
-            }}>
-            <label style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <input
-                type="text"
-                placeholder="아이디" name="userId" value={userId}
-                onChange={onChangeUserIdHandler}
-                style={{
-                  border: 'none',
-                  width: '310px',
-                  height: '30px',
-                  fontSize: '20px',
-                  fontWeight: 'bold',
-                }}
-              />
-              <button
-                type="button"
-                onClick={validateUserId}
-                style={{
-                  width: '80px',
-                  height: '25px',
-                  border: 'none',
-                  borderRadius: '20px',
-                  fontSize: '13px',
-                  fontWeight: 'bold',
-                  backgroundColor: 'darkgray',
-                }}
-              >
-                중복 체크
-              </button>
-            </label>
-            {userIdError && (
-              <div style={{ fontSize: '10px', color: 'red', textAlign: 'left', marginTop: '-5px', fontWeight: 'bold' }}>
-                <p>{userIdError}</p>
-              </div>
-            )}
-            {isUserIdCheck && (
-              <div style={{ fontSize: '10px', color: 'blue', textAlign: 'left', marginTop: '-5px', fontWeight: 'bold' }}>
-                <p>중복 체크 완료</p>
-              </div>
-            )}
-          </div>
-          <div style={{ width: '340px', margin: 'auto' }}>
-            <label style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <input
-                type={showPassword ? 'text' : 'password'}
-                placeholder="비밀번호" name="password" value={password}
-                onChange={onChangePasswordHandler}
-                style={{
-                  border: 'none',
-                  borderBottom: 'solid 2px',
-                  width: '340px',
-                  height: '30px',
-                  fontSize: '20px',
-                  fontWeight: 'bold',
-                }}
-              />
-              <div onClick={toggleShowPassword}
-                style={{ 
-                border: 'none',
-                borderBottom: 'solid 2px'
-              }}>
-                <i>눈</i>
-              </div>
-            </label>
-            {passwordError && (
-              <div style={{ fontSize: '10px', color: 'red', textAlign: 'left', marginTop: '-5px', fontWeight: 'bold' }}>
-                <p>{passwordError}</p>
-              </div>
-            )}
-          </div>
-          <div style={{ marginTop: '30px', marginBottom: '30px', width: '340px', margin: 'auto' }}>
-            <label>
-              <input
-                type="password"
-                placeholder="비밀번호 확인" name="repassword" value={repassword}
-                onChange={onChangePasswordHandler}
-                style={{
-                  border: 'none',
-                  borderBottom: 'solid 2px',
-                  width: '340px',
-                  height: '30px',
-                  fontSize: '20px',
-                  fontWeight: 'bold',
-                }}
-              />
-            </label>
-            {repasswordError && (
-              <div style={{ fontSize: '10px', color: 'red', textAlign: 'left', marginTop: '-5px', fontWeight: 'bold' }}>
-                <p>{repasswordError}</p>
-              </div>
-            )}
-          </div>
-        </div>
-        <div style={{
-          backgroundColor: 'white', width: '60%', margin: 'auto'
-        }}>
-          <button
-          id="signupButton"
+    <div className="mt-5 flex w-full p-4">
+      <div className="flex h-[34rem] w-full flex-col items-center justify-center bg-[#fefefe] pb-7">
+        <span className="font-DoHyeon mb-14 text-2xl">회원가입</span>
+        <div className="flex flex-col items-start">
+          <div className="mt-5 flex w-72 justify-between border-b-[1px] border-[#000000]">
+            <input
+              type="text"
+              name="nickname"
+              value={nickname}
+              placeholder="닉네임"
+              onChange={(e) => setNickname(e.target.value)}
+              className="font-Pretendard placeholder:font-DoHyeon flex h-7 w-52 outline-none placeholder:text-sm placeholder:text-[#000000]"
+            />
+            <button
             type="button"
-            onClick={onClickSignup}
-            disabled={!isNicknameAvailable || !isUserIdAvailable}
-            style={{
-              width: '270px',
-              height: '40px',
-              border: 'none',
-              borderRadius: '50px',
-              fontSize: '17px',
-              fontWeight: 'bold',
-              backgroundColor: 'darkgray',
-              marginTop: '40px',
-              marginBottom: '40px',
-              cursor: !isNicknameAvailable || !isUserIdAvailable ? 'not-allowed' : 'pointer',
+            onClick={checkNicknameAvailability}
+            className="flex h-6 w-16 items-center justify-center rounded-2xl bg-[#70d096] text-xs font-semibold">
+              중복 체크
+            </button>
+          </div>
+          <div style={{ fontSize: '10px', color: isNicknameAvailable === true ? 'blue' : 'red', textAlign: 'left', marginTop: '-5px', fontWeight: 'bold' }}>
+            {isNicknameAvailable === true ? '사용 가능' : isNicknameAvailable === false ? '사용 불가능' : ''}
+          </div>
+          {/* 이부분 css추가 */}
+          <span className="text-xs font-medium text-[#5A5A5A]">*8자 이하</span>
+          <div className="mt-4 flex w-72 justify-between border-b-[1px] border-[#000000]">
+            <input
+              type="text"
+              name="userId"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              placeholder="아이디"
+              className="font-Pretendard placeholder:font-DoHyeon flex h-7 w-52 outline-none placeholder:text-sm placeholder:text-[#000000]"
+            />
+            <button 
+            type="button"
+            onClick={checkUserIdAvailability}
+            className="flex h-6 w-16 items-center justify-center rounded-2xl bg-[#70d096] text-xs font-semibold">
+              중복 체크
+            </button>
+          </div>
+          <div className="mt-7 flex w-72 justify-between border-b-[1px] border-[#000000]">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="비밀번호"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="font-Pretendard placeholder:font-DoHyeon flex h-7 w-52 outline-none placeholder:text-sm placeholder:text-[#000000]"
+            />
+            <img
+              src={eye}
+              alt="eye"
+              className="flex hover:cursor-pointer"
+              onClick={() => {
+                setShowPassword(!showPassword);
+              }}
+            />
+                      <div style={{ fontSize: '10px', color: 'red', textAlign: 'left', marginTop: '-5px', fontWeight: 'bold' }}>
+            {passwordMatch === false ? '비밀번호가 일치하지 않습니다.' : ''}
+          </div>
+          {/* 이부분추가 */}
+          </div>
+          <span className="text-xs font-medium text-[#5a5a5a]">
+            *대문자, 소문자, 숫자 활용하여 10글자 이상
+          </span>
+          <div className="mt-4 flex w-72 justify-between border-b-[1px] border-[#000000]">
+            <input
+              name="repassword"
+              value={repassword}
+              onChange={(e) => setRepassword(e.target.value)}
+              onBlur={checkPasswordMatch}
+              type={showPassword ? 'text' : 'password'}
+              placeholder="비밀번호 확인"
+              className="font-Pretendard placeholder:font-DoHyeon flex h-7 w-52 outline-none placeholder:text-sm placeholder:text-[#000000]"
+            />
+          </div>
+          <div style={{ fontSize: '10px', color: 'red', textAlign: 'left', marginTop: '-5px', fontWeight: 'bold' }}>
+            {passwordMatch === false ? '비밀번호가 일치하지 않습니다.' : ''}
+          </div>
+          {/* 추가 */}
+        </div>
+        <button 
+        id="signupButton"
+        type="button"
+        onClick={handleSignup}
+        className="font-DoHyeon mt-14 flex h-9 w-72 items-center justify-center rounded-3xl bg-[#70d096]">
+          회원가입
+        </button>
+        <div className="mt-7 flex items-center justify-between space-x-20">
+          <span className="font-DoHyeon text-xs font-light">
+            이미 회원이신가요?
+          </span>
+          <span
+          role="button"
+            className="font-DoHyeon text-xs font-bold hover:cursor-pointer"
+            onClick={() => {
+              navigate("/login");
             }}
           >
-            회원가입
-          </button>
-          <br />
-          <span style={{ fontWeight: 'bold' }}>이미 회원이신가요?</span>
-          <span role="button"
-            style={{
-              marginLeft: '40px',
-              fontWeight: 'bold',
-              textDecoration: 'none',
-              color: 'black'
-            }}><Link to='/login'>로그인하기</Link></span>
+            로그인하기
+          </span>
         </div>
-      </form>
+      </div>
     </div>
   );
-};
+}
 
 export default Signup;
