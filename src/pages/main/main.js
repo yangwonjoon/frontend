@@ -1,6 +1,6 @@
-import Header from "../../components/Header";
-import NavBar from "../../components/Nav";
-import Footer from "../../components/Footer";
+import Header from "../../components/common/Header";
+import NavBar from "../../components/common/Nav";
+import Footer from "../../components/common/Footer";
 import Content from "../../components/Content";
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
 import { restaurantSelector } from "../../recoil/selectors/restaurantSeletor";

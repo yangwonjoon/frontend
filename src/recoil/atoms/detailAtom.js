@@ -8,7 +8,7 @@ export const detailAtom = atom({
         sojuPrice: 0,
         bookmarkCount: '',
         category: '',
-        imageURLs: '',
+        imageURLs: [],
         lat: 0,
         lon: 0,
         restaurantName: ''
