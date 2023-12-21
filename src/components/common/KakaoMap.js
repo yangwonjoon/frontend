@@ -1,61 +1,77 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
+import { Map, MapMarker, MapInfoWindow } from "react-kakao-maps-sdk"
 import { detailAtom } from "../../recoil/atoms/detailAtom";
-
-const { kakao } = window;
 
 function KakaoMap() {
 
     const detailAt = useRecoilValue(detailAtom);
-    console.log(detailAt.lat, detailAt.lon)//lat: 위도, lon: 경도
 
-    // 마커를 표시할 위치와 title 객체 배열입니다 
-    var positions = [
-        {
-            restaurantTitle: detailAt.restaurantName,
-            restauranrLatlng: new kakao.maps.LatLng(detailAt.lat, detailAt.lon)
-        },
-    ];
+    // const [state, setState] = useState({
+    //     center: {
+    //         lat: 33.450701,
+    //         lng: 126.570667,
+    //     },
+    //     errMsg: null,
+    //     isLoading: true,
+    // })
 
-    useEffect(() => {
-        const container = document.getElementById('map');
-        const options = { //지도 생성할 때 필요한 기본 옵션
-            center: new kakao.maps.LatLng(detailAt.lat, detailAt.lon), //지도 중심 좌표
-            level: 3 //지도 확대, 축소 정도
-        }
-        const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
-
-
-        // 마커가 표시될 위치
-        var markerPosition = new kakao.maps.LatLng(detailAt.lat, detailAt.lon);
-
-        // 마커를 생성
-        var marker = new kakao.maps.Marker({
-            position: markerPosition
-        });
-
-        // 마커가 지도 위에 표시되도록 설정
-        marker.setMap(map);
-
-        var iwContent = `<div style="padding:5px;">${detailAt.restaurantName}</div>`
-
-        // 인포윈도우를 생성
-        var infowindow = new kakao.maps.InfoWindow({
-            position: markerPosition,
-            content: iwContent
-        });
-
-        // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시
-        infowindow.open(map, marker);
-
-    }, [detailAt])
-
-
+    // useEffect(() => {
+    //     if (navigator.geolocation) {
+    //         // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+    //         navigator.geolocation.getCurrentPosition(
+    //             (position) => {
+    //                 setState((prev) => ({
+    //                     ...prev,
+    //                     center: {
+    //                         lat: position.coords.latitude, // 위도
+    //                         lng: position.coords.longitude, // 경도
+    //                     },
+    //                     isLoading: false,
+    //                 }))
+    //             },
+    //             (err) => {
+    //                 setState((prev) => ({
+    //                     ...prev,
+    //                     errMsg: err.message,
+    //                     isLoading: false,
+    //                 }))
+    //             }
+    //         )
+    //     } else {
+    //         // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+    //         setState((prev) => ({
+    //             ...prev,
+    //             errMsg: "geolocation을 사용할수 없어요..",
+    //             isLoading: false,
+    //         }))
+    //     }
+    // }, [])
 
     return (
         <>
-            <div id="map" style={{ width: "550px", height: "300px", marginTop: "20px", marginBottom: "10px" }}></div>
+
+            <Map
+                center={{ lat: detailAt.lat, lng: detailAt.lon }} // 지도의 중심좌표
+                style={{ width: "100%", height: "360px", marginTop: "20px", marginBottom: "10px" }}// 지도의 크기
+                level={3} // 지도의 확대 레벨
+            >
+
+                <MapMarker
+                    position={{ lat: detailAt.lat, lng: detailAt.lon }}>
+                    <div style={{ color: "#000", padding: "5px", textAlign: "center" }}><span>{detailAt.restaurantName}</span></div>
+                </MapMarker>
+
+                {/* {!state.isLoading && (
+                    <MapMarker position={state.center}>
+                        <div style={{ padding: "5px", color: "#000" }}>
+                            {state.errMsg ? state.errMsg : "여기에 계신가요?!"}
+                        </div>
+                    </MapMarker>
+                )} */}
+
+            </Map >
+
         </>
     )
 }
