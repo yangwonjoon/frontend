@@ -2,7 +2,7 @@ import { useState } from "react";
 import MySavedContent from "./MySavedContent";
 import MyCommentContent from "./MyCommentContent";
 import pencil from "../assets/pencil.svg";
-import cancel from "../assets/cancel.svg";
+// import cancel from "../assets/cancel.svg";
 
 function MyPageContainer() {
   const [likeClicked, setLikeClicked] = useState(true);

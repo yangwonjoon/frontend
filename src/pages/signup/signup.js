@@ -1,7 +1,13 @@
+import Footer from "../../components/footer";
+import Header from "../../components/header";
+import SignUpContainer from "../../components/SignupContainer";
+
 const SignUp = () => (
-    <>
-        회원가입페이지
-    </>
-)
+  <>
+    <Header />
+    <SignUpContainer />
+    <Footer />
+  </>
+);
 
 export default SignUp;
