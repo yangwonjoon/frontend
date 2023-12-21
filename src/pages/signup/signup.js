@@ -9,3 +9,5 @@ const SignUp = () => (
     <Footer />
   </>
 );
+
+export default SignUp;

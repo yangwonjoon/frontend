@@ -1,8 +1,8 @@
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
 
 import { Routes, Route } from "react-router-dom";
-import { atom, useRecoilState } from "recoil";
+// import { atom, useRecoilState } from "recoil";
 
 import Main from "./pages/main/main";
 import Detail from "./pages/detail/detail";
