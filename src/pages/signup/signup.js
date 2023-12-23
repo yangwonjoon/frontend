@@ -1,13 +1,19 @@
-import Footer from "../../components/footer";
-import Header from "../../components/header";
-import SignUpContainer from "../../components/SignupContainer";
+import React, { useState } from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Header from '../../components/common/Header';
+import SignupContainer from '../../components/SignupContainer';
+import Footer from '../../components/common/Footer';
 
-const SignUp = () => (
-  <>
-    <Header />
-    <SignUpContainer />
-    <Footer />
-  </>
-);
 
-export default SignUp;
+const Signup = () => {
+    return (
+        <>
+            <Header></Header>
+            <SignupContainer></SignupContainer>
+            <Footer></Footer>
+        </>
+    )
+};
+
+export default Signup;

@@ -33,7 +33,7 @@ function Header() {
           src={person}
           alt="person"
           className="flex w-6 hover:cursor-pointer"
-
+          
         />
       </div>
     </div>
