@@ -1,22 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { useNavigate } from "react-router-dom";
+
 import star from "../assets/star.svg";
 import filledStar from "../assets/filled_star.svg";
 import cancel from "../assets/cancel.svg";
-import sampleImage5 from "../assets/sampleImage5.png";
-import sampleImage6 from "../assets/sampleImage6.png";
-import sampleImage7 from "../assets/sampleImage7.png";
 import mapSample from "../assets/mapSample.png";
 import upArrow from "../assets/up_arrow.svg";
 import downArrow from "../assets/down_arrow.svg";
+import KakaoMap from "./common/KakaoMap";
+
+import { useRecoilValue } from "recoil";
+import { detailAtom } from "../recoil/atoms/detailAtom";
 
 function DetailContainer() {
+
+  const navigate = useNavigate();
+  //해당 가게 데이터
+  const detailAt = useRecoilValue(detailAtom);
   const [arrowClicked, setArrowClicked] = useState(false);
   const [starCliked, setStartClicked] = useState(false);
 
+
+  //댓글쓰기란
   const arrowClickedHandler = () => {
     setArrowClicked(!arrowClicked);
   };
 
+  //찜, 별점
   const saveClickHandler = () => {
     setStartClicked((prevState) => !prevState);
   };
@@ -33,56 +44,53 @@ function DetailContainer() {
           />
           <div className="flex items-end">
             <span className="ml-3 text-2xl text-[#325FFF] hover:cursor-pointer">
-              TeamB 홍대점
+              {detailAt.restaurantName}
             </span>
-            <span className="ml-2 text-sm text-[#5A5A5A]">한식, 일식</span>
+            <span className="ml-2 text-sm text-[#5A5A5A]">
+              {detailAt.category}
+            </span>
             <div className="ml-2 flex items-center">
               <img src={filledStar} alt="star" className="w-3" />
-              <span className="ml-1 text-sm">365</span>
+              <span className="ml-1 text-sm">{detailAt.bookmarkCount}</span>
             </div>
           </div>
         </div>
-        <img src={cancel} alt="cancel" className="w-5 hover:cursor-pointer" />
+        {/* 닫기 */}
+        <img src={cancel} alt="cancel" className="w-5 hover:cursor-pointer" onClick={() => { navigate('/') }} />
+
       </div>
       <div className="mt-3 grid w-full grid-cols-2 gap-4">
-        <img
-          src={sampleImage5}
-          alt="sampleImage5"
-          className="w-full hover:cursor-pointer"
-        />
-        <img
-          src={sampleImage6}
-          alt="sampleImage6"
-          className="w-full hover:cursor-pointer"
-        />
-        <img
-          src={sampleImage5}
-          alt="sampleImage5"
-          className="w-full hover:cursor-pointer"
-        />
-        <img
-          src={sampleImage7}
-          alt="sampleImage7"
-          className="w-full hover:cursor-pointer"
-        />
+        {detailAt.imageURLs.map((url, i) => (
+          <img
+            key={i}
+            src={url}
+            alt={`img${i + 1}`}
+            className="w-full hover:cursor-pointer"
+          />
+        ))}
+
       </div>
       <div className="mt-3 flex w-full items-center justify-start">
         <div className="flex h-8 w-32 items-center justify-center rounded-xl border-[1px] bg-[#CCE7D0] text-sm">
-          소주 3000원
+          소주가격: {detailAt.sojuPrice}
         </div>
         <div className="ml-2 flex h-8 w-32 items-center justify-center rounded-xl border-[1px] bg-[#e8e6b1] text-sm">
-          맥주 4000원
+          맥주가격: {detailAt.beerPrice}
         </div>
       </div>
       <div className="mt-4 flex w-full flex-col items-start">
         <span className="text-lg font-medium text-[#444444]">
-          영업시간 : 11:00 ~ 17:00
+          영업시간 :{detailAt.businessHours}
         </span>
         <span className="mt-4 text-lg font-medium text-[#444444]">
-          주소 : 서울특별시 마포구 양화로 122 LAB7빌딩 3층, 4층
+          주소: {detailAt.address}
         </span>
       </div>
-      <img src={mapSample} alt="mapSample" className="mt-5" />
+
+
+      <KakaoMap></KakaoMap>
+
+
       <div className="mt-4 w-full border-t-2">
         <div className="mt-5 flex items-center justify-between">
           <div className="flex items-center">
