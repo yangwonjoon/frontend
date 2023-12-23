@@ -1,6 +1,5 @@
-import { selector, useRecoilState } from 'recoil';
+import { selector } from 'recoil';
 import axios from 'axios';
-import { restaurantAtom } from '../atoms/restaurantAtom';
 
 export const restaurantSelector = selector({
     key: 'restaurantSelector',
@@ -8,7 +7,7 @@ export const restaurantSelector = selector({
 
         try {
             //api호출
-            const res = await axios.get('http://localhost:8080/api/restaurant/all');
+            const res = await axios.get('http://localhost:3000/data/sample.json');
 
             return res.data;
         } catch (error) {
@@ -16,4 +15,3 @@ export const restaurantSelector = selector({
         }
     },
 });
-

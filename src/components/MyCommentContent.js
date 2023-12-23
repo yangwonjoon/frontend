@@ -32,7 +32,7 @@ function MyComment() {
       </div>
       <div className="mt-6 flex w-full items-center justify-between">
         <span className="text-lg">
-          - 처음 가봤는데 지인들이 너무 만족했어요!
+          -> 처음 가봤는데 지인들이 너무 만족했어요!
         </span>
         <div className="flex">
           <button

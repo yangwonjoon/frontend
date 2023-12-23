@@ -5,6 +5,7 @@ import Header from '../../components/common/Header';
 import SignupContainer from '../../components/SignupContainer';
 import Footer from '../../components/common/Footer';
 
+
 const Signup = () => {
     return (
         <>
