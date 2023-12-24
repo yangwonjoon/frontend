@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import eye from "../assets/eye.svg";
 import { useNavigate } from "react-router-dom";
@@ -70,8 +69,6 @@ const Signup = () => {
 
             if (response.status === 201) {
                 console.log('회원가입 성공:', response.data);
-                navigate("/login");
-
             } else {
                 console.log('회원가입 실패:', response.data);
             }
@@ -105,7 +102,7 @@ const Signup = () => {
                         {isNicknameAvailable === true ? '사용 가능' : isNicknameAvailable === false ? '사용 불가능' : ''}
                     </div>
                     {/* 이부분 css추가 */}
-                    <span className="text-xs font-medium text-[#5A5A5A]">*8자 이하</span>
+                    <span className="mt-1 text-xs font-medium text-[#5A5A5A]">*8자 이하</span>
                     <div className="mt-4 flex w-72 justify-between border-b-[1px] border-[#000000]">
                         <input
                             type="text"

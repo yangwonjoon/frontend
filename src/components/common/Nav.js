@@ -55,24 +55,6 @@ function Nav() {
         filter();
     }, [value1]);
 
-    // //클릭한 nav 소주 가격 sojuatom에 저장
-    // async function sojuHandler(e) {
-    //     e.preventDefault();
-    //     const moreSojuPrice = value1[0];
-    //     const underSojuPrice = value1[1];
-
-    //     await axios.get(`http://localhost:8080/api/restaurant/info?moreSojuPrice=${moreSojuPrice}&underSojuPrice=${underSojuPrice}`)
-    //         .then(response => {
-    //             // 필터링 된 데이터로 메인 페이지 업데이트
-    //             navigate('/', { state: { filteredData: response.data } });
-    //             console.log(response.data)
-    //         })
-    //         .catch(error => {
-    //             console.error("데이터 가져오기 오류:", error);
-    //         });
-
-    // }
-
     return (
 
         <div className="mt-7 flex w-full items-center justify-between pb-3 pl-7">
@@ -138,23 +120,33 @@ function Nav() {
                     <div className="flex w-[26rem] justify-between">
                         <span className="text-xs text-[#080707]">{value1[0]}원</span>
                         <span className="text-xs text-[#080707]">{value1[1]}원</span>
-
-                        {/* <div className="flex items-center space-x-2">
-                            <div className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#5a5a5a] hover:cursor-pointer">
-                                <span className="font-semibold text-[#5a5a5a]">AI</span>
-                            </div>
-                            <img
-                                src={category}
-                                alt="category"
-                                className="w-11 hover:cursor-pointer"
-                            />
-                        </div> */}
-
                     </div>
                 </div>
+            </div>
+            {/* Bundle 2: AI and Category */}
+            <div className="flex flex-shrink-0 items-center space-x-2">
+                <div
+                    className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#5a5a5a] hover:cursor-pointer"
+                    onClick={() => {
+                        navigate("/aipage");
+                    }}
+                >
+                    <span className="font-semibold text-[#5a5a5a]">AI</span>
+                </div>
+                <img
+                    src={category}
+                    alt="category"
+                    className="w-11 hover:cursor-pointer"
+                    onClick={() => {
+                        navigate("/menu");
+                    }}
+                />
             </div>
         </div>
     );
 }
 
 export default Nav;
+
+
+
