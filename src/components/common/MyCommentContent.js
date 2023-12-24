@@ -1,5 +1,5 @@
 import React from "react";
-import filledStar from "../assets/filled_star.svg";
+import filledStar from "../../assets/filled_star.svg";
 
 function MyComment() {
   return (

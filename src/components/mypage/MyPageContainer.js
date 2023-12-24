@@ -1,8 +1,8 @@
 import { useState } from "react";
-import MySavedContent from "./MySavedContent";
-import MyCommentContent from "./MyCommentContent";
-import pencil from "../assets/pencil.svg";
-import cancel from "../assets/cancel.svg";
+import MySavedContent from "../common/MySavedContent";
+import MyCommentContent from "../common/MyCommentContent";
+import pencil from "../../assets/pencil.svg";
+import cancel from "../../assets/cancel.svg";
 
 function MyPageContainer() {
   const [likeClicked, setLikeClicked] = useState(true);
@@ -20,12 +20,7 @@ function MyPageContainer() {
           alt="pencil"
           className="mr-6 w-4 hover:cursor-pointer"
         />
-        {/* 도무지 생각해도 있을 이유가 없음 */}
-        {/* <img
-          src={cancel}
-          alt="cancel"
-          className="absolute right-0 top-0 w-6 hover:cursor-pointer"
-        /> */}
+
       </div>
       {likeClicked && !commentClicked ? (
         <>

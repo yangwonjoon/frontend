@@ -1,6 +1,6 @@
 import React from "react";
-import filledStar from "../assets/filled_star.svg";
-import X from "../assets/mypageX.svg";
+import filledStar from "../../assets/filled_star.svg";
+import X from "../../assets/mypageX.svg";
 
 function MyContent() {
   return (

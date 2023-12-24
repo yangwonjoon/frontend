@@ -1,4 +1,4 @@
-import eye from "../assets/eye.svg";
+import eye from "../../assets/eye.svg";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';

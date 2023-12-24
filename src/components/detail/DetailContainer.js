@@ -2,16 +2,15 @@ import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import star from "../assets/star.svg";
-import filledStar from "../assets/filled_star.svg";
-import cancel from "../assets/cancel.svg";
-import mapSample from "../assets/mapSample.png";
-import upArrow from "../assets/up_arrow.svg";
-import downArrow from "../assets/down_arrow.svg";
-import KakaoMap from "./common/KakaoMap";
+import star from "../../assets/star.svg";
+import filledStar from "../../assets/filled_star.svg";
+import cancel from "../../assets/cancel.svg";
+import upArrow from "../../assets/up_arrow.svg";
+import downArrow from "../../assets/down_arrow.svg";
+import KakaoMap from "../common/KakaoMap";
 
 import { useRecoilValue } from "recoil";
-import { detailAtom } from "../recoil/atoms/detailAtom";
+import { detailAtom } from "../../recoil/atoms/detailAtom";
 
 function DetailContainer() {
 

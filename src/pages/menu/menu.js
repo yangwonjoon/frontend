@@ -1,6 +1,6 @@
 import Footer from "../../components/common/Footer";
 import Header from "../../components/common/Header";
-import MenuContainer from "../../components/MenuContainer";
+import MenuContainer from "../../components/main/MenuContainer";
 
 const Menu = () => (
     <>
