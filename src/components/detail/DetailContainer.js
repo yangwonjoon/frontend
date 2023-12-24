@@ -8,11 +8,18 @@ import cancel from "../../assets/cancel.svg";
 import upArrow from "../../assets/up_arrow.svg";
 import downArrow from "../../assets/down_arrow.svg";
 import KakaoMap from "../common/KakaoMap";
+import { userAtom } from "../../recoil/atoms/userAtom";
 
 import { useRecoilValue } from "recoil";
 import { detailAtom } from "../../recoil/atoms/detailAtom";
 
 function DetailContainer() {
+
+  const userAt = useRecoilValue(userAtom)
+  console.log(userAt)
+
+  const jSessionId = sessionStorage.getItem("JSESSIONID");
+  console.log(jSessionId)
 
   const navigate = useNavigate();
   //해당 가게 데이터

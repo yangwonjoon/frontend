@@ -3,6 +3,8 @@ import filledStar from "../../assets/filled_star.svg";
 import marker from "../../assets/marker.svg";
 import arrowDown from "../../assets/down_arrow.svg";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { userAtom } from "../../recoil/atoms/userAtom";
 
 
 function Content({ i, data }) {

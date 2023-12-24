@@ -69,6 +69,7 @@ const Signup = () => {
 
             if (response.status === 201) {
                 console.log('회원가입 성공:', response.data);
+                navigate('/login')
             } else {
                 console.log('회원가입 실패:', response.data);
             }

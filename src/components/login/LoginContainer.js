@@ -2,12 +2,18 @@ import eye from "../../assets/eye.svg";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useRecoilState } from "recoil";
+import { userAtom } from "../../recoil/atoms/userAtom";
 
 
 function LoginContainer() {
+
+
+    const [userAt, setUserAt] = useRecoilState(userAtom)
+    const navigate = useNavigate();
+
     // 비밀번호 가리기/보이기를 처리하는 state
     const [showPassword, setShowPassword] = useState(false);
-    const navigate = useNavigate();
 
     // 사용자 아이디와 비밀번호를 저장하는 state
     const [userId, setUserId] = useState('');
@@ -24,6 +30,7 @@ function LoginContainer() {
             // 로그인 성공 시
             if (response && response.data && response.data.status === 'success') {
                 console.log('로그인 성공:', response.data);
+                console.log('useratom', userAt);
                 navigate('/')
 
                 // 'set-cookie' 헤더가 존재하고 비어있지 않은 경우에만 저장
