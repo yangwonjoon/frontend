@@ -1,20 +1,18 @@
+
 import React, { useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import eye from "../assets/eye.svg";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-
-function SignupContainer() {
-
-    
-    const navigate = useNavigate()
-
+const Signup = () => {
+    const [showPassword, setShowPassword] = useState(false);
     const [nickname, setNickname] = useState('');
     const [isNicknameAvailable, setIsNicknameAvailable] = useState(null);
     const [userId, setUserId] = useState('');
     const [isUserIdAvailable, setIsUserIdAvailable] = useState(null);
     const [password, setPassword] = useState('');
     const [repassword, setRepassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
     const [passwordMatch, setPasswordMatch] = useState(true);
 
     const checkNicknameAvailability = async () => {
@@ -72,6 +70,8 @@ function SignupContainer() {
 
             if (response.status === 201) {
                 console.log('회원가입 성공:', response.data);
+                navigate("/login");
+
             } else {
                 console.log('회원가입 실패:', response.data);
             }
@@ -81,174 +81,112 @@ function SignupContainer() {
     };
 
     return (
-        <div style={{ backgroundColor: '#f5f5f5', width: '100%', height: '800px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <form style={{ display: 'flex', flexDirection: 'column', backgroundColor: 'white', width: '60%', margin: 'auto', padding: '30px', borderRadius: '10px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)', boxSizing: 'border-box' }}>
-                <h1 style={{ textAlign: 'center' }}>회원가입</h1>
-                <div style={{ width: '340px', margin: 'auto', marginTop: '40px', borderBottom: '2px solid' }}>
-                    <label style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div className="mt-5 flex w-full p-4">
+            <div className="flex h-[34rem] w-full flex-col items-center justify-center bg-[#fefefe] pb-7">
+                <span className="font-DoHyeon mb-14 text-2xl">회원가입</span>
+                <div className="flex flex-col items-start">
+                    <div className="mt-5 flex w-72 justify-between border-b-[1px] border-[#000000]">
                         <input
                             type="text"
-                            placeholder="닉네임"
                             name="nickname"
                             value={nickname}
+                            placeholder="닉네임"
                             onChange={(e) => setNickname(e.target.value)}
-                            style={{
-                                border: 'none',
-                                width: '310px',
-                                height: '30px',
-                                fontSize: '20px',
-                                fontWeight: 'bold',
-                            }}
+                            className="font-Pretendard placeholder:font-DoHyeon flex h-7 w-52 outline-none placeholder:text-sm placeholder:text-[#000000]"
                         />
                         <button
                             type="button"
                             onClick={checkNicknameAvailability}
-                            style={{
-                                width: '80px',
-                                height: '25px',
-                                border: 'none',
-                                borderRadius: '20px',
-                                fontSize: '13px',
-                                fontWeight: 'bold',
-                                backgroundColor: 'darkgray',
-                            }}
-                        >
+                            className="flex h-6 w-16 items-center justify-center rounded-2xl bg-[#70d096] text-xs font-semibold">
                             중복 체크
                         </button>
-                    </label>
+                    </div>
                     <div style={{ fontSize: '10px', color: isNicknameAvailable === true ? 'blue' : 'red', textAlign: 'left', marginTop: '-5px', fontWeight: 'bold' }}>
                         {isNicknameAvailable === true ? '사용 가능' : isNicknameAvailable === false ? '사용 불가능' : ''}
                     </div>
-                </div>
-                <div style={{ width: '340px', margin: 'auto', marginTop: '30px', borderBottom: '2px solid' }}>
-                    <label style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    {/* 이부분 css추가 */}
+                    <span className="text-xs font-medium text-[#5A5A5A]">*8자 이하</span>
+                    <div className="mt-4 flex w-72 justify-between border-b-[1px] border-[#000000]">
                         <input
                             type="text"
-                            placeholder="아이디"
                             name="userId"
                             value={userId}
                             onChange={(e) => setUserId(e.target.value)}
-                            style={{
-                                border: 'none',
-                                width: '310px',
-                                height: '30px',
-                                fontSize: '20px',
-                                fontWeight: 'bold',
-                            }}
+                            placeholder="아이디"
+                            className="font-Pretendard placeholder:font-DoHyeon flex h-7 w-52 outline-none placeholder:text-sm placeholder:text-[#000000]"
                         />
                         <button
                             type="button"
                             onClick={checkUserIdAvailability}
-                            style={{
-                                width: '80px',
-                                height: '25px',
-                                border: 'none',
-                                borderRadius: '20px',
-                                fontSize: '13px',
-                                fontWeight: 'bold',
-                                backgroundColor: 'darkgray',
-                            }}
-                        >
+                            className="flex h-6 w-16 items-center justify-center rounded-2xl bg-[#70d096] text-xs font-semibold">
                             중복 체크
                         </button>
-                    </label>
-                    <div style={{ fontSize: '10px', color: isUserIdAvailable === true ? 'blue' : 'red', textAlign: 'left', marginTop: '-5px', fontWeight: 'bold' }}>
-                        {isUserIdAvailable === true ? '사용 가능' : isUserIdAvailable === false ? '사용 불가능' : ''}
                     </div>
-                </div>
-                <div style={{ width: '340px', fontSize: '10px', color: 'gray', marginTop: '-8px', fontWeight: 'bold', margin: 'auto', textAlign: 'left' }}>
-                    <p>*8자 이하</p>
-                </div>
-                <div style={{ width: '340px', margin: 'auto', marginTop: '30px', borderBottom: '2px solid' }}>
-                    <label style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <div className="mt-7 flex w-72 justify-between border-b-[1px] border-[#000000]">
                         <input
-                            type={showPassword ? 'text' : 'password'}
+                            type={showPassword ? "text" : "password"}
                             placeholder="비밀번호"
                             name="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            style={{
-                                border: 'none',
-                                borderBottom: 'solid 2px',
-                                width: '340px',
-                                height: '30px',
-                                fontSize: '20px',
-                                fontWeight: 'bold',
+                            className="font-Pretendard placeholder:font-DoHyeon flex h-7 w-52 outline-none placeholder:text-sm placeholder:text-[#000000]"
+                        />
+                        <img
+                            src={eye}
+                            alt="eye"
+                            className="flex hover:cursor-pointer"
+                            onClick={() => {
+                                setShowPassword(!showPassword);
                             }}
                         />
-                        <div
-                            style={{
-                                border: 'none',
-                                borderBottom: 'solid 2px',
-                            }}>
-                            <i onClick={() => setShowPassword(!showPassword)}>눈</i>
+                        <div style={{ fontSize: '10px', color: 'red', textAlign: 'left', marginTop: '-5px', fontWeight: 'bold' }}>
+                            {passwordMatch === false ? '비밀번호가 일치하지 않습니다.' : ''}
                         </div>
-                    </label>
-                    <div style={{ fontSize: '10px', color: 'red', textAlign: 'left', marginTop: '-5px', fontWeight: 'bold' }}>
-                        {passwordMatch === false ? '비밀번호가 일치하지 않습니다.' : ''}
+                        {/* 이부분추가 */}
                     </div>
-                </div>
-                <div style={{ width: '340px', margin: 'auto', marginTop: '30px', borderBottom: '2px solid' }}>
-                    <label style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span className="text-xs font-medium text-[#5a5a5a]">
+                        *대문자, 소문자, 숫자 활용하여 10글자 이상
+                    </span>
+                    <div className="mt-4 flex w-72 justify-between border-b-[1px] border-[#000000]">
                         <input
-                            type={showPassword ? 'text' : 'password'}
-                            placeholder="비밀번호 확인"
                             name="repassword"
                             value={repassword}
                             onChange={(e) => setRepassword(e.target.value)}
                             onBlur={checkPasswordMatch}
-                            style={{
-                                border: 'none',
-                                borderBottom: 'solid 2px',
-                                width: '340px',
-                                height: '30px',
-                                fontSize: '20px',
-                                fontWeight: 'bold',
-                            }}
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder="비밀번호 확인"
+                            className="font-Pretendard placeholder:font-DoHyeon flex h-7 w-52 outline-none placeholder:text-sm placeholder:text-[#000000]"
                         />
-                        <div
-                            style={{
-                                border: 'none',
-                                borderBottom: 'solid 2px',
-                            }}>
-                            <i onClick={() => setShowPassword(!showPassword)}></i>
-                        </div>
-                    </label>
+                    </div>
                     <div style={{ fontSize: '10px', color: 'red', textAlign: 'left', marginTop: '-5px', fontWeight: 'bold' }}>
                         {passwordMatch === false ? '비밀번호가 일치하지 않습니다.' : ''}
                     </div>
+                    {/* 추가 */}
                 </div>
-                <div style={{ backgroundColor: 'white', width: '60%', margin: 'auto' }}>
-                    <button
-                        id="signupButton"
-                        type="button"
+                <button
+                    id="signupButton"
+                    type="button"
+                    onClick={handleSignup}
+                    className="font-DoHyeon mt-14 flex h-9 w-72 items-center justify-center rounded-3xl bg-[#70d096]">
+                    회원가입
+                </button>
+                <div className="mt-7 flex items-center justify-between space-x-20">
+                    <span className="font-DoHyeon text-xs font-light">
+                        이미 회원이신가요?
+                    </span>
+                    <span
+                        role="button"
+                        className="font-DoHyeon text-xs font-bold hover:cursor-pointer"
                         onClick={() => {
-                            handleSignup();
-                            navigate('/');
+                            navigate("/login");
                         }}
-                        style={{
-                            width: '270px',
-                            height: '40px',
-                            border: 'none',
-                            borderRadius: '50px',
-                            fontSize: '17px',
-                            fontWeight: 'bold',
-                            backgroundColor: 'darkgray',
-                            marginTop: '40px',
-                            marginBottom: '40px',
-                            cursor: 'pointer',
-                        }}>
-                        회원가입
-                    </button>
-                    <br />
-                    <span style={{ fontWeight: 'bold' }}>이미 회원이신가요?</span>
-                    <span role="button" style={{ marginLeft: '40px', fontWeight: 'bold', textDecoration: 'none', color: 'black' }}>
-                        <Link to='/login'>로그인하기</Link>
+                    >
+                        로그인하기
                     </span>
                 </div>
-            </form>
+            </div>
         </div>
     );
 }
 
-export default SignupContainer
+export default Signup;

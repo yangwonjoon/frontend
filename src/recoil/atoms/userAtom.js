@@ -1,10 +1,11 @@
 import { atom } from "recoil"
 
 
-export const userAtom = atom(({
-    default: "userAtom",
-    key: {
+export const userAtom = atom({
+    key: "userAtom",
+    default: {
         userId: '',
         userPw: ''
     }
-}))
+})
+
