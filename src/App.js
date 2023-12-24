@@ -9,6 +9,8 @@ import Detail from "./pages/detail/detail";
 import Login from "./pages/login/login";
 import SignUp from "./pages/signup/signup";
 import Mypage from "./pages/mypage/mypage";
+import AI from "./pages/ai/ai"
+import Menu from "./pages/menu/menu";
 
 
 function App() {
@@ -23,6 +25,9 @@ function App() {
           <Route path="/login" element={<Login></Login>}></Route>
           <Route path="/signup" element={<SignUp></SignUp>}></Route>
           <Route path="/mypage" element={<Mypage></Mypage>}></Route>
+
+          <Route path="/aipage" element={<AI></AI>}></Route>
+          <Route path="/menu" element={<Menu></Menu>}></Route>
         </Routes>
       </div>
 

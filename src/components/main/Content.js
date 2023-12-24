@@ -1,7 +1,7 @@
-import star from "../assets/star.svg";
-import filledStar from "../assets/filled_star.svg";
-import marker from "../assets/marker.svg";
-import arrowDown from "../assets/down_arrow.svg";
+import star from "../../assets/star.svg";
+import filledStar from "../../assets/filled_star.svg";
+import marker from "../../assets/marker.svg";
+import arrowDown from "../../assets/down_arrow.svg";
 import { useNavigate } from "react-router-dom";
 
 
