@@ -42,6 +42,7 @@ function Nav() {
             const response = await axios.post('http://localhost:8080/api/logout');
 
             sessionStorage.removeItem('user')
+            window.location.reload();
 
         } catch (error) {
             console.error('로그아웃 중 오류 발생:', error);

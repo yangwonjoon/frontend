@@ -1,18 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MySavedContent from "../common/MySavedContent";
 import MyCommentContent from "../common/MyCommentContent";
 import pencil from "../../assets/pencil.svg";
 import cancel from "../../assets/cancel.svg";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function MyPageContainer() {
+
+  const navigate = useNavigate()
+  const session = sessionStorage.getItem('user')
+
   const [likeClicked, setLikeClicked] = useState(true);
   const [commentClicked, setCommentClicked] = useState(false);
+
+
 
   return (
     <div className="mt-5 flex w-full flex-col items-center bg-[#F9F9F9] px-7 py-2">
       <div className="relative flex h-36 w-full justify-between">
         <div className="flex flex-col items-start justify-center">
-          <span className="text-lg">아이디 : Team B</span>
+          <span className="text-lg">아이디 : {JSON.parse(session).id}</span>
           <span className="text-lg">닉네임 : nickname123</span>
         </div>
         <img

@@ -169,6 +169,7 @@ function LoginContainer() {
                 id: userId, // or any user data you want to store
             });
             sessionStorage.setItem('user', JSON.stringify({ id: userId }));
+            navigate('/')
 
         } catch (error) {
             // 에러 처리
@@ -181,7 +182,7 @@ function LoginContainer() {
     return (
         <div className="mt-5 flex w-full p-4">
             <div className="flex h-[30rem] w-full flex-col items-center justify-center bg-[#fefefe] pb-7">
-                <span className="font-DoHyeon mb-14 text-2xl">Mexico</span>
+                <span className="font-DoHyeon mb-14 text-2xl">로그인</span>
                 <div className="flex-col">
                     <div className="mt-5 flex border-b-[1px] border-[#000000]">
                         <input
@@ -189,7 +190,7 @@ function LoginContainer() {
                             value={userId}
                             onChange={(e) => setUserId(e.target.value)}
                             type="text"
-                            placeholder="Love"
+                            placeholder="ID"
                             className="font-Pretendard placeholder:font-DoHyeon h-7 w-64 outline-none placeholder:text-sm placeholder:text-[#000000]"
                         />
                     </div>
@@ -199,7 +200,7 @@ function LoginContainer() {
                             value={userPw}
                             onChange={(e) => setUserPw(e.target.value)}
                             type={showPassword ? "text" : "password"}
-                            placeholder="small"
+                            placeholder="PASSWORD"
                             className="placeholder:font-DoHyeon font-Pretendard flex h-7 w-64 outline-none placeholder:text-sm placeholder:text-[#000000]"
                         />
                         <img

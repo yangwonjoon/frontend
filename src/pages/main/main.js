@@ -18,8 +18,7 @@ const Main = () => {
   //소주 전체 데이터
   const dataLoadable = useRecoilValueLoadable(restaurantSelector)
 
-  const session = sessionStorage.getItem('user')
-  console.log(JSON.parse(session).id)
+ 
 
   //dataLoadable -> loading, hasValue, hasError
   switch (dataLoadable.state) {
