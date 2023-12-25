@@ -4,6 +4,8 @@ import magnify from "../../assets/magnify.svg";
 import person from "../../assets/person.svg";
 import { useState } from "react";
 import SearchModal from "../main/SearchModal";
+import { useRecoilState } from "recoil";
+import { userAtom } from "../../recoil/atoms/userAtom";
 
 function Header() {
   const [searchClicked, setSearchClicked] = useState(false);
@@ -21,8 +23,9 @@ function Header() {
           src={logo}
           alt="logo"
           className="w-[200px] hover:cursor-pointer"
-          onClick={() => {
-            navigate("/");
+          onClick={(e) => {
+            e.preventDefault()
+            navigate("/")
           }}
         ></img>
       </div>

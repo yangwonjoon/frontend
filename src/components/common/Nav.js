@@ -7,6 +7,9 @@ import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import category from "../../assets/category.svg";
 import axios from "axios";
+import { userAtom } from "../../recoil/atoms/userAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { menuAtom } from "../../recoil/atoms/menuAtom"
 
 function valuetext(value) {
     return `${value}원`;
@@ -34,6 +37,32 @@ function Nav() {
         }
     };
 
+    const handleLogout = async () => {
+        try {
+            const response = await axios.post('http://localhost:8080/api/logout');
+
+            if (response && response.data && response.data.status === 'success') {
+                // setUserAt(false)
+                // console.log('로그아웃 성공');
+
+                // Clear the JSESSIONID from sessionStorage
+                sessionStorage.removeItem('JSESSIONID');
+            } else {
+                console.log('로그아웃 실패:', response.data.message);
+            }
+        } catch (error) {
+            console.error('로그아웃 중 오류 발생:', error);
+            console.log('서버 응답:', error.response);
+
+            if (error.response && error.response.data) {
+                console.log('로그아웃 실패:', error.response.data.message);
+            }
+        }
+    };
+
+    const menuAt = useRecoilValue(menuAtom)
+    console.log(menuAt)
+
     useEffect(() => {
         // value1이 변경될 때 axios 요청 트리거
         const filter = async () => {
@@ -41,9 +70,23 @@ function Nav() {
                 const moreSojuPrice = value1[0];
                 const underSojuPrice = value1[1];
 
-                const response = await axios.get(
-                    `http://localhost:8080/api/restaurant/info?moreSojuPrice=${moreSojuPrice}&underSojuPrice=${underSojuPrice}`
-                );
+                let baseUrl = `api/restaurant/info?moreSojuPrice=${moreSojuPrice}&underSojuPrice=${underSojuPrice}`
+                const plusParams = [];
+
+                if (menuAt.category) {
+                    plusParams.push(`category=${menuAt.category}`);
+                }
+
+                if (menuAt.moreBeer) {
+                    plusParams.push(`moreBeerPrice=${menuAt.moreBeer}`);
+                }
+
+                if (menuAt.underBeer) {
+                    plusParams.push(`underBeerPrice=${menuAt.underBeer}`);
+                }
+                const fullUrl = `${baseUrl}&${plusParams.join("&")}`;
+
+                const response = await axios.get(fullUrl);
 
                 navigate("/", { state: { filteredData: response.data } });
                 // console.log(response.data);
@@ -54,6 +97,7 @@ function Nav() {
 
         filter();
     }, [value1]);
+
 
     return (
 
@@ -141,6 +185,22 @@ function Nav() {
                         navigate("/menu");
                     }}
                 />
+                <button
+                    type="button"
+                    onClick={handleLogout}
+                    style={{
+                        width: '100%',
+                        height: '40px',
+                        borderRadius: '5px',
+                        fontSize: '17px',
+                        fontWeight: 'bold',
+                        backgroundColor: '#e74c3c',
+                        color: 'white',
+                        cursor: 'pointer',
+                        marginTop: '20px',
+                    }}>
+                    로그아웃
+                </button>
             </div>
         </div>
     );

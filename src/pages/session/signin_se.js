@@ -19,10 +19,12 @@ const Login = () => {
         userID: userId,
         userPW: userPw,
       });
-  
+
       // 로그인 성공 시
       if (response && response.data && response.data.status === 'success') {
         console.log('로그인 성공:', response.data);
+        console.log('useratom', userAt);
+        navigate('/')
 
         // 'set-cookie' 헤더가 존재하고 비어있지 않은 경우에만 저장
         if (response.headers['Set-cookie'] && response.headers['Set-cookie'].length > 0) {
@@ -40,7 +42,7 @@ const Login = () => {
       // 에러 처리
       console.error('로그인 중 오류 발생:', error);
       console.log('서버 응답:', error.response);
-  
+
       if (error.response && error.response.data) {
         console.log('로그인 실패:', error.response.data.message);
       }

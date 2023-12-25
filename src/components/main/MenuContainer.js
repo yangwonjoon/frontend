@@ -1,8 +1,11 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import { useRecoilState } from "recoil";
+import { menuAtom } from "../../recoil/atoms/menuAtom";
+import { useNavigate } from "react-router-dom";
 
 function valuetext(value) {
     return `${value}원`;
@@ -12,11 +15,17 @@ const minDistance = 1000;
 
 const categories = {
     region: ["서울시 마포구", "서울시 강남구", "서울시 강서구", "서울시 동작구"],
-    etc: ["한식", "중식", "일식", "양식", "기타"],
+    etc: ["korean", "chinese", "japanese", "western"],
 };
 
 function MenuContainer() {
+
+    const navigate = useNavigate()
+
+    const [menuAt, setMenuAt] = useRecoilState(menuAtom)
     const [value1, setValue1] = useState([4000, 9000]);
+    const [category, setCategory] = useState(null);
+
 
     const handleChange1 = (event, newValue, activeThumb) => {
         if (!Array.isArray(newValue)) {
@@ -30,7 +39,39 @@ function MenuContainer() {
         }
     };
 
+
+    //카테고리 클릭시 저장
+    function handleCategory(category) {
+        setCategory(category)
+    }
+
+    //적용하기 버튼 클릭시 맥주가격 저장
+    function handleMenu() {
+        setMenuAt((prev) => ({
+            ...prev,
+            underBeer: value1[1],
+            moreBeer: value1[0],
+            category: category
+        }));
+        navigate("/");
+    }
+
+    useEffect(() => {
+        setMenuAt((prev) => ({
+            ...prev,
+            underBeer: 0,
+            moreBeer: 0,
+            category: ''
+        }));
+    }, [])
+
+    console.log(menuAt)
+
+
+
+
     return (
+
         <div className="mt-5 flex w-full flex-col items-center bg-[#F9F9F9] p-10">
             {/* 지역 박스 */}
             <div className="mb-12 flex w-full flex-col justify-start">
@@ -63,24 +104,28 @@ function MenuContainer() {
                     </span>
                 </div>
             </div>
+
+
             {/* 기타 박스 */}
             <div className="mb-12 flex w-full flex-col justify-start">
                 <span className="mb-3 flex text-xl font-semibold">기타</span>
                 <div className="grid grid-cols-3 gap-x-10 gap-y-6">
-                    <span className="hover:cursor-pointer">{categories.etc[0]}</span>
-                    <span className="hover:cursor-pointer">{categories.etc[1]}</span>
-                    <span className="hover:cursor-pointer">{categories.etc[2]}</span>
-                    <span className="hover:cursor-pointer">{categories.etc[3]}</span>
-                    <span
-                        className="line-through hover:cursor-pointer"
-                        onClick={() => {
-                            alert("아직 개발중입니다.");
-                        }}
-                    >
-                        {categories.etc[4]}
-                    </span>
+                    {categories.etc.map((a, i) => (
+                        <span
+                            key={i}
+                            className={`hover:cursor-pointer ${category === a ? 'text-green-500' : ''}`}
+                            onClick={() => handleCategory(a)}
+                        >
+                            {a}
+                        </span>
+
+                    ))}
                 </div>
             </div>
+
+
+
+
             {/* 맥주 박스 */}
             <div className="mb-4 flex w-full flex-col justify-start">
                 <span className="mb-3 flex text-xl font-semibold">맥주 가격</span>
@@ -139,18 +184,23 @@ function MenuContainer() {
                         />
                     </Box>
                     <div className="flex w-[26rem] justify-between">
-                        <span className="text-xs text-[#080707]">{value1[0]}원</span>
+                        < span className="text-xs text-[#080707]">{value1[0]}원</span>
+                        {/* {menuAt.moreBeer ? menuAt.moreBeer : value1[0]}원 */}
                         <span className="text-xs text-[#080707]">{value1[1]}원</span>
+                        {/* {menuAt.underBeer ? menuAt.underBeer : value1[1]}원 */}
                     </div>
                 </div>
             </div>
             {/* 적용하기 버튼 */}
             <div className="mt-4">
-                <button className="rounded-full bg-black px-6 py-2 text-white">
+                <button className="rounded-full bg-black px-6 py-2 text-white"
+                    onClick={handleMenu}
+                >
                     적용하기
                 </button>
+
             </div>
-        </div>
+        </div >
     );
 }
 
