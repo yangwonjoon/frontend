@@ -4,6 +4,8 @@ import magnify from "../../assets/magnify.svg";
 import person from "../../assets/person.svg";
 import { useState } from "react";
 import SearchModal from "../main/SearchModal";
+import { useRecoilState } from "recoil";
+import { userAtom } from "../../recoil/atoms/userAtom";
 
 function Header() {
   const [searchClicked, setSearchClicked] = useState(false);
@@ -12,6 +14,8 @@ function Header() {
   const searchClickHandler = () => {
     setSearchClicked(!searchClicked);
   };
+
+  // const userAt = useRecoilState(userAtom)
 
   return (
     <div className="mt-1 flex h-24 w-full items-start border-b-[1.5px] border-black">

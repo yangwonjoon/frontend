@@ -22,6 +22,10 @@ function LoginContainer() {
     const [userId, setUserId] = useState('');
     const [userPw, setUserPw] = useState('');
 
+    useEffect(() => {
+        console.log(userAt)
+    }, [userAt])
+
     const handleLogin = async () => {
         try {
             // 서버에 로그인 요청
@@ -32,19 +36,21 @@ function LoginContainer() {
 
             // 로그인 성공 시
             if (response && response.data && response.data.status === 'success') {
-                console.log('로그인 성공:', response.data);
-                console.log('useratom', userAt);
+                // setUserAt(true)
+                // console.log(userAt)
                 navigate('/')
-
                 // 'set-cookie' 헤더가 존재하고 비어있지 않은 경우에만 저장
-                if (response.headers['Set-cookie'] && response.headers['Set-cookie'].length > 0) {
-                    // 쿠키에서 JSESSIONID만 추출하여 저장
-                    const jSessionId = response.headers['Set-cookie'][0].split(';')[0];
-                    sessionStorage.setItem('JSESSIONID', jSessionId);
+                // if (response.headers['Set-cookie'] && response.headers['Set-cookie'].length > 0) {
+                //     // 쿠키에서 JSESSIONID만 추출하여 저장
+                //     const jSessionId = response.headers['Set-cookie'][0].split(';')[0];
+                //     sessionStorage.setItem('JSESSIONID', jSessionId);
 
-                    // 콘솔에 저장된 JSESSIONID 출력
-                    console.log('세션 스토리지에 저장된 JSESSIONID:', jSessionId);
-                }
+
+                //     // 콘솔에 저장된 JSESSIONID 출력
+                //     console.log('세션 스토리지에 저장된 JSESSIONID:', JSON.stringify(jSessionId));
+                // } else {
+                //     console.log("실패")
+                // }
             } else {
                 console.log('로그인 실패:', response.data.message);
             }
@@ -60,12 +66,12 @@ function LoginContainer() {
     };
 
     // 컴포넌트가 마운트될 때 세션 스토리지에서 JSESSIONID를 가져와 axios 설정에 추가
-    useEffect(() => {
-        const sessionStorageJSessionId = sessionStorage.getItem('JSESSIONID');
-        if (sessionStorageJSessionId) {
-            axios.defaults.headers.common['Cookie'] = sessionStorageJSessionId;
-        }
-    }, []);
+    // useEffect(() => {
+    //     const sessionStorageJSessionId = sessionStorage.getItem('JSESSIONID');
+    //     if (sessionStorageJSessionId) {
+    //         axios.defaults.headers.common['Cookie'] = sessionStorageJSessionId;
+    //     }
+    // }, []);
 
     return (
         <div className="mt-5 flex w-full p-4">

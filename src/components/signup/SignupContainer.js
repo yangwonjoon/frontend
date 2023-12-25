@@ -14,7 +14,7 @@ const Signup = () => {
     const navigate = useNavigate();
     const [passwordMatch, setPasswordMatch] = useState(true);
 
-    const config = { "Content-Type": 'application/json' }; //json 형태로
+    // const config = { "Content-Type": 'application/json' }; //json 형태로
 
     const checkNicknameAvailability = async () => {
         try {

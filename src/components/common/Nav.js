@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import category from "../../assets/category.svg";
 import axios from "axios";
+import { userAtom } from "../../recoil/atoms/userAtom";
+import { useRecoilState } from "recoil";
 
 function valuetext(value) {
     return `${value}원`;
@@ -16,6 +18,7 @@ const minDistance = 1000;
 
 function Nav() {
 
+    const [userAt, setUserAt] = useRecoilState(userAtom)
     const navigate = useNavigate()
     //초기값
     const [value1, setValue1] = useState([3000, 8000]);
@@ -39,7 +42,9 @@ function Nav() {
             const response = await axios.post('http://localhost:8080/api/logout');
 
             if (response && response.data && response.data.status === 'success') {
-                console.log('로그아웃 성공');
+                // setUserAt(false)
+                // console.log('로그아웃 성공');
+
                 // Clear the JSESSIONID from sessionStorage
                 sessionStorage.removeItem('JSESSIONID');
             } else {
@@ -54,6 +59,10 @@ function Nav() {
             }
         }
     };
+
+    // useEffect(() => {
+    //     console.log(userAt)
+    // }, [userAt])
 
     useEffect(() => {
         // value1이 변경될 때 axios 요청 트리거
