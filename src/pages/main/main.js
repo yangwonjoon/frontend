@@ -2,16 +2,18 @@ import Header from "../../components/common/Header";
 import NavBar from "../../components/common/Nav";
 import Footer from "../../components/common/Footer";
 import Content from "../../components/main/Content"
-import { useRecoilState, useRecoilValueLoadable } from "recoil";
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable } from "recoil";
 import { restaurantSelector } from "../../recoil/selectors/restaurantSeletor";
 import { useLocation } from "react-router-dom";
-import { restaurantAtom } from "../../recoil/atoms/restaurantAtom";
+import { menuAtom, restaurantAtom } from "../../recoil/atoms/menuAtom";
 import { useEffect } from "react";
 
 
 const Main = () => {
 
   const location = useLocation();
+  const menuAt = useRecoilValue(menuAtom)
+  console.log(menuAt)
 
   //소주가격 클릭시 데이터
   const filteredData = location.state?.filteredData;

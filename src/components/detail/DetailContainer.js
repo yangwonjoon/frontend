@@ -15,13 +15,6 @@ import { detailAtom } from "../../recoil/atoms/detailAtom";
 
 function DetailContainer() {
 
-  const loginCookie = document.cookie;
-  if (loginCookie) {
-    console.log(loginCookie)
-  } else {
-    console.log("no")
-  }
-
 
   const navigate = useNavigate();
   //해당 가게 데이터
