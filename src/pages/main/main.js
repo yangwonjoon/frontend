@@ -13,7 +13,7 @@ const Main = () => {
 
   const location = useLocation();
   const menuAt = useRecoilValue(menuAtom)
-  console.log(menuAt)
+
 
   //소주가격 클릭시 데이터
   const filteredData = location.state?.filteredData;

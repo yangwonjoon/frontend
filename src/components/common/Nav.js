@@ -8,7 +8,8 @@ import Slider from "@mui/material/Slider";
 import category from "../../assets/category.svg";
 import axios from "axios";
 import { userAtom } from "../../recoil/atoms/userAtom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { menuAtom } from "../../recoil/atoms/menuAtom"
 
 function valuetext(value) {
     return `${value}원`;
@@ -18,7 +19,6 @@ const minDistance = 1000;
 
 function Nav() {
 
-    const [userAt, setUserAt] = useRecoilState(userAtom)
     const navigate = useNavigate()
     //초기값
     const [value1, setValue1] = useState([3000, 8000]);
@@ -60,9 +60,9 @@ function Nav() {
         }
     };
 
-    // useEffect(() => {
-    //     console.log(userAt)
-    // }, [userAt])
+    const menuAt = useRecoilValue(menuAtom)
+
+    console.log(menuAt)
 
     useEffect(() => {
         // value1이 변경될 때 axios 요청 트리거
@@ -71,9 +71,32 @@ function Nav() {
                 const moreSojuPrice = value1[0];
                 const underSojuPrice = value1[1];
 
+                let baseUrl = `api/restaurant/info?moreSojuPrice=${moreSojuPrice}&underSojuPrice=${underSojuPrice}`
+                const categoryUrl = `&category=${menuAt.category}`
+                const moreBeerUrl = `&moreBeerPrice=${menuAt.moreBeer}`
+                const underBeerUrl = `&underBeerPrice=${menuAt.underBeer}`
+                const queryParams = [];
+
+                if (menuAt.category) {
+                    queryParams.push(`category=${menuAt.category}`);
+                }
+
+                if (menuAt.moreBeer) {
+                    queryParams.push(`moreBeerPrice=${menuAt.moreBeer}`);
+                }
+
+                if (menuAt.underBeer) {
+                    queryParams.push(`underBeerPrice=${menuAt.underBeer}`);
+                }
+                const fullUrl = `${baseUrl}&${queryParams.join("&")}`;
+
                 const response = await axios.get(
-                    `api/restaurant/info?moreSojuPrice=${moreSojuPrice}&underSojuPrice=${underSojuPrice}`
+                    // menuAt.category
+                    //     ? `api/restaurant/info?moreSojuPrice=${moreSojuPrice}&underSojuPrice=${underSojuPrice}&category=${menuAt.category}`
+                    //     : `api/restaurant/info?moreSojuPrice=${moreSojuPrice}&underSojuPrice=${underSojuPrice}`  
+                    fullUrl
                 );
+                console.log(queryParams)
 
                 navigate("/", { state: { filteredData: response.data } });
                 // console.log(response.data);
@@ -84,6 +107,7 @@ function Nav() {
 
         filter();
     }, [value1]);
+
 
     return (
 
