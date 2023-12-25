@@ -14,6 +14,9 @@ import Menu from "./pages/menu/menu";
 
 
 function App() {
+
+  
+
   return (
     <div className="App">
       <div className="mx-auto my-0 h-full min-w-[320px] max-w-[640px]">

@@ -15,11 +15,13 @@ import { detailAtom } from "../../recoil/atoms/detailAtom";
 
 function DetailContainer() {
 
-  const userAt = useRecoilValue(userAtom)
-  console.log(userAt)
+  const loginCookie = document.cookie;
+  if (loginCookie) {
+    console.log(loginCookie)
+  } else {
+    console.log("no")
+  }
 
-  const jSessionId = sessionStorage.getItem("JSESSIONID");
-  console.log(jSessionId)
 
   const navigate = useNavigate();
   //해당 가게 데이터

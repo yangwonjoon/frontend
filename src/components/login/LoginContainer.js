@@ -5,12 +5,15 @@ import axios from 'axios';
 import { useRecoilState } from "recoil";
 import { userAtom } from "../../recoil/atoms/userAtom";
 
+axios.defaults.withCredentials = true;
+
 
 function LoginContainer() {
 
 
     const [userAt, setUserAt] = useRecoilState(userAtom)
     const navigate = useNavigate();
+    const config = { "Content-Type": 'application/json' }; //json 형태로
 
     // 비밀번호 가리기/보이기를 처리하는 state
     const [showPassword, setShowPassword] = useState(false);
@@ -25,7 +28,7 @@ function LoginContainer() {
             const response = await axios.post('http://localhost:8080/api/login', {
                 userID: userId,
                 userPW: userPw,
-            });
+            }, config);
 
             // 로그인 성공 시
             if (response && response.data && response.data.status === 'success') {

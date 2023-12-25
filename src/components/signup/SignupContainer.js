@@ -14,9 +14,11 @@ const Signup = () => {
     const navigate = useNavigate();
     const [passwordMatch, setPasswordMatch] = useState(true);
 
+    const config = { "Content-Type": 'application/json' }; //json 형태로
+
     const checkNicknameAvailability = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/api/checkNickname', { nickname });
+            const response = await axios.post('api/checkNickname', { nickname });
 
             setIsNicknameAvailable(!response.data.duplication);
         } catch (error) {
@@ -26,8 +28,7 @@ const Signup = () => {
 
     const checkUserIdAvailability = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/api/checkUserId', { userID: userId });
-
+            const response = await axios.post('api/checkUserId', { userID: userId });
             setIsUserIdAvailable(!response.data.duplication);
         } catch (error) {
             console.error('Error checking user ID availability:', error);
@@ -61,7 +62,7 @@ const Signup = () => {
                 return;
             }
 
-            const response = await axios.post('http://localhost:8080/api/signup', {
+            const response = await axios.post('api/signup', {
                 userID: userId,
                 userPW: password,
                 nickname: nickname,
