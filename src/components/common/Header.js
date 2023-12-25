@@ -15,8 +15,6 @@ function Header() {
     setSearchClicked(!searchClicked);
   };
 
-  // const userAt = useRecoilState(userAtom)
-
   return (
     <div className="mt-1 flex h-24 w-full items-start border-b-[1.5px] border-black">
       <div className="flex basis-1/3"></div>
@@ -25,8 +23,9 @@ function Header() {
           src={logo}
           alt="logo"
           className="w-[200px] hover:cursor-pointer"
-          onClick={() => {
-            navigate("/");
+          onClick={(e) => {
+            e.preventDefault()
+            navigate("/")
           }}
         ></img>
       </div>

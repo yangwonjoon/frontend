@@ -12,8 +12,6 @@ import { useEffect } from "react";
 const Main = () => {
 
   const location = useLocation();
-  const menuAt = useRecoilValue(menuAtom)
-
 
   //소주가격 클릭시 데이터
   const filteredData = location.state?.filteredData;

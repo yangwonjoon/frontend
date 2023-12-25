@@ -61,7 +61,6 @@ function Nav() {
     };
 
     const menuAt = useRecoilValue(menuAtom)
-
     console.log(menuAt)
 
     useEffect(() => {
@@ -72,31 +71,22 @@ function Nav() {
                 const underSojuPrice = value1[1];
 
                 let baseUrl = `api/restaurant/info?moreSojuPrice=${moreSojuPrice}&underSojuPrice=${underSojuPrice}`
-                const categoryUrl = `&category=${menuAt.category}`
-                const moreBeerUrl = `&moreBeerPrice=${menuAt.moreBeer}`
-                const underBeerUrl = `&underBeerPrice=${menuAt.underBeer}`
-                const queryParams = [];
+                const plusParams = [];
 
                 if (menuAt.category) {
-                    queryParams.push(`category=${menuAt.category}`);
+                    plusParams.push(`category=${menuAt.category}`);
                 }
 
                 if (menuAt.moreBeer) {
-                    queryParams.push(`moreBeerPrice=${menuAt.moreBeer}`);
+                    plusParams.push(`moreBeerPrice=${menuAt.moreBeer}`);
                 }
 
                 if (menuAt.underBeer) {
-                    queryParams.push(`underBeerPrice=${menuAt.underBeer}`);
+                    plusParams.push(`underBeerPrice=${menuAt.underBeer}`);
                 }
-                const fullUrl = `${baseUrl}&${queryParams.join("&")}`;
+                const fullUrl = `${baseUrl}&${plusParams.join("&")}`;
 
-                const response = await axios.get(
-                    // menuAt.category
-                    //     ? `api/restaurant/info?moreSojuPrice=${moreSojuPrice}&underSojuPrice=${underSojuPrice}&category=${menuAt.category}`
-                    //     : `api/restaurant/info?moreSojuPrice=${moreSojuPrice}&underSojuPrice=${underSojuPrice}`  
-                    fullUrl
-                );
-                console.log(queryParams)
+                const response = await axios.get(fullUrl);
 
                 navigate("/", { state: { filteredData: response.data } });
                 // console.log(response.data);

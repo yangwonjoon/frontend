@@ -24,6 +24,7 @@ function MenuContainer() {
 
     const [menuAt, setMenuAt] = useRecoilState(menuAtom)
     const [value1, setValue1] = useState([4000, 9000]);
+    const [category, setCategory] = useState(null);
 
 
     const handleChange1 = (event, newValue, activeThumb) => {
@@ -38,23 +39,35 @@ function MenuContainer() {
         }
     };
 
-    const [category, setCategory] = useState('')
 
     //카테고리 클릭시 저장
-    function handleCategory(a) {
-        setCategory(a)
+    function handleCategory(category) {
+        setCategory(category)
     }
 
     //적용하기 버튼 클릭시 맥주가격 저장
     function handleMenu() {
         setMenuAt((prev) => ({
             ...prev,
-            category: category,
             underBeer: value1[1],
-            moreBeer: value1[0]
+            moreBeer: value1[0],
+            category: category
         }));
-        navigate('/')
+        navigate("/");
     }
+
+    useEffect(() => {
+        setMenuAt((prev) => ({
+            ...prev,
+            underBeer: 0,
+            moreBeer: 0,
+            category: ''
+        }));
+    }, [])
+
+    console.log(menuAt)
+
+
 
 
     return (
@@ -110,7 +123,7 @@ function MenuContainer() {
                 </div>
             </div>
 
-            {console.log(menuAt)}
+
 
 
             {/* 맥주 박스 */}
@@ -185,6 +198,7 @@ function MenuContainer() {
                 >
                     적용하기
                 </button>
+
             </div>
         </div >
     );
