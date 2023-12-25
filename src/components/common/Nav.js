@@ -41,27 +41,16 @@ function Nav() {
         try {
             const response = await axios.post('http://localhost:8080/api/logout');
 
-            if (response && response.data && response.data.status === 'success') {
-                // setUserAt(false)
-                // console.log('로그아웃 성공');
+            sessionStorage.removeItem('user')
 
-                // Clear the JSESSIONID from sessionStorage
-                sessionStorage.removeItem('JSESSIONID');
-            } else {
-                console.log('로그아웃 실패:', response.data.message);
-            }
         } catch (error) {
             console.error('로그아웃 중 오류 발생:', error);
             console.log('서버 응답:', error.response);
-
-            if (error.response && error.response.data) {
-                console.log('로그아웃 실패:', error.response.data.message);
-            }
         }
     };
 
     const menuAt = useRecoilValue(menuAtom)
-    console.log(menuAt)
+    // console.log(menuAt)
 
     useEffect(() => {
         // value1이 변경될 때 axios 요청 트리거
