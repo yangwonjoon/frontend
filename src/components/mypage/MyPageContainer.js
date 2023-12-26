@@ -1,19 +1,39 @@
 import { useEffect, useState } from "react";
-import MySavedContent from "../common/MySavedContent";
+import MySavedContent from "./MySavedContent";
 import MyCommentContent from "../common/MyCommentContent";
 import pencil from "../../assets/pencil.svg";
 import cancel from "../../assets/cancel.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { myBookmarkSelector } from "../../recoil/selectors/myBookmarkSelector";
 
 function MyPageContainer() {
 
   const navigate = useNavigate()
   const session = sessionStorage.getItem('user')
+  const session_id = session ? JSON.parse(session).id : null;
 
   const [likeClicked, setLikeClicked] = useState(true);
   const [commentClicked, setCommentClicked] = useState(false);
+  const [bookmark, setBookmark] = useState([])
 
+  useEffect(() => {
+    const checkBookmark = async () => {
+
+      try {
+        const response = await axios.get(`api/bookmarks?userID=${session_id}`);
+        setBookmark(response.data);
+
+
+      } catch (error) {
+        console.error("checkbookmark error:", error);
+      }
+    };
+
+    checkBookmark();
+  }, [session_id]);
+  // const [myBookmarkSel, SetMyBookmarkSel] = useRecoilState(myBookmarkSelector)
 
 
   return (
@@ -52,10 +72,17 @@ function MyPageContainer() {
               <span className="mt-3 text-lg">내가 쓴 댓글</span>
             </div>
           </div>
-          <MySavedContent />
-          <MySavedContent />
-          <MySavedContent />
-          <MySavedContent />
+          {
+            bookmark.map(function (a, i) {
+              return (
+                <MySavedContent data={bookmark} i={i} key={i} />
+              )
+            })
+          }
+
+
+
+
         </>
       ) : (
         <>
