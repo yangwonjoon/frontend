@@ -17,22 +17,49 @@ function Detail() {
   //클릭한 가게 데이터
   const [detailAt, setDetailAt] = useRecoilState(detailAtom);
 
-  //url parma과 전체데이터중 맞는 데이터 res에 저장
-  let res = restaurantSel.find(function (x) {
-    return x.restaurant_seq == id
-  });
-
   useEffect(() => {
+    let isMounted = true;
 
-    //detailAtom에 res값 저장
-    if (res) {
-      setDetailAt((prev) => ({
-        ...prev,
-        ...res,
-      }));
-    }
+    const fetchData = async () => {
+      try {
+        let res = restaurantSel.find(function (x) {
+          return x.restaurant_seq == id;
+        });
 
-  }, [res, setDetailAt])
+        if (isMounted && res) {
+          setDetailAt((prev) => ({
+            ...prev,
+            ...res,
+          }));
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [id, restaurantSel, setDetailAt]);
+
+  // //url parma과 전체데이터중 맞는 데이터 res에 저장
+  // let res = restaurantSel.find(function (x) {
+  //   return x.restaurant_seq == id
+  // });
+
+  // useEffect((e) => {
+
+  //   //detailAtom에 res값 저장
+  //   if (res) {
+  //     setDetailAt((prev) => ({
+  //       ...prev,
+  //       ...res,
+  //     }));
+  //   }
+
+  // }, [res, setDetailAt])
 
   return (
     <div className="flex flex-col items-center justify-center">
