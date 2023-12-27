@@ -9,13 +9,6 @@ function AI() {
     //레스토랑 전체 데이터
     const dataLoadable = useRecoilValueLoadable(restaurantSelector);
 
-    //레스토랑 전체 데이터 restaurantAtom에 저장
-    // const [restaurantAt, setRestaurantAt] = useRecoilState(restaurantAtom)
-    // useEffect(() => {
-    //   setRestaurantAt(dataLoadable.contents)
-    // }, [dataLoadable.contents])
-    // const sojAt = useRecoilValue(sojuAtom)
-
     //dataLoadable -> loading, hasValue, hasError
     switch (dataLoadable.state) {
         //로딩중일경우

@@ -4,6 +4,10 @@ import { useDropzone } from "react-dropzone";
 import picture from "../../assets/picture.svg";
 import AiSearching from "../../assets/AiSearching.png"
 
+import axios from "axios";
+
+axios.defaults.withCredentials = false;
+
 function AiContainer() {
     const [aiState, setAIState] = useState("Not Started");
     const [uploadedImage, setUploadedImage] = useState(null);
@@ -16,9 +20,37 @@ function AiContainer() {
             const reader = new FileReader();
 
             // 파일 읽기가 성공적으로 완료되면 실행될 콜백 함수
-            reader.onload = () => {
+            reader.onload = async () => {
                 setUploadedImage(reader.result);
                 setAIState("In Progress");
+
+
+                const formData = new FormData();
+                formData.append("analyzeImg", file);
+
+
+                // axios.post("api/image-analyze", formData)
+                //     .then((response) => {
+                //         console.log("Success:", response.data);
+                //         // Handle the response data
+                //     })
+                //     .catch((error) => {
+                //         console.error("Error:", error);
+                //         // Handle errors
+                //     });
+                try {
+                    console.log("Request URL:", '/hi/image-analyze');
+
+                    const response = await axios.post('http://127.0.0.1:5000/hi/image-analyze', formData);
+                    console.log(response.data)
+
+                } catch (error) {
+                    // 에러 처리
+                    console.error(error);
+
+                }
+
+
             };
 
             // 파일 읽기 오류 처리
@@ -34,6 +66,8 @@ function AiContainer() {
         }
     }, []);
 
+
+
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
     useEffect(() => {
@@ -42,7 +76,8 @@ function AiContainer() {
             setTimeout(() => {
                 setIsLoading(false);
                 setAIState("Done");
-            }, 10000);
+            }, 5000);
+
         }
     }, [aiState]);
 
@@ -108,3 +143,4 @@ function AiContainer() {
 }
 
 export default AiContainer;
+
