@@ -5,13 +5,31 @@ import picture from "../../assets/picture.svg";
 import AiSearching from "../../assets/AiSearching.png"
 
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+import { useRecoilState } from "recoil";
+import { menuAtom } from "../../recoil/atoms/menuAtom";
 
 axios.defaults.withCredentials = false;
 
 function AiContainer() {
+
+    const navigate = useNavigate()
+
+    const [menuAt, setMenuAt] = useRecoilState(menuAtom)
+
     const [aiState, setAIState] = useState("Not Started");
     const [uploadedImage, setUploadedImage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        setMenuAt((prev) => ({
+            ...prev,
+            underBeer: 0,
+            moreBeer: 0,
+            category: ''
+        }));
+    }, [])
 
     const onDrop = useCallback((acceptedFiles) => {
         const file = acceptedFiles[0];
@@ -42,7 +60,16 @@ function AiContainer() {
                     console.log("Request URL:", '/hi/image-analyze');
 
                     const response = await axios.post('http://127.0.0.1:5000/hi/image-analyze', formData);
-                    console.log(response.data)
+                    console.log("menuat", menuAt)
+
+                    setMenuAt((prev) => ({
+                        ...prev,
+                        // underBeer: 9000,
+                        // moreBeer: 4000,
+                        category: response.data.category
+                    }));
+                    setAIState('Done');
+                    navigate('/')
 
                 } catch (error) {
                     // 에러 처리

@@ -107,7 +107,7 @@ function Nav() {
 
         filter();
     }, [value1]);
-
+    console.log(menuAt)
 
     return (
 
