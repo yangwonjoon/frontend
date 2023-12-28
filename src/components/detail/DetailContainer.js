@@ -70,7 +70,7 @@ function DetailContainer() {
     };
 
     useEffect(() => {
-        // Fetch comments when the component mounts
+
         fetchComments();
     }, [detailAt.restaurant_seq]);
 
@@ -78,12 +78,12 @@ function DetailContainer() {
         <div className="mt-5 flex w-full flex-col items-center bg-[#F9F9F9] p-7">
             <div className="flex w-full items-center justify-between">
                 <div className="flex items-center">
-                    <img
+                    {/* <img
                         src={starCliked ? filledStar : star}
                         alt="star"
                         className="w-6 hover:cursor-pointer"
                         onClick={saveClickHandler}
-                    />
+                    /> */}
                     <div className="flex items-end">
                         <span className="ml-3 text-2xl text-[#325FFF] hover:cursor-pointer">
                             {detailAt.restaurantName}
@@ -201,12 +201,6 @@ function DetailContainer() {
                             <span className="text-sm">{comment.userID}</span>
                             <div className="mb-2 ml-1 mt-1 flex h-9 w-full items-center justify-between rounded-lg bg-[#EFEFEF] px-3">
                                 <span className="text-sm">{comment.content}</span>
-                                <button
-                                    type="button"
-                                    className="flex h-7 w-12 items-center justify-center rounded-lg border-[1px] border-[#CFCFCF] bg-[#F3F3F3] text-sm text-[#2C2C2C]"
-                                >
-                                    수정
-                                </button>
                             </div>
                         </div>
                     ))}

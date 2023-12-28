@@ -18,31 +18,26 @@ function Detail() {
   const [detailAt, setDetailAt] = useRecoilState(detailAtom);
 
   useEffect(() => {
-    let isMounted = true;
 
-    const fetchData = async () => {
-      try {
-        let res = restaurantSel.find(function (x) {
-          return x.restaurant_seq == id;
-        });
 
-        if (isMounted && res) {
-          setDetailAt((prev) => ({
-            ...prev,
-            ...res,
-          }));
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
+
+    try {
+      let res = restaurantSel.find(function (x) {
+        return x.restaurant_seq == id;
+      });
+
+      if (res) {
+        setDetailAt((prev) => ({
+          ...prev,
+          ...res,
+        }));
       }
-    };
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
 
-    fetchData();
 
-    return () => {
-      isMounted = false;
-    };
-  }, [id, restaurantSel, setDetailAt]);
+  }, []);
 
   // //url parma과 전체데이터중 맞는 데이터 res에 저장
   // let res = restaurantSel.find(function (x) {

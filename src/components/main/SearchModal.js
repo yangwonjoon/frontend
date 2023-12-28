@@ -1,6 +1,20 @@
+import React, { useState } from "react";
+import { useRecoilState } from "recoil";
+
 function SearchModal({ onCancelClick }) {
+
+    const [searchQuery, setSearchQuery] = useState("");
+    //const [searchAt, setSearchAt] = useRecoilState("");
+
     const handleContainerClick = (e) => {
         e.stopPropagation();
+    };
+
+    const handleSearch = () => {
+
+        //setSearchAt(searchQuery)
+        console.log(searchQuery)
+
     };
 
     return (
@@ -16,7 +30,12 @@ function SearchModal({ onCancelClick }) {
                     type="text"
                     placeholder="가게이름을 입력하세요."
                     className="ml-4 w-80 text-lg outline-none placeholder:font-bold"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                 />
+                <button className="ml-2" onClick={handleSearch}>
+                    검색
+                </button>
             </div>
         </div>
     );
