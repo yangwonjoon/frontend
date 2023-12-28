@@ -2,11 +2,36 @@ import React from "react";
 import filledStar from "../../assets/filled_star.svg";
 import X from "../../assets/mypageX.svg";
 
-function MySavedContent({ data, i }) {
+import axios from "axios";
 
-
+function MySavedContent({ data, i, id }) {
 
   const item = data
+
+  const session = sessionStorage.getItem('user')
+  const session_id = session ? JSON.parse(session).id : null;
+
+  console.log(session_id)
+  console.log(item[i].restaurant_seq)
+
+  const handleBookmarkDelete = async () => {
+    try {
+      const response = await axios.post("api/bookmarks/delete", {
+        userID: session_id,
+        restaurant_seq: item[i].restaurant_seq,
+      });
+
+      console.log(id);
+      console.log(item.restaurant_seq);
+
+      if (response.data) {
+        console.log("delete");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
   return (
     <div className="relative mb-5 flex h-24 w-full flex-row bg-white p-6 shadow-md">
@@ -38,6 +63,7 @@ function MySavedContent({ data, i }) {
         src={X}
         alt="x"
         className="absolute right-3 top-4 w-4 hover:cursor-pointer"
+        onClick={handleBookmarkDelete}
       />
     </div>
   );

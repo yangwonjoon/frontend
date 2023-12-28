@@ -107,7 +107,8 @@ function DetailContainer() {
                         key={i}
                         src={url}
                         alt={`img${i + 1}`}
-                        className="w-full hover:cursor-pointer"
+                        className="h-[300px] w-full hover:cursor-pointer
+                        "
                     />
                 ))}
 

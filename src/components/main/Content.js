@@ -146,7 +146,7 @@ function Content({ i, data }) {
                                 key={i}
                                 src={url}
                                 alt={`img${i}`}
-                                className="rounded-lg"
+                                className="h-24 w-36 rounded-lg object-cover object-center"
                                 onClick={() => (navigate(`detail/${data[i].restaurant_seq}`))}
                             />
                         )

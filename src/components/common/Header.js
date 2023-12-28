@@ -33,14 +33,14 @@ function Header() {
         ></img>
       </div>
       <div className="flex basis-1/3 justify-end">
-        <img
+        {/* <img
           src={magnify}
           alt="magnify"
           className="mr-5 mt-6 flex w-8 hover:cursor-pointer"
           onClick={() => {
             setSearchClicked(true);
           }}
-        />
+        /> */}
         <img
           src={person}
           alt="person"

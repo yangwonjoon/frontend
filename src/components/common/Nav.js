@@ -195,22 +195,7 @@ function Nav() {
                         navigate("/menu");
                     }}
                 />
-                <button
-                    type="button"
-                    onClick={handleLogout}
-                    style={{
-                        width: '100%',
-                        height: '40px',
-                        borderRadius: '5px',
-                        fontSize: '17px',
-                        fontWeight: 'bold',
-                        backgroundColor: '#e74c3c',
-                        color: 'white',
-                        cursor: 'pointer',
-                        marginTop: '20px',
-                    }}>
-                    로그아웃
-                </button>
+
             </div>
         </div>
     );

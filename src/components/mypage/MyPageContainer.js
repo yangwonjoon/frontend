@@ -25,7 +25,7 @@ function MyPageContainer() {
       try {
         const bookresponse = await axios.get(`api/bookmarks?userID=${session_id}`);
         setBookmark(bookresponse.data);
-
+        console.log(bookresponse.data);
 
       } catch (error) {
         console.error("checkbookmark error:", error);
@@ -40,9 +40,9 @@ function MyPageContainer() {
     const checkComment = async () => {
 
       try {
-        const commentsResponse = await axios.get(`api/mypage/comments?userID=${session_id}`);
+        const commentsResponse = await axios.get(`api/comments/mypage?userID=${session_id}`);
         setComments(commentsResponse.data)
-        console.log(commentsResponse)
+        // console.log(commentsResponse.data);
 
       } catch (error) {
         console.error("comments error:", error);
@@ -124,15 +124,14 @@ function MyPageContainer() {
               <span className="mt-2 text-xl">내가 쓴 댓글</span>
             </div>
           </div>
-          {
+          {/* {
             bookmark.map(function (a, i) {
               return (
-                <MyCommentContent data={comments} i={i} key={i} />
+                <MyCommentContent data={comments} i={i} key={i} id={session_id} />
               )
             })
-          }
+          } */}
 
-          <MyCommentContent />
         </>
       )}
     </div>

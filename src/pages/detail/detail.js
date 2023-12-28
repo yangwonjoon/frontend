@@ -19,8 +19,6 @@ function Detail() {
 
   useEffect(() => {
 
-
-
     try {
       let res = restaurantSel.find(function (x) {
         return x.restaurant_seq == id;
