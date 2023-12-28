@@ -19,6 +19,9 @@ const minDistance = 1000;
 
 function Nav() {
 
+    const session = sessionStorage.getItem('user')
+    const session_id = session ? JSON.parse(session).id : null;
+
     const navigate = useNavigate()
     //초기값
     const [value1, setValue1] = useState([3000, 8000]);
@@ -39,29 +42,36 @@ function Nav() {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/api/logout');
+            await axios.post('api/logout', { userID: session_id }, { withCredentials: true });
 
-            if (response && response.data && response.data.status === 'success') {
-                // setUserAt(false)
-                // console.log('로그아웃 성공');
+            sessionStorage.removeItem('user');
+            window.location.reload();
+        }
+        // catch (error) {
+        //     console.error('로그아웃 중 오류 발생:', error);
+        //     console.log('서버 응답:', error.response);
+        // }
+        catch (error) {
+            console.error('An error occurred while logging out:', error);
 
-                // Clear the JSESSIONID from sessionStorage
-                sessionStorage.removeItem('JSESSIONID');
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.log('Server responded with data:', error.response.data);
+                console.log('Status code:', error.response.status);
+                console.log('Headers:', error.response.headers);
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.log('No response received. Request details:', error.request);
             } else {
-                console.log('로그아웃 실패:', response.data.message);
-            }
-        } catch (error) {
-            console.error('로그아웃 중 오류 발생:', error);
-            console.log('서버 응답:', error.response);
-
-            if (error.response && error.response.data) {
-                console.log('로그아웃 실패:', error.response.data.message);
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error setting up the request:', error.message);
             }
         }
     };
 
     const menuAt = useRecoilValue(menuAtom)
-    console.log(menuAt)
+    // console.log(menuAt)
 
     useEffect(() => {
         // value1이 변경될 때 axios 요청 트리거
@@ -97,7 +107,7 @@ function Nav() {
 
         filter();
     }, [value1]);
-
+    console.log(menuAt)
 
     return (
 
@@ -185,22 +195,7 @@ function Nav() {
                         navigate("/menu");
                     }}
                 />
-                <button
-                    type="button"
-                    onClick={handleLogout}
-                    style={{
-                        width: '100%',
-                        height: '40px',
-                        borderRadius: '5px',
-                        fontSize: '17px',
-                        fontWeight: 'bold',
-                        backgroundColor: '#e74c3c',
-                        color: 'white',
-                        cursor: 'pointer',
-                        marginTop: '20px',
-                    }}>
-                    로그아웃
-                </button>
+
             </div>
         </div>
     );

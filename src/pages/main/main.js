@@ -18,6 +18,8 @@ const Main = () => {
   //소주 전체 데이터
   const dataLoadable = useRecoilValueLoadable(restaurantSelector)
 
+ 
+
   //dataLoadable -> loading, hasValue, hasError
   switch (dataLoadable.state) {
     //로딩중일경우
