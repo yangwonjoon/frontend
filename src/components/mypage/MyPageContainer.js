@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import MySavedContent from "./MySavedContent";
-import MyCommentContent from "./MyCommentContent";
 import pencil from "../../assets/pencil.svg";
 import cancel from "../../assets/cancel.svg";
 import { useNavigate } from "react-router-dom";

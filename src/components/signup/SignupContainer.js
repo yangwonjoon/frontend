@@ -4,16 +4,20 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 const Signup = () => {
-    const [showPassword, setShowPassword] = useState(false);
-    const [nickname, setNickname] = useState('');
-    const [isNicknameAvailable, setIsNicknameAvailable] = useState(null);
+
+    const navigate = useNavigate();
+
     const [userId, setUserId] = useState('');
-    const [isUserIdAvailable, setIsUserIdAvailable] = useState(null);
     const [password, setPassword] = useState('');
     const [repassword, setRepassword] = useState('');
-    const navigate = useNavigate();
-    const [passwordMatch, setPasswordMatch] = useState(true);
+    const [nickname, setNickname] = useState('');
 
+
+    const [isNicknameAvailable, setIsNicknameAvailable] = useState(null);
+    const [passwordMatch, setPasswordMatch] = useState(true);
+    const [isUserIdAvailable, setIsUserIdAvailable] = useState(null);
+
+    const [showPassword, setShowPassword] = useState(false);
     // const config = { "Content-Type": 'application/json' }; //json 형태로
 
     const checkNicknameAvailability = async () => {
@@ -29,6 +33,7 @@ const Signup = () => {
     const checkUserIdAvailability = async () => {
         try {
             const response = await axios.post('api/checkUserId', { userID: userId });
+
             setIsUserIdAvailable(!response.data.duplication);
         } catch (error) {
             console.error('Error checking user ID availability:', error);
@@ -100,7 +105,7 @@ const Signup = () => {
                             중복 체크
                         </button>
                     </div>
-                    <div style={{ fontSize: '10px', color: isNicknameAvailable === true ? 'blue' : 'red', textAlign: 'left', marginTop: '-5px', fontWeight: 'bold' }}>
+                    <div style={{ fontSize: '10px', color: isNicknameAvailable === true ? 'blue' : 'red', textAlign: 'left', fontWeight: 'bold' }}>
                         {isNicknameAvailable === true ? '사용 가능' : isNicknameAvailable === false ? '사용 불가능' : ''}
                     </div>
                     {/* 이부분 css추가 */}
@@ -121,6 +126,9 @@ const Signup = () => {
                             중복 체크
                         </button>
                     </div>
+                    <div style={{ fontSize: '10px', color: isUserIdAvailable === true ? 'blue' : 'red', textAlign: 'left', fontWeight: 'bold' }}>
+                        {isUserIdAvailable === true ? '사용 가능' : '사용 불가능'}
+                    </div>
                     <div className="mt-7 flex w-72 justify-between border-b-[1px] border-[#000000]">
                         <input
                             type={showPassword ? "text" : "password"}
@@ -138,10 +146,6 @@ const Signup = () => {
                                 setShowPassword(!showPassword);
                             }}
                         />
-                        <div style={{ fontSize: '10px', color: 'red', textAlign: 'left', marginTop: '-5px', fontWeight: 'bold' }}>
-                            {passwordMatch === false ? '비밀번호가 일치하지 않습니다.' : ''}
-                        </div>
-                        {/* 이부분추가 */}
                     </div>
                     <span className="text-xs font-medium text-[#5a5a5a]">
                         *대문자, 소문자, 숫자 활용하여 10글자 이상
@@ -157,7 +161,7 @@ const Signup = () => {
                             className="font-Pretendard placeholder:font-DoHyeon flex h-7 w-52 outline-none placeholder:text-sm placeholder:text-[#000000]"
                         />
                     </div>
-                    <div style={{ fontSize: '10px', color: 'red', textAlign: 'left', marginTop: '-5px', fontWeight: 'bold' }}>
+                    <div style={{ fontSize: '10px', color: 'red', textAlign: 'left', fontWeight: 'bold' }}>
                         {passwordMatch === false ? '비밀번호가 일치하지 않습니다.' : ''}
                     </div>
                     {/* 추가 */}
