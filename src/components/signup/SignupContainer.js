@@ -103,35 +103,7 @@ const Signup = () => {
         }
     };
 
-    //회원가입 버튼
-    // const handleSignup = async () => {
-
-    //     if (signup.nickname && signup.userId && validData.password && (formData.password === formData.repassword)) {
-    //         try {
-
-    //             const response = await axios.post('api/signup', {
-    //                 userID: formData.userId,
-    //                 userPW: formData.password,
-    //                 nickname: formData.nickname,
-    //             });
-
-    //             if (response.status === 201) {
-    //                 console.log('회원가입 성공:', response.data);
-    //                 navigate('/login')
-    //             } else {
-    //                 console.log('회원가입 실패:', response.data);
-    //             }
-
-    //         } catch (error) {
-    //             console.error('singup axios error');
-    //         }
-    //     } else {
-    //         setSignup({ ...signup, nickname: false, userId: false })
-    //         console.log('singup error')
-    //     }
-
-    // };
-    // Member registration button
+    // 회원가입
     const handleSignup = async () => {
         console.log('Signup:', signup);
         console.log('Valid Password:', validData.password);
@@ -159,10 +131,6 @@ const Signup = () => {
             console.log('Signup error');
         }
     };
-
-
-
-
 
     return (
         <div className="mt-5 flex w-full p-4">
