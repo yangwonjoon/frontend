@@ -16,17 +16,18 @@ function valuetext(value) {
 }
 
 const minDistance = 1000;
+const MIN_SOJU_PRICE = 3000;
+const MAX_SOJU_PRICE = 8000;
 
 function Nav() {
 
-    const session = sessionStorage.getItem('user')
-    const session_id = session ? JSON.parse(session).id : null;
-
     const navigate = useNavigate()
-    //초기값
-    const [value1, setValue1] = useState([3000, 8000]);
+    const [menuAt, setMenuAt] = useRecoilState(menuAtom)
 
-    const handleChange1 = (event, newValue, activeThumb) => {
+    //소주 가격
+    const [value1, setValue1] = useState([menuAt.moresoju || MIN_SOJU_PRICE, menuAt.undersoju || MAX_SOJU_PRICE]);
+
+    const handleChange = (event, newValue, activeThumb) => {
 
         //console.log(newValue);
         if (!Array.isArray(newValue)) {
@@ -40,75 +41,15 @@ function Nav() {
         }
     };
 
-    const handleLogout = async () => {
-        try {
-            await axios.post('api/logout', { userID: session_id }, { withCredentials: true });
 
-            sessionStorage.removeItem('user');
-            window.location.reload();
-        }
-        // catch (error) {
-        //     console.error('로그아웃 중 오류 발생:', error);
-        //     console.log('서버 응답:', error.response);
-        // }
-        catch (error) {
-            console.error('An error occurred while logging out:', error);
-
-            if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
-                console.log('Server responded with data:', error.response.data);
-                console.log('Status code:', error.response.status);
-                console.log('Headers:', error.response.headers);
-            } else if (error.request) {
-                // The request was made but no response was received
-                console.log('No response received. Request details:', error.request);
-            } else {
-                // Something happened in setting up the request that triggered an Error
-                console.log('Error setting up the request:', error.message);
-            }
-        }
-    };
-
-    const menuAt = useRecoilValue(menuAtom)
-    // console.log(menuAt)
 
     useEffect(() => {
-        // value1이 변경될 때 axios 요청 트리거
-        const filter = async () => {
-            try {
-                const moreSojuPrice = value1[0];
-                const underSojuPrice = value1[1];
-
-                let baseUrl = `api/restaurant/info?moreSojuPrice=${moreSojuPrice}&underSojuPrice=${underSojuPrice}`
-                const plusParams = [];
-
-                if (menuAt.category) {
-                    plusParams.push(`category=${menuAt.category}`);
-                }
-
-                if (menuAt.moreBeer) {
-                    plusParams.push(`moreBeerPrice=${menuAt.moreBeer}`);
-                }
-
-                if (menuAt.underBeer) {
-                    plusParams.push(`underBeerPrice=${menuAt.underBeer}`);
-                }
-                const fullUrl = `${baseUrl}&${plusParams.join("&")}`;
-
-                const response = await axios.get(fullUrl);
-
-                navigate("/", { state: { filteredData: response.data } });
-                // console.log(response.data);
-            } catch (error) {
-                console.error("데이터 가져오기 오류:", error);
-            }
-        };
-
-        filter();
-    }, [value1]);
-    console.log(menuAt)
-
+        setMenuAt((prev) => ({
+            ...prev,
+            moresoju: value1[0],
+            undersoju: value1[1]
+        }))
+    }, [value1])
 
 
     return (
@@ -165,11 +106,11 @@ function Nav() {
 
                             getAriaLabel={() => "Minimum distance"}
                             value={value1}
-                            onChange={handleChange1}
+                            onChange={handleChange}
                             getAriaValueText={valuetext}
                             disableSwap
-                            min={3000}
-                            max={8000}
+                            min={MIN_SOJU_PRICE}
+                            max={MAX_SOJU_PRICE}
                             step={1000}
                         />
                     </Box>
@@ -179,7 +120,7 @@ function Nav() {
                     </div>
                 </div>
             </div>
-            {/* Bundle 2: AI and Category */}
+
             <div className="flex flex-shrink-0 items-center space-x-2">
                 <div
                     className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#5a5a5a] hover:cursor-pointer"
@@ -197,7 +138,7 @@ function Nav() {
                         navigate("/menu");
                     }}
                 />
-                <button onClick={handleLogout}>로그아웃</button>
+
             </div>
         </div>
     );

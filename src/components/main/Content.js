@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 function Content({ i, data }) {
 
-    //음식점 주소 안이뻐서 짜름
+    //음식점 주소 자름
     function restaurantAddress(data, i) {
         const subAddress = data[i].address.split(' ');
         const restaurantAddress = '';
@@ -38,10 +38,10 @@ function Content({ i, data }) {
 
                     if (bookmarkData) {
                         setStarClicked(true);
-                        // setBookmarkCount(bookmarkData.bookmarkCount);
+
                     } else {
                         setStarClicked(false);
-                        // setBookmarkCount(0);
+
                     }
                 } catch (error) {
                     console.error("checkbookmark error:", error);
@@ -160,97 +160,3 @@ function Content({ i, data }) {
 
 
 export default Content;
-
-
-// import star from "../../assets/star.svg";
-// import filledStar from "../../assets/filled_star.svg";
-// import marker from "../../assets/marker.svg";
-// import arrowDown from "../../assets/down_arrow.svg";
-// import { useNavigate } from "react-router-dom";
-// import axios from "axios";
-// import { useEffect, useState } from "react";
-
-// function Content({ i, data }) {
-//     const navigate = useNavigate();
-//     const [starClicked, setStarClicked] = useState(false);
-//     const [bookmarkCount, setBookmarkCount] = useState(0);
-
-//     const session = sessionStorage.getItem('user');
-//     const session_id = session ? JSON.parse(session).id : null;
-//     const seq = data[i].restaurant_seq;
-
-//     useEffect(() => {
-//         const checkBookmark = async () => {
-//             if (session && session_id) {
-//                 try {
-//                     const response = await axios.get(`api/bookmarks?userID=${session_id}`);
-//                     const bookmarkData = response.data.find((x) => x.restaurant_seq === seq);
-
-//                     if (bookmarkData) {
-//                         setStarClicked(true);
-//                         setBookmarkCount(bookmarkData.bookmarkCount);
-//                     } else {
-//                         setStarClicked(false);
-//                         setBookmarkCount(0);
-//                     }
-//                 } catch (error) {
-//                     console.error("checkbookmark error:", error);
-//                 }
-//             }
-//         };
-
-//         checkBookmark();
-//     }, [session, session_id, seq]);
-
-//     const handleStar = async () => {
-//         if (session && session_id) {
-//             try {
-//                 if (starClicked) {
-//                     // Remove bookmark
-//                     await axios.delete('api/bookmarks/delete', {
-//                         data: { userID: session_id, restaurant_seq: seq }
-//                     });
-//                     setBookmarkCount((prevCount) => Math.max(0, prevCount - 1));
-//                 } else {
-//                     // Add bookmark
-//                     await axios.post('api/bookmarks/add', {
-//                         userID: session_id,
-//                         restaurant_seq: seq
-//                     });
-//                     setBookmarkCount((prevCount) => prevCount + 1);
-//                 }
-
-//                 setStarClicked((prevClicked) => !prevClicked);
-//             } catch (error) {
-//                 console.error('handlestar error:', error);
-//             }
-//         } else {
-//             console.log('로그인 안되어 있음');
-//             navigate('login');
-//         }
-//     };
-
-//     return (
-//         <div className="mt-5 flex h-auto w-full flex-col bg-white p-3">
-//             {/* ... (your existing code) */}
-//             <div className="flex justify-end">
-//                 <img
-//                     src={starClicked ? filledStar : star}
-//                     alt="star"
-//                     className="mr-3 w-6 hover:cursor-pointer"
-//                     onClick={handleStar}
-//                 />
-//                 <img
-//                     src={marker}
-//                     alt="marker"
-//                     className="w-8 hover:cursor-pointer"
-//                     onClick={() => {
-//                         window.open(`https://map.kakao.com/link/to/${data[i].restaurantName},${data[i].lat},${data[i].lon}`);
-//                     }}
-//                 />
-//             </div>
-//         </div>
-//     );
-// }
-
-// export default Content;

@@ -7,7 +7,6 @@ export const restaurantSelector = selector({
     get: async ({ get }) => {
 
         try {
-            //api호출
             const res = await axios.get('api/restaurant/all');
 
             return res.data;
