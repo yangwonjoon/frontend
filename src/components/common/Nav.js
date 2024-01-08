@@ -109,6 +109,8 @@ function Nav() {
     }, [value1]);
     console.log(menuAt)
 
+
+
     return (
 
         <div className="mt-7 flex w-full items-center justify-between pb-3 pl-7">
@@ -195,7 +197,7 @@ function Nav() {
                         navigate("/menu");
                     }}
                 />
-
+                <button onClick={handleLogout}>로그아웃</button>
             </div>
         </div>
     );
