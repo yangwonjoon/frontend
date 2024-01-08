@@ -12,28 +12,27 @@ const cookies = new Cookies();
 function LoginContainer() {
 
     const navigate = useNavigate();
+    const config = { "Content-Type": 'application/json' };
 
-    //ㅁㅅ
     const [userAt, setUserAt] = useRecoilState(userAtom);
     const [showPassword, setShowPassword] = useState(false);
 
     const [formData, setFormData] = useState({
-        userId: '',
-        userPw: ''
+        userID: '',
+        userPW: ''
     })
+    console.log(formData)
 
 
     const handleLogin = async () => {
         try {
             // 서버에 로그인 요청
             const response = await axios.post('api/login', formData);
-
-            console.log(response.headers['Set-cookie'])
-
+            console.log(getCookie('JSESSIONID'))
 
         } catch (error) {
             // 에러 처리
-            console.error(error);
+            console.error(error.response);
 
         }
     };
@@ -49,7 +48,7 @@ function LoginContainer() {
                             name='userId'
                             onChange={(e) => setFormData({
                                 ...formData,
-                                userId: e.target.value
+                                userID: e.target.value
                             })}
                             type="text"
                             placeholder="ID"
@@ -61,7 +60,7 @@ function LoginContainer() {
                             name='userPw'
                             onChange={(e) => setFormData({
                                 ...formData,
-                                userPw: e.target.value
+                                userPW: e.target.value
                             })}
                             type={showPassword ? "text" : "password"}
                             placeholder="PASSWORD"
