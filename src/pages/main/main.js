@@ -2,17 +2,23 @@ import Header from "../../components/common/Header";
 import NavBar from "../../components/common/Nav";
 import Footer from "../../components/common/Footer";
 import Content from "../../components/main/Content"
-import { useRecoilValueLoadable } from "recoil";
+import { useRecoilValue, useRecoilValueLoadable } from "recoil";
 import { restaurantSelector } from "../../recoil/selectors/restaurantSeletor";
 import { filteredDataSelector } from "../../recoil/selectors/filteredDataSelector";
+import { searchAtom } from "../../recoil/atoms/searchAtom";
 
 
 const Main = () => {
 
+  //검색창 데이터
+  const searchAt = useRecoilValue(searchAtom)
   //전체 데이터
   const dataLoadable = useRecoilValueLoadable(restaurantSelector);
   //필터링 데이터
   const filterdataLoadable = useRecoilValueLoadable(filteredDataSelector)
+
+
+
 
   //dataLoadable -> loading, hasValue, hasError
   switch (dataLoadable.state) {
@@ -39,10 +45,10 @@ const Main = () => {
             {data.length > 0 ? (
               // 필터링된 데이터가 있을 경우
               data.map(function (a, i) {
-                return <Content key={i} i={i} data={data}></Content>;
+                return <Content key={i} data={a}></Content>;
               })
             ) :
-            //필터링 데이터가 없을 경우
+              //필터링 데이터가 없을 경우
               data.length === 0 ?
                 (
                   <div>
