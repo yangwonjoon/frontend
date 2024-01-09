@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
+import { searchAtom } from "../../recoil/atoms/searchAtom"
+import { useNavigate } from "react-router-dom";
 
 function SearchModal({ onCancelClick }) {
 
+    const navigate = useNavigate();
+    const [searchAt, setSearchAt] = useRecoilState(searchAtom);
     const [searchQuery, setSearchQuery] = useState("");
     //const [searchAt, setSearchAt] = useRecoilState("");
 
@@ -11,10 +15,13 @@ function SearchModal({ onCancelClick }) {
     };
 
     const handleSearch = () => {
-
-        //setSearchAt(searchQuery)
-        console.log(searchQuery)
-
+        setSearchAt((prev) => ({
+            ...prev,
+            searchQuery
+        }))
+        navigate('/')
+        onCancelClick()
+        console.log(searchAt.searchQuery)
     };
 
     return (
