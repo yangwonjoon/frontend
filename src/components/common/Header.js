@@ -11,7 +11,7 @@ function Header() {
   const [searchClicked, setSearchClicked] = useState(false);
   const navigate = useNavigate();
 
-  const session = sessionStorage.getItem('user')
+  // const session = sessionStorage.getItem('user')
   //console.log(JSON.parse(session).id)//value만
 
   const searchClickHandler = () => {
@@ -46,12 +46,7 @@ function Header() {
           alt="person"
           className="mt-6 flex w-8 hover:cursor-pointer"
           onClick={() => {
-            if (session) {
-              navigate('/mypage')
-            } else {
-              navigate("/login");
-            }
-
+            navigate('/login')
           }}
         />
       </div>

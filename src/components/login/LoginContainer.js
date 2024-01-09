@@ -7,14 +7,14 @@ import { userAtom } from "../../recoil/atoms/userAtom";
 import { Cookies } from 'react-cookie';
 
 axios.defaults.withCredentials = true;
-const cookies = new Cookies();
+
 
 function LoginContainer() {
 
     const navigate = useNavigate();
     const config = { "Content-Type": 'application/json' };
 
-    const [userAt, setUserAt] = useRecoilState(userAtom);
+    // const [userAt, setUserAt] = useRecoilState(userAtom);
     const [showPassword, setShowPassword] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -28,7 +28,6 @@ function LoginContainer() {
         try {
             // 서버에 로그인 요청
             const response = await axios.post('api/login', formData);
-            console.log(getCookie('JSESSIONID'))
 
         } catch (error) {
             // 에러 처리
@@ -97,14 +96,6 @@ function LoginContainer() {
             </div>
         </div>
     );
-}
-
-export const setCookie = (name, value, options) => {
-    return cookies.set(name, value, { ...options });
-}
-
-export const getCookie = (name) => {
-    return cookies.get(name);
 }
 
 export default LoginContainer;
