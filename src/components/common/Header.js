@@ -11,7 +11,7 @@ function Header() {
   const [searchClicked, setSearchClicked] = useState(false);
   const navigate = useNavigate();
 
-  const session = sessionStorage.getItem('user')
+  // const session = sessionStorage.getItem('user')
   //console.log(JSON.parse(session).id)//value만
 
   const searchClickHandler = () => {
@@ -33,25 +33,20 @@ function Header() {
         ></img>
       </div>
       <div className="flex basis-1/3 justify-end">
-        {/* <img
+        <img
           src={magnify}
           alt="magnify"
           className="mr-5 mt-6 flex w-8 hover:cursor-pointer"
           onClick={() => {
             setSearchClicked(true);
           }}
-        /> */}
+        />
         <img
           src={person}
           alt="person"
           className="mt-6 flex w-8 hover:cursor-pointer"
           onClick={() => {
-            if (session) {
-              navigate('/mypage')
-            } else {
-              navigate("/login");
-            }
-
+            navigate('/login')
           }}
         />
       </div>

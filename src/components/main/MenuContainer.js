@@ -12,6 +12,8 @@ function valuetext(value) {
 }
 
 const minDistance = 1000;
+const MIN_BEER_PRICE = 4000;
+const MAX_BEER_PRICE = 9000;
 
 const categories = {
     region: ["서울시 마포구", "서울시 강남구", "서울시 강서구", "서울시 동작구"],
@@ -23,10 +25,13 @@ function MenuContainer() {
     const navigate = useNavigate()
 
     const [menuAt, setMenuAt] = useRecoilState(menuAtom)
-    const [value1, setValue1] = useState([4000, 9000]);
-    const [category, setCategory] = useState(null);
+    //맥주가격
+    const [value1, setValue1] = useState([menuAt.moreBeer || MIN_BEER_PRICE, menuAt.underBeer || MAX_BEER_PRICE]);
+    //카테고리
+    const [category, setCategory] = useState(menuAt.category || '');
 
 
+    //맥주 가격 변경
     const handleChange1 = (event, newValue, activeThumb) => {
         if (!Array.isArray(newValue)) {
             return;
@@ -40,12 +45,14 @@ function MenuContainer() {
     };
 
 
-    //카테고리 클릭시 저장
+    //카테고리 변경
     function handleCategory(category) {
-        setCategory(category)
+        setCategory((prev) => {
+            return prev !== category ? category : ''
+        })
     }
 
-    //적용하기 버튼 클릭시 맥주가격 저장
+    //적용하기 버튼
     function handleMenu() {
         setMenuAt((prev) => ({
             ...prev,
@@ -55,19 +62,6 @@ function MenuContainer() {
         }));
         navigate("/");
     }
-
-    useEffect(() => {
-        setMenuAt((prev) => ({
-            ...prev,
-            underBeer: 0,
-            moreBeer: 0,
-            category: ''
-        }));
-    }, [])
-
-    console.log(menuAt)
-
-
 
 
     return (
@@ -106,7 +100,7 @@ function MenuContainer() {
             </div>
 
 
-            {/* 기타 박스 */}
+            {/* 카테고리 박스 */}
             <div className="mb-12 flex w-full flex-col justify-start">
                 <span className="mb-3 flex text-xl font-semibold">기타</span>
                 <div className="grid grid-cols-3 gap-x-10 gap-y-6">
@@ -185,12 +179,12 @@ function MenuContainer() {
                     </Box>
                     <div className="flex w-[26rem] justify-between">
                         < span className="text-xs text-[#080707]">{value1[0]}원</span>
-                        {/* {menuAt.moreBeer ? menuAt.moreBeer : value1[0]}원 */}
                         <span className="text-xs text-[#080707]">{value1[1]}원</span>
-                        {/* {menuAt.underBeer ? menuAt.underBeer : value1[1]}원 */}
                     </div>
                 </div>
             </div>
+
+
             {/* 적용하기 버튼 */}
             <div className="mt-4">
                 <button className="rounded-full bg-black px-6 py-2 text-white"
