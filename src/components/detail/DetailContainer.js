@@ -1,68 +1,14 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import cancel from "../../assets/cancel.svg";
 import KakaoMap from "../common/KakaoMap";
 import { useRecoilValue } from "recoil";
 import { detailAtom } from "../../recoil/atoms/detailAtom";
-import axios from "axios";
-
 
 function DetailContainer() {
-
-    const session = sessionStorage.getItem('user')
-    const session_id = session ? JSON.parse(session).id : null;
 
     const navigate = useNavigate();
     //해당 가게 데이터
     const detailAt = useRecoilValue(detailAtom);
-    const [arrowClicked, setArrowClicked] = useState(false);
-    const [starCliked, setStartClicked] = useState(false);
-
-    //댓글쓰기란
-    const arrowClickedHandler = () => {
-        setArrowClicked(!arrowClicked);
-    };
-
-    //찜, 별점
-    const saveClickHandler = () => {
-        setStartClicked((prevState) => !prevState);
-    };
-
-    const [commentContent, setCommentContent] = useState("");
-    const [comments, setComments] = useState([]);
-
-    const postCommentHandler = async () => {
-        console.log(comments)
-        try {
-            const response = await axios.post("/api/comments", {
-                userID: session_id,
-                restaurant_seq: detailAt.restaurant_seq,
-                content: commentContent,
-            });
-            console.log(response.data)
-            if (response.data.status === "success") {
-                fetchComments();
-                setCommentContent("");
-            } else {
-                console.error("Failed to post comment:", response.data);
-            }
-        } catch (error) {
-            console.error("Error posting comment:", error);
-        }
-    };
-
-    const fetchComments = async () => {
-        try {
-            const response = await axios.get(`/api/comments?restaurant_seq=${detailAt.restaurant_seq}`);
-            setComments(response.data);
-        } catch (error) {
-            console.error("Error fetching comments:", error);
-        }
-    };
-
-    useEffect(() => {
-        fetchComments();
-    }, [detailAt.restaurant_seq]);
 
     return (
         <div className="mt-5 flex w-full flex-col items-center bg-[#F9F9F9] p-7">
