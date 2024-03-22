@@ -58,7 +58,6 @@ const Signup = () => {
         setValidData({ ...setValidData, password: result })
     }, [formData.password])
 
-
     //닉네임 체크
     const handleNickname = async () => {
 
@@ -72,7 +71,6 @@ const Signup = () => {
                 } else {
                     setMsg({ ...msg, nickname: '이미 존재하는 닉네임입니다' })
                 }
-
             } catch (error) {
                 console.log('nickname axios error');
             }
@@ -87,8 +85,6 @@ const Signup = () => {
             try {
                 const res = await axios.post('api/checkUserId', { userID: formData.userId });
 
-
-                console.log(res)
                 if (res.data.duplication === false) {
                     setMsg({ ...msg, userId: '사용가능한 아이디입니다' })
                     setSignup({ ...signup, userId: true })
@@ -161,8 +157,6 @@ const Signup = () => {
                     <div className="text-xs text-left font-bold mt-1">
                         {msg.nickname}
                     </div>
-
-
 
                     <div className="mt-4 flex w-72 justify-between border-b-[1px] border-[#000000]">
                         <input

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 function Content({ data }) {
 
+    const navigate = useNavigate()
     //음식점 주소 보이는 주소 자르기
     function restaurantAddress(data) {
         const subAddress = data.address.split(' ');
@@ -13,12 +14,9 @@ function Content({ data }) {
         return restaurantAddress.concat(subAddress[0], ' ', subAddress[1], ' ', subAddress[2], ' ', subAddress[3]);
     }
 
-    const navigate = useNavigate()
-
     return (
 
         <div className="mt-5 flex h-auto w-full flex-col bg-white p-3">
-
             <div className="flex w-full items-center justify-between">
                 <div className="flex flex-col items-start">
                     <div className="">
@@ -80,7 +78,5 @@ function Content({ data }) {
         </div>
     );
 }
-
-
 
 export default Content;

@@ -8,7 +8,6 @@ function SearchModal({ onCancelClick }) {
     const navigate = useNavigate();
     const [searchAt, setSearchAt] = useRecoilState(searchAtom);
     const [searchQuery, setSearchQuery] = useState("");
-    //const [searchAt, setSearchAt] = useRecoilState("");
 
     const handleContainerClick = (e) => {
         e.stopPropagation();

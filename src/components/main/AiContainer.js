@@ -1,12 +1,9 @@
-import ramen from "../../assets/ramenSample.jpg";
 import { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import picture from "../../assets/picture.svg";
 import AiSearching from "../../assets/AiSearching.png"
-
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 import { useRecoilState } from "recoil";
 import { menuAtom } from "../../recoil/atoms/menuAtom";
 
@@ -15,12 +12,11 @@ axios.defaults.withCredentials = false;
 function AiContainer() {
 
     const navigate = useNavigate()
-
     const [menuAt, setMenuAt] = useRecoilState(menuAtom)
-
     const [aiState, setAIState] = useState("Not Started");
     const [uploadedImage, setUploadedImage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
     useEffect(() => {
         setMenuAt((prev) => ({
@@ -36,26 +32,14 @@ function AiContainer() {
 
         if (file && file.type.startsWith("image/")) {
             const reader = new FileReader();
-
             // 파일 읽기가 성공적으로 완료되면 실행될 콜백 함수
             reader.onload = async () => {
                 setUploadedImage(reader.result);
                 setAIState("In Progress");
 
-
                 const formData = new FormData();
                 formData.append("analyzeImg", file);
 
-
-                // axios.post("api/image-analyze", formData)
-                //     .then((response) => {
-                //         console.log("Success:", response.data);
-                //         // Handle the response data
-                //     })
-                //     .catch((error) => {
-                //         console.error("Error:", error);
-                //         // Handle errors
-                //     });
                 try {
                     console.log("Request URL:", '/hi/image-analyze');
 
@@ -64,38 +48,26 @@ function AiContainer() {
 
                     setMenuAt((prev) => ({
                         ...prev,
-                        // underBeer: 9000,
-                        // moreBeer: 4000,
                         category: response.data.category
                     }));
                     setAIState('Done');
                     navigate('/')
-
                 } catch (error) {
                     // 에러 처리
                     console.error(error);
-
                 }
-
-
             };
-
             // 파일 읽기 오류 처리
             reader.onerror = () => {
                 console.log("file reading has failed");
                 setUploadedImage(null);
             };
-
             // 파일을 Data URL 형식으로 읽기
             reader.readAsDataURL(file);
         } else {
             console.log("No image file selected");
         }
     }, []);
-
-
-
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
     useEffect(() => {
         if (aiState === "In Progress") {

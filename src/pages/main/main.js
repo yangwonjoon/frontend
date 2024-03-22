@@ -17,7 +17,6 @@ const Main = () => {
     //필터링 데이터
     const filterdataLoadable = useRecoilValueLoadable(filteredDataSelector)
 
-
     //dataLoadable -> loading, hasValue, hasError
     switch (dataLoadable.state) {
         //로딩중일경우
@@ -35,17 +34,10 @@ const Main = () => {
             const data = filterdataLoadable.state === "hasValue"
                 ? filterdataLoadable.contents
                 : dataLoadable.contents;
-            // filterdataLoadable.contents ||
-
-
             if (searchAt.searchQuery) {
-
                 const searchData = data.filter((restaurant) =>
                     restaurant.restaurantName.includes(searchAt.searchQuery)
                 )
-
-                { console.log(searchData) }
-
                 return (
                     <>
                         <div className="flex flex-col items-center justify-center">
@@ -61,15 +53,12 @@ const Main = () => {
                                         결과값이 없습니다
                                     </div>
                             }
-
                             < Footer />
                         </div >
                     </>
                 )
             }
-
             return (
-
                 <>
                     <div className="flex flex-col items-center justify-center">
                         <Header />
@@ -98,7 +87,6 @@ const Main = () => {
                         < Footer />
                     </div >
                 </>
-
             );
 
         //에러가 뜬 경우

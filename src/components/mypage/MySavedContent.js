@@ -1,13 +1,11 @@
 import React from "react";
 import filledStar from "../../assets/filled_star.svg";
 import X from "../../assets/mypageX.svg";
-
 import axios from "axios";
 
 function MySavedContent({ data, i, id }) {
 
   const item = data
-
   const session = sessionStorage.getItem('user')
   const session_id = session ? JSON.parse(session).id : null;
 

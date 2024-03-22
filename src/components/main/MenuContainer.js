@@ -23,35 +23,29 @@ const categories = {
 function MenuContainer() {
 
     const navigate = useNavigate()
-
     const [menuAt, setMenuAt] = useRecoilState(menuAtom)
     //맥주가격
     const [value1, setValue1] = useState([menuAt.moreBeer || MIN_BEER_PRICE, menuAt.underBeer || MAX_BEER_PRICE]);
     //카테고리
     const [category, setCategory] = useState(menuAt.category || '');
 
-
     //맥주 가격 변경
     const handleChange1 = (event, newValue, activeThumb) => {
         if (!Array.isArray(newValue)) {
             return;
         }
-
         if (activeThumb === 0) {
             setValue1([Math.min(newValue[0], value1[1] - minDistance), value1[1]]);
         } else {
             setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
         }
     };
-
-
     //카테고리 변경
     function handleCategory(category) {
         setCategory((prev) => {
             return prev !== category ? category : ''
         })
     }
-
     //적용하기 버튼
     function handleMenu() {
         setMenuAt((prev) => ({
@@ -63,9 +57,7 @@ function MenuContainer() {
         navigate("/");
     }
 
-
     return (
-
         <div className="mt-5 flex w-full flex-col items-center bg-[#F9F9F9] p-10">
             {/* 지역 박스 */}
             <div className="mb-12 flex w-full flex-col justify-start">
@@ -98,8 +90,6 @@ function MenuContainer() {
                     </span>
                 </div>
             </div>
-
-
             {/* 카테고리 박스 */}
             <div className="mb-12 flex w-full flex-col justify-start">
                 <span className="mb-3 flex text-xl font-semibold">기타</span>
@@ -112,14 +102,9 @@ function MenuContainer() {
                         >
                             {a}
                         </span>
-
                     ))}
                 </div>
             </div>
-
-
-
-
             {/* 맥주 박스 */}
             <div className="mb-4 flex w-full flex-col justify-start">
                 <span className="mb-3 flex text-xl font-semibold">맥주 가격</span>
@@ -183,8 +168,6 @@ function MenuContainer() {
                     </div>
                 </div>
             </div>
-
-
             {/* 적용하기 버튼 */}
             <div className="mt-4">
                 <button className="rounded-full bg-black px-6 py-2 text-white"
@@ -192,7 +175,6 @@ function MenuContainer() {
                 >
                     적용하기
                 </button>
-
             </div>
         </div >
     );

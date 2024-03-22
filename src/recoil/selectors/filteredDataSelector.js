@@ -8,7 +8,6 @@ export const filteredDataSelector = selector({
     get: async ({ get }) => {
 
         try {
-
             //api호출
             const baseUrl = `api/restaurant/info?`
             const plusParams = [];
@@ -30,18 +29,15 @@ export const filteredDataSelector = selector({
             if (category) {
                 plusParams.push(`category=${category}`);
             }
-
             if (moreBeer) {
                 plusParams.push(`moreBeerPrice=${moreBeer}`);
             }
-
             if (underBeer) {
                 plusParams.push(`underBeerPrice=${underBeer}`);
             }
 
             const fullUrl = `${baseUrl}&${plusParams.join("&")}`;
             const response = await axios.get(fullUrl)
-
 
             return response.data;
         } catch (error) {

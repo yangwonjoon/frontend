@@ -2,9 +2,6 @@ import eye from "../../assets/eye.svg";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
 import axios from 'axios'; // axios import 수정
-import { useRecoilState } from "recoil";
-import { userAtom } from "../../recoil/atoms/userAtom";
-import { Cookies } from 'react-cookie';
 
 axios.defaults.withCredentials = true;
 
