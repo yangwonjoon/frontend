@@ -18,12 +18,10 @@ function Detail() {
   const [detailAt, setDetailAt] = useRecoilState(detailAtom);
 
   useEffect(() => {
-
     try {
       let res = restaurantSel.find(function (x) {
         return x.restaurant_seq == id;
       });
-
       if (res) {
         setDetailAt((prev) => ({
           ...prev,
@@ -33,26 +31,7 @@ function Detail() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-
-
   }, []);
-
-  // //url parma과 전체데이터중 맞는 데이터 res에 저장
-  // let res = restaurantSel.find(function (x) {
-  //   return x.restaurant_seq == id
-  // });
-
-  // useEffect((e) => {
-
-  //   //detailAtom에 res값 저장
-  //   if (res) {
-  //     setDetailAt((prev) => ({
-  //       ...prev,
-  //       ...res,
-  //     }));
-  //   }
-
-  // }, [res, setDetailAt])
 
   return (
     <div className="flex flex-col items-center justify-center">

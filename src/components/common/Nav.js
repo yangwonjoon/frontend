@@ -1,14 +1,9 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import category from "../../assets/category.svg";
-import axios from "axios";
-import { userAtom } from "../../recoil/atoms/userAtom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { menuAtom } from "../../recoil/atoms/menuAtom"
 
 function valuetext(value) {
@@ -29,7 +24,6 @@ function Nav() {
 
     const handleChange = (event, newValue, activeThumb) => {
 
-        //console.log(newValue);
         if (!Array.isArray(newValue)) {
             return;
         }
@@ -40,8 +34,6 @@ function Nav() {
             setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
         }
     };
-
-
 
     useEffect(() => {
         setMenuAt((prev) => ({
