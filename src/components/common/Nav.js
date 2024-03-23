@@ -114,14 +114,14 @@ function Nav() {
             </div>
 
             <div className="flex flex-shrink-0 items-center space-x-2">
-                <div
+                {/* <div
                     className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#5a5a5a] hover:cursor-pointer"
                     onClick={() => {
                         navigate("/aipage");
                     }}
                 >
                     <span className="font-semibold text-[#5a5a5a]">AI</span>
-                </div>
+                </div> */}
                 <img
                     src={category}
                     alt="category"

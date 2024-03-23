@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export const restaurantSelector = selector({
     key: 'restaurantSelector',
-    get: async ({ get }) => {
+    get: async () => {
         try {
             const res = await axios.get('api/restaurant/all');
 
